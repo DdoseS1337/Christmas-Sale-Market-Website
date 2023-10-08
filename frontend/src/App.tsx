@@ -1,22 +1,26 @@
-import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import MainPage from "./pages/MainPage";
+import CatalogPage from "./pages/CatalogPage";
+import ProductPage from "./pages/ProductPage";
+import ContactsPage from "./pages/ContactsPage";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import MainContainer from "./components/MainContainer";
 
 function App() {
     return (
-        <div className="App">
-            <header className="App-header">
-                <p>
-                    Test string
-                </p>
-                <a
-                    className="App-link"
-                    href="https://reactjs.org"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Learn React
-                </a>
-            </header>
-        </div>
+        <Router>
+            <Header />
+            <MainContainer>
+                <Routes>
+                    <Route path="/" element={<MainPage />} />
+                    <Route path="/catalog" element={<CatalogPage />} />
+                    <Route path="/catalog/:id" element={<ProductPage />} />
+                    <Route path="/contacts" element={<ContactsPage />} />
+                </Routes>
+            </MainContainer>
+            <Footer />
+        </Router>
     );
 }
 
