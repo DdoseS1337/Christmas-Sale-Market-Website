@@ -1,6 +1,7 @@
 @import url('./components/footer.css');
 @import url('./components/header.css');
 @import url('./components/main.css');
+@import url('./components/snow.css');
 
 body {
     margin: 0;
