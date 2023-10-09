@@ -3,12 +3,15 @@ import Basket from "../Header/Basket";
 import ContactsBar from "../Header/HeaderContactsBar";
 import NavBar from "../Header/HeaderNavBar";
 import SearchBar from "../Header/HeaderSearchbar";
+import Snowfall from "./Snowfall";
 import { Col, Container, Row } from "react-bootstrap";
+import { ImportsNotUsedAsValues } from "typescript";
 
 function Header() {
     return (
-        <Container fluid>
-            <Row className="background_red_theme p-3 text-center">
+        <Container fluid className="position-relative">
+            <Snowfall />
+            <Row className="red_theme p-3 text-center">
                 <Col>
                     <Logo />
                 </Col>
