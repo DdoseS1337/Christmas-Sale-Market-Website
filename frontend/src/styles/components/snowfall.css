@@ -1,9 +1,9 @@
 .snow_wrap {
     height: 100%;
-    width: 100%;
+    width: 98%;
     background-size: cover;
     background-position: center bottom;
-    position: relative;
+    position: absolute;
     overflow: hidden;
 }
 
@@ -54,10 +54,3 @@
         transform: translateY(650px);
     }
 }
-
-.container {
-    width: 100%;
-    height: 20rem;
-    background-color: black;
-}
-
