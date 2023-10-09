@@ -1,4 +1,3 @@
-//Delete
 function Footer(){
     return(
         <div></div>
