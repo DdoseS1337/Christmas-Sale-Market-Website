@@ -5,16 +5,18 @@ import Col from 'react-bootstrap/Col'
 import FooterList from './FooterList'
 import HeaderLogo from '../Header/HeaderLogo'
 import { LinkWithIcon } from '../common/LinkWithIcon'
+import Snowfall from '../UserInterface/Snowfall'
 
 function BottomFooter() {
     return (
         <div className='bottom-footer'>
+            <Snowfall />
             <Container>
                 <Row className='bottom-footer__row'>
                     <Col xs={4}>
                         <HeaderLogo />
                         <p className='mt-2'>Магазин з продажу новорічних товарів №1</p>
-                        <div className='d-flex mb-1 ms-1'>
+                        <div className='d-flex mb-1'>
                             <LinkWithIcon
                                 to="#"
                                 src="/images/icons/viber.png"
@@ -31,9 +33,7 @@ function BottomFooter() {
                             to="#"
                             src="/images/icons/gmail.png"
                             text="example@gmail.com"
-                            className='ms-1'
                         />
-                        <p className='mt-3'>Christmas Market © 2022. All Rights Reserved</p>
                     </Col>
                     <Col>
                         <FooterList
@@ -70,7 +70,7 @@ function BottomFooter() {
                     </Col>
                     <Col>
                         <FooterList
-                            title="Categories"
+                            title="Категорії"
                             list={[
                                 { text: "Ялинки", link: "" },
                                 { text: "Гірлянди хвойні", link: "" },
@@ -78,6 +78,9 @@ function BottomFooter() {
                             ]}
                         />
                     </Col>
+                </Row>
+                <Row className='bottom-footer__bottom-row'>
+                    <p className='m-0 ps-2'>Christmas Market © 2022. Всі права захищені</p>
                 </Row>
             </Container>
         </div>

@@ -1,11 +1,22 @@
 .bottom-footer {
     background-color: var(--bg-primary);
-    padding-top: 60px;
-    padding-bottom: 60px;
+    
     color: var(--light);
     font-size: 14px;
+
+    position: relative;
+}
+
+.bottom-footer .container {
+    padding-top: 60px;
 }
 
 .bottom-footer__row {
-    align-items: center;
+    padding-bottom: 60px;
+    align-items: start;
+}
+
+.bottom-footer__bottom-row {
+    border-top: 1px solid var(--light);
+    padding: 24px 0;
 }
