@@ -1,8 +1,12 @@
 import { NestFactory } from '@nestjs/core';
 import { ProductsServiceModule } from './products-service.module';
+import { ConfigService } from '@nestjs/config';
+import { Logger } from 'nestjs-pino';
 
 async function bootstrap() {
   const app = await NestFactory.create(ProductsServiceModule);
-  await app.listen(3000);
+  app.useLogger(app.get(Logger))
+  const configService = app.get(ConfigService)
+  await app.listen(configService.get('PORT'));
 }
 bootstrap();

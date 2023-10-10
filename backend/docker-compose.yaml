@@ -1,0 +1,25 @@
+services:
+  supplier-service:
+    build:
+      context: .
+      dockerfile: ./apps/supplier-service/Dockerfile
+      target: development
+    command: npm run start:dev supplier-service
+    env_file:
+      - ./apps/supplier-service/.env
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/usr/src/app
+  products-service:
+    build:
+      context: .
+      dockerfile: ./apps/products-service/Dockerfile
+      target: development
+    command: npm run start:dev products-service
+    env_file:
+      - ./apps/products-service/.env
+    ports:
+      - "3001:3001"
+    volumes:
+      - .:/usr/src/app

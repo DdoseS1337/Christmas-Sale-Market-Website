@@ -1,12 +1,13 @@
 import { Controller, Get } from '@nestjs/common';
 import { SupplierServiceService } from './supplier-service.service';
+import { MessagePattern } from '@nestjs/microservices';
 
-@Controller()
+@Controller('supply-data')
 export class SupplierServiceController {
   constructor(private readonly supplierServiceService: SupplierServiceService) {}
 
   @Get()
-  getHello(): string {
-    return this.supplierServiceService.getHello();
+  async getDataFromButikElok(): Promise<string> {
+    return this.supplierServiceService.getDataElkiShop();
   }
 }
