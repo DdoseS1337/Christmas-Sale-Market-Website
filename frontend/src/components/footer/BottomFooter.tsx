@@ -80,7 +80,7 @@ function BottomFooter() {
                     </Col>
                 </Row>
                 <Row className='bottom-footer__bottom-row'>
-                    <p className='m-0 ps-2'>Christmas Market © 2022. Всі права захищені</p>
+                    <p className='m-0 ps-2'>Christmas Market © 2023. Всі права захищені</p>
                 </Row>
             </Container>
         </div>
