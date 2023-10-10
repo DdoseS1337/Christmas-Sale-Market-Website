@@ -1,20 +1,49 @@
-@import url('./components/footer.css');
-@import url('./components/header.css');
-@import url('./components/main.css');
-@import url('./components/snowfall.css');
+@font-face {
+    font-family: "Christmas Font";
+    src: url("../../public/fonts/Candcu__.ttf") format("truetype");
+}
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+* {
+    font-family: sans-serif;
+}
 
 body {
     margin: 0;
     padding: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-      sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+        "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+        "Helvetica Neue", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-  }
-  
-  code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-      monospace;
-  }
-  
+}
+
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+        monospace;
+}
+
+.background_red_theme {
+    background-color: #c93f4f;
+    color: white;
+}
+
+.logo-icon {
+    background-image: url("../../public/images/pictures/header-logo.png");
+    width: 3rem;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.christmas-text {
+    font-family: Christmas Font;
+    white-space: nowrap;
+}
+
+:root {
+    --bg-primary: #C93F4F;
+    --light: white;
+    --light-gray: #F7F7F7;
+    --gray-100: #E6E6E6;
+    --gray-50: #F7F7F7;
+}

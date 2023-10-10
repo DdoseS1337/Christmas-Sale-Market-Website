@@ -1,16 +1,17 @@
-import Button from 'react-bootstrap/Button'
-import '../../styles/components/rounded-button.css'
+import '../../styles/components/footer/rounded-button.css'
 
 interface IProps {
-  children: string
+  children: string;
+  className?: string;
 }
 
 function RoundedButton(props: IProps) {
   return (
-    <Button
-      className='rounded-pill rounded-button'
-      size="lg"
-    >{props.children}</Button>
+    <button
+      className={'rounded-button ' + props.className}
+    >
+      {props.children}
+    </button>
   )
 }
 
