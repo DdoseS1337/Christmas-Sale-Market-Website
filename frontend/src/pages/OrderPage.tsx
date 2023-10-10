@@ -1,4 +1,4 @@
-function OrderPage() {
+const OrderPage = () => {
     return <div></div>;
 }
 

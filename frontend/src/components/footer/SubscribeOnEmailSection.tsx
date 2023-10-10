@@ -4,7 +4,7 @@ import Col from 'react-bootstrap/Col';
 import '../../styles/components/footer/email-section.css';
 import FooterInputBar from './FooterInputBar';
 
-function SubscribeOnEmailSection() {
+const SubscribeOnEmailSection = () => {
   return (
     <div className='footer-email-section'>
         <Container>

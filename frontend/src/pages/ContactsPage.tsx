@@ -1,4 +1,4 @@
-function ContactsPage() {
+const ContactsPage = () => {
     return <div></div>;
 }
 
