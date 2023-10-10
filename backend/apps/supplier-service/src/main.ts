@@ -1,11 +1,11 @@
 import { NestFactory } from '@nestjs/core';
-import { SupplierServiceModule } from './supplier-service.module';
+import { SupplierModule } from './supplier.module';
 import { Logger } from 'nestjs-pino';
 import { ConfigService } from '@nestjs/config';
 import { Transport } from '@nestjs/microservices';
 
 async function bootstrap() {
-  const app = await NestFactory.create(SupplierServiceModule);
+  const app = await NestFactory.create(SupplierModule);
   app.useLogger(app.get(Logger))
   const configService = app.get(ConfigService);
   app.connectMicroservice({

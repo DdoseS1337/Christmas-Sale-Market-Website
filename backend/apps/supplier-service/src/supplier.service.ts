@@ -4,7 +4,7 @@ import * as xml2js from 'xml2js';
 import { YmlCatalog } from './interfaces/catalog.interface';
 
 @Injectable()
-export class SupplierServiceService {
+export class SupplierService {
   async xmlParser(url: string): Promise<any> {
     try {
       const response = await axios.get(url);

@@ -1,5 +1,5 @@
 import { NestFactory } from '@nestjs/core';
-import { ProductsServiceModule } from './products-service.module';
+import { ProductsServiceModule } from './products.module';
 import { ConfigService } from '@nestjs/config';
 import { Logger } from 'nestjs-pino';
 

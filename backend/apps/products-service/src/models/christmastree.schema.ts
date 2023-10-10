@@ -2,20 +2,56 @@ import { AbstactDocument } from '@app/common';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 @Schema({ versionKey: false })
-export class ReservationDocument extends AbstactDocument {
+export class ChristmasTreeDocument extends AbstactDocument {
   @Prop()
-  timestamp: Date;
+  id: string;
+
   @Prop()
-  startDate: Date;
+  group_id: string;
+
   @Prop()
-  endDate: Date;
+  available: boolean;
+
   @Prop()
-  userId: string;
+  url: string;
+
   @Prop()
-  placeId: string;
+  name: string;
+
   @Prop()
-  invoiceId: string;
+  price: number;
+
+  @Prop()
+  currencyId: string;
+
+  @Prop({ type: [String] })
+  picture: string[];
+
+  @Prop()
+  store: boolean;
+
+  @Prop()
+  delivery: boolean;
+
+  @Prop()
+  pickup: boolean;
+
+  @Prop()
+  adult: boolean;
+
+  @Prop()
+  manufacturer_warranty: boolean;
+
+  @Prop()
+  category: number;
+
+  @Prop({ type: [String], default: [] })
+  vendorCode: string[];
+
+  @Prop({ type: Map, of: String, default: new Map() })
+  param: Map<string, string>;
 }
 
-export const ReservationSchema =
-  SchemaFactory.createForClass(ReservationDocument);
+export const ChristmasTreeSchema = SchemaFactory.createForClass(
+  ChristmasTreeDocument,
+);

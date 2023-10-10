@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { SupplierServiceController } from './supplier-service.controller';
-import { SupplierServiceService } from './supplier-service.service';
+import { SupplierController } from './supplier.controller';
+import { SupplierService } from './supplier.service';
 import { LoggerModule } from '@app/common';
 import { ClientsModule } from '@nestjs/microservices';
 import { ConfigModule } from '@nestjs/config';
@@ -15,7 +15,7 @@ import * as Joi from 'joi';
       }),
     }),
   ],
-  controllers: [SupplierServiceController],
-  providers: [SupplierServiceService],
+  controllers: [SupplierController],
+  providers: [SupplierService],
 })
 export class SupplierServiceModule {}
