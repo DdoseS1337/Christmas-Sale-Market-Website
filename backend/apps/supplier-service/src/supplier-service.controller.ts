@@ -6,7 +6,7 @@ import { MessagePattern } from '@nestjs/microservices';
 export class SupplierServiceController {
   constructor(private readonly supplierServiceService: SupplierServiceService) {}
 
-  @Get()
+  @MessagePattern('update_supply_data')
   async getDataFromButikElok(): Promise<string> {
     return this.supplierServiceService.getDataElkiShop();
   }
