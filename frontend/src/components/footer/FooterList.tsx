@@ -1,3 +1,4 @@
+import '../../styles/components/footer/footer-list.css';
 
 interface IProps {
     title: string;
@@ -11,10 +12,10 @@ interface ILink {
 
 function FooterList(props: IProps) {
   return (
-    <div>
-        <p>{props.title}</p>
-        {props.list.map((item) => {
-            return <a  href={item.link}>{item.text}</a>
+    <div className='footer-list'>
+        <h3 className='footer-list__title'>{props.title}</h3>
+        {props.list.map((item, index) => {
+            return <a key={index} href={item.link}>{item.text}</a>
         })}
     </div>
   )

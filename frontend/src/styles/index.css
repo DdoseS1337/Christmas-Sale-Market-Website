@@ -7,10 +7,11 @@
     font-family: "Christmas Font";
     src: url("../../public/fonts/Candcu__.ttf") format("truetype");
 }
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&display=swap');
 
 * {
-    font-family: sans-serif;
+    font-family: "Golos Text", sans-serif;
 }
 
 body {
@@ -56,7 +57,9 @@ code {
     --light-gray: #F7F7F7;
     --gray-100: #E6E6E6;
     --gray-50: #F7F7F7;
+    --gray-200: #CCCCCC;
 }
+
 .bold_text {
     font-weight: bold;
 }

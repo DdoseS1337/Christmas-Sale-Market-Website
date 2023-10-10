@@ -1,4 +1,11 @@
 .bottom-footer {
     background-color: var(--bg-primary);
     padding-top: 60px;
+    padding-bottom: 60px;
+    color: var(--light);
+    font-size: 14px;
+}
+
+.bottom-footer__row {
+    align-items: center;
 }

@@ -1,12 +1,11 @@
-import InputGroup from 'react-bootstrap/InputGroup';
 import RoundedButton from '../common/RoundedButton';
 import '../../styles/components/footer/rounded-input.css'
-import '../../styles/components/footer/search-bar.css'
+import '../../styles/components/footer/search-input.css'
 
-function FooterSearchBar() {
+function FooterInputBar() {
   return (
     <div
-        className='footer-search-bar'
+        className='footer-input-bar'
     >
         <input
             className="rounded-input"
@@ -17,4 +16,4 @@ function FooterSearchBar() {
   )
 }
 
-export default FooterSearchBar
+export default FooterInputBar
