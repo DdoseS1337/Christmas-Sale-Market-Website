@@ -39,6 +39,11 @@ code {
     color: #c93f4f;
 }
 
+.white_theme_black {
+    background-color: white;
+    color: black;
+}
+
 .logo-icon {
     background-image: url("../../public/images/pictures/header-logo.png");
     width: 3rem;
@@ -62,4 +67,13 @@ code {
 
 .bold_text {
     font-weight: bold;
+}
+
+.link-settings {
+    color: white;
+    text-decoration: none;
+}
+
+.link-settings:hover {
+    cursor: pointer;
 }

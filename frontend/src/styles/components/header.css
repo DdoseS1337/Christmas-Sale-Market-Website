@@ -44,3 +44,36 @@
     background-color: transparent;
     border-right: none;
 }
+
+.btn-basket {
+    border: 0;
+    background-color: transparent;
+    height: 2.5rem;
+    width: 2.5rem;
+    padding: 0.2rem;
+}
+
+.basket-sizer {
+    height: 100%;
+    width: 100%;
+}
+
+.dropdown-item:active {
+    background-color: #c93f4f;
+}
+
+.dropdown-item.active {
+    background-color: #c93f4f;
+}
+
+a.nav-link {
+    color: black;
+}
+
+a.active.nav-link {
+    font-weight: bold;
+}
+
+.contact-icon {
+    width: 1.6rem;
+}

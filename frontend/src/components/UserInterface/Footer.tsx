@@ -1,8 +1,7 @@
-
 import BottomFooter from '../footer/BottomFooter';
 import SubscribeOnEmailSection from '../footer/SubscribeOnEmailSection';
 
-function Footer(){
+const Footer = () => {
     return(
         <footer>
             <SubscribeOnEmailSection />

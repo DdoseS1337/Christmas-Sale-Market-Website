@@ -5,6 +5,7 @@
     background-position: center bottom;
     position: absolute;
     overflow: hidden;
+    pointer-events: none;
 }
 
 .snow,
