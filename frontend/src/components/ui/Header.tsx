@@ -1,16 +1,16 @@
-import Logo from "../Header/HeaderLogoContainer";
-import Basket from "../Header/BasketContainer";
-import ContactsBar from "../Header/HeaderContactsBar";
-import NavBar from "../Header/HeaderNavBar";
-import SearchBar from "../Header/HeaderSearchbar";
+import Logo from "../header/HeaderLogoContainer";
+import Basket from "../header/BasketContainer";
+import ContactsBar from "../header/HeaderContactsBar";
+import NavBar from "../header/HeaderNavBar";
+import SearchBar from "../header/HeaderSearchbar";
 import Snowfall from "./Snowfall";
 import { Col, Container, Row } from "react-bootstrap";
 
 const Header = () => {
     return (
-        <Container fluid className="position-relative">
-            <Snowfall />
-            <Row className="red_theme p-3 text-center">
+        <Container fluid>
+            <Row className="red_theme p-3 text-center position-relative">
+                <Snowfall />
                 <Col>
                     <Logo />
                 </Col>

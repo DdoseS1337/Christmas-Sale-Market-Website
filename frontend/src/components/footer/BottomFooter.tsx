@@ -3,9 +3,9 @@ import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import FooterList from './FooterList'
-import HeaderLogo from '../Header/HeaderLogo'
+import HeaderLogo from '../header/HeaderLogo'
 import { LinkWithIcon } from '../common/LinkWithIcon'
-import Snowfall from '../UserInterface/Snowfall'
+import Snowfall from '../ui/Snowfall'
 
 function BottomFooter() {
     return (

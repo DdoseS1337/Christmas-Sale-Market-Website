@@ -1,4 +1,4 @@
-function CatalogPage() {
+const CatalogPage = () =>  {
     return <div></div>;
 }
 

@@ -10,7 +10,7 @@ interface ILink {
     link: string;
 }
 
-function FooterList(props: IProps) {
+const FooterList = (props: IProps) => {
   return (
     <div className='footer-list'>
         <h3 className='footer-list__title'>{props.title}</h3>

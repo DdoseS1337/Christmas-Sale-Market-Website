@@ -1,5 +1,5 @@
 //Delete
-function ValidationData() {
+const ValidationData = () => {
     return <div></div>;
 }
 

@@ -2,7 +2,7 @@ import RoundedButton from '../common/RoundedButton';
 import '../../styles/components/footer/rounded-input.css'
 import '../../styles/components/footer/search-input.css'
 
-function FooterInputBar() {
+const FooterInputBar = () => {
   return (
     <div
         className='footer-input-bar'

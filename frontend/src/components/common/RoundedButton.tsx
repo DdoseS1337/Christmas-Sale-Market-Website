@@ -5,7 +5,7 @@ interface IProps {
   className?: string;
 }
 
-function RoundedButton(props: IProps) {
+const RoundedButton = (props: IProps) => {
   return (
     <button
       className={'rounded-button ' + props.className}
