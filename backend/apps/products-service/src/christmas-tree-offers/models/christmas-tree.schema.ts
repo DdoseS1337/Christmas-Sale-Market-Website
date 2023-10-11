@@ -48,8 +48,8 @@ export class ChristmasTreeDocument extends AbstactDocument {
   @Prop({ type: [String], default: [] })
   vendorCode: string[];
 
-  @Prop({ type: Map, of: String, default: new Map() })
-  param: Map<string, string>;
+  @Prop({ type: [{ name: String, description: String }], default: [] })
+  param: Array<{ name: string; description: string }>;
 }
 
 export const ChristmasTreeSchema = SchemaFactory.createForClass(

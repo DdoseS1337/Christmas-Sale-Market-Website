@@ -1,20 +1,22 @@
-import { Controller, Get, Inject, Param } from '@nestjs/common';
+import { Controller,UseInterceptors  } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { MessagePattern, Payload } from '@nestjs/microservices';
+import { FormatResponseInterceptor } from '@app/common';
 
+@UseInterceptors(FormatResponseInterceptor)
 @Controller('products')
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
   @MessagePattern('set_supply_categories')
   async setDataCategories(@Payload() data) {
-    console.log(`set_supply_categories ${data}`);
-    return data;
+    const categories = JSON.parse(data);
+    return this.productsService.setCategories(categories);
   }
 
   @MessagePattern('set_supply_offers')
   async setDataOffers(@Payload() data) {
-    console.log(`set_supply_offers ${data}`);
-    return data;
+    const offers = JSON.parse(data);
+    return this.productsService.setOffers(offers);
   }
 }

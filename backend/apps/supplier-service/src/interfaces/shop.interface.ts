@@ -10,5 +10,5 @@ export interface Shop {
   version: string[];
   currencies: Currency[];
   categories: Category[];
-  offers: { offer: Offer[] };
+  offers: Offer[];
 }

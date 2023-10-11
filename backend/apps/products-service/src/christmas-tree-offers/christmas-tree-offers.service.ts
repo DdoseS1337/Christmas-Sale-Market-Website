@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ChristmasTreeOffersRepository } from './christmas-tree-offers.repository';
+import { ChristmasTreeDto } from '../dto/christmas-tree.dto';
 
 @Injectable()
 export class ChristmasTreeOffersService {
@@ -7,9 +8,9 @@ export class ChristmasTreeOffersService {
     private readonly christmasTreeOffersRepository: ChristmasTreeOffersRepository,
   ) {}
 
-//   create() {
-//     return this.christmasTreeOffersRepository.create({});
-//   }
+  create(data: ChristmasTreeDto) {
+    return this.christmasTreeOffersRepository.create(data);
+  }
 
 //   findAll() {
 //     return this.christmasTreeOffersRepository.find({});

@@ -17,5 +17,6 @@ import { ChristmastreeCategoryDocument, ChristmastreeCategorySchema } from './mo
   ],
   controllers: [ChristmasTreeCategoriesController],
   providers: [ChristmasTreeCategoriesService, ChristmastreeCategoryRepository],
+  exports: [ChristmasTreeCategoriesService]
 })
 export class ChristmasTreeCategoriesModule {}

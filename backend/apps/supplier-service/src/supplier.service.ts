@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import axios from 'axios';
 import * as xml2js from 'xml2js';
 import { YmlCatalog } from './interfaces/catalog.interface';
@@ -9,7 +9,9 @@ import { map } from 'rxjs';
 
 @Injectable()
 export class SupplierService {
-  constructor(@Inject(PRODUCT_SERVICE) private readonly productService: ClientProxy) {}
+  constructor(
+    @Inject(PRODUCT_SERVICE) private readonly productService: ClientProxy,
+  ) {}
 
   async xmlParser(url: string): Promise<any> {
     try {
@@ -34,38 +36,49 @@ export class SupplierService {
 
     try {
       const result = await this.xmlParser(url);
-
       const catalog: YmlCatalog = result.yml_catalog;
 
       catalog.shop.categories = result.yml_catalog.shop.categories.category;
       catalog.shop.offers = result.yml_catalog.shop.offers.offer;
 
-      
-      const categories = await this.getElkiShopCategories(catalog.shop.categories)
-      const offers = await this.getElkiShopOffers(catalog.shop.offers)
-      console.log(categories, offers)
-      const jsonData = JSON.stringify({categories, offers});
-      return jsonData;
+      const categories = await this.getElkiShopCategories(
+        catalog.shop.categories,
+      );
+      const offers = await this.getElkiShopOffers(catalog.shop.offers);
 
+      if (categories && offers) {
+        return 'Data successfully upload';
+      }
     } catch (error) {
-      console.error('Помилка завантаження файлу:', error);
-      throw error;
+      throw new NotFoundException('File upload error');
     }
   }
 
   async getElkiShopCategories(categories: Category[]) {
-    const categoryList = JSON.stringify(categories);
-    return this.productService.send('set_supply_categories', categoryList).pipe(
-      map(res => {
+    const transformCategories = categories.map((category) => {
+      return { ...category, name: category._ };
+    });
+    const jsonData = JSON.stringify(transformCategories);
+    return this.productService
+      .send('set_supply_categories', jsonData)
+      .subscribe((res) => {
         return res;
-      }));
+      });
   }
 
-  async getElkiShopOffers(offers: { offer: Offer[] }) {
-    const offerList = JSON.stringify(offers);
-    return this.productService.send('set_supply_offers', offerList).pipe(
-      map(res => {
+  async getElkiShopOffers(offers: Offer[] ) {
+    const transformOffers = offers.map((offer) => {
+      const modifiedParams = offer.param.map(item => {
+        return {name: item.name, description: item._}
+      });
+      return {...offer, param: modifiedParams}
+    })
+
+    const jsonData = JSON.stringify(transformOffers);
+    return this.productService
+      .send('set_supply_offers', jsonData)
+      .subscribe((res) => {
         return res;
-      }));
+      });
   }
 }

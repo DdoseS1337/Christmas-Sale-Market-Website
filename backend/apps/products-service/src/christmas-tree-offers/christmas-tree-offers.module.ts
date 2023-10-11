@@ -13,6 +13,7 @@ import { ChristmasTreeDocument, ChristmasTreeSchema } from './models/christmas-t
     ]),
   ],
   controllers: [ChristmasTreeOffersController],
-  providers: [ChristmasTreeOffersService, ChristmasTreeOffersRepository]
+  providers: [ChristmasTreeOffersService, ChristmasTreeOffersRepository],
+  exports: [ChristmasTreeOffersService]
 })
 export class ChristmasTreeOffersModule {}
