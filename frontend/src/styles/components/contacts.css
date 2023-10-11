@@ -1,0 +1,27 @@
+.contacts-container {
+    border-radius: 0.5rem;
+    border: 1px solid var(--Light-red, #c93f4f);
+    box-shadow: 0px 0px 56px 0px rgba(236, 15, 55, 0.08);
+    padding: 1rem;
+    height: 18rem;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.contact-icons {
+    color: #c93f4f;
+    width: 4.5rem;
+    height: 4.5rem;
+    cursor: pointer;
+}
+
+.contact-line {
+    height: 15rem;
+    width: 2px;
+    background-color: #e6e6e6;
+}
+
+.contact-container-icon {
+    width: 35%;
+}

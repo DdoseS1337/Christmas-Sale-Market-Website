@@ -1,22 +1,24 @@
-import '../../styles/components/footer/bottom-footer.css'
-import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import FooterList from './FooterList'
-import HeaderLogo from '../header/HeaderLogo'
-import { LinkWithIcon } from '../common/LinkWithIcon'
-import Snowfall from '../ui/Snowfall'
+import "../../styles/components/footer/bottom-footer.css";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import FooterList from "./FooterList";
+import HeaderLogo from "../header/HeaderLogo";
+import { LinkWithIcon } from "../common/LinkWithIcon";
+import Snowfall from "../ui/Snowfall";
 
-function BottomFooter() {
+const BottomFooter = () => {
     return (
-        <div className='bottom-footer'>
+        <div className="bottom-footer">
             <Snowfall />
             <Container>
-                <Row className='bottom-footer__row'>
+                <Row className="bottom-footer__row">
                     <Col xs={4}>
                         <HeaderLogo />
-                        <p className='mt-2'>Магазин з продажу новорічних товарів №1</p>
-                        <div className='d-flex mb-1'>
+                        <p className="mt-2">
+                            Магазин з продажу новорічних товарів №1
+                        </p>
+                        <div className="d-flex mb-1">
                             <LinkWithIcon
                                 to="#"
                                 src="/images/icons/viber.png"
@@ -24,13 +26,13 @@ function BottomFooter() {
                                 className="me-3"
                             />
                             <LinkWithIcon
-                                to="#"
+                                to="tel:+1234567890"
                                 src="/images/icons/telephone.png"
                                 text="(063) 555-01-14"
                             />
                         </div>
                         <LinkWithIcon
-                            to="#"
+                            to="mailto:example@gmail.com"
                             src="/images/icons/gmail.png"
                             text="example@gmail.com"
                         />
@@ -79,12 +81,14 @@ function BottomFooter() {
                         />
                     </Col>
                 </Row>
-                <Row className='bottom-footer__bottom-row'>
-                    <p className='m-0 ps-2'>Christmas Market © 2023. Всі права захищені</p>
+                <Row className="bottom-footer__bottom-row">
+                    <p className="m-0 ps-2">
+                        Christmas Market © 2023. Всі права захищені
+                    </p>
                 </Row>
             </Container>
         </div>
-    )
-}
+    );
+};
 
-export default BottomFooter
+export default BottomFooter;
