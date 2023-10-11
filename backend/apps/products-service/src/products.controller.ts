@@ -1,43 +1,20 @@
 import { Controller, Get, Inject, Param } from '@nestjs/common';
 import { ProductsService } from './products.service';
-import { SUPPLIER_SERVICE } from '@app/common';
-import { ClientProxy } from '@nestjs/microservices';
-import { map } from 'rxjs';
+import { MessagePattern, Payload } from '@nestjs/microservices';
 
-@Controller('products')
+@Controller()
 export class ProductsController {
-  constructor(
-    private readonly productsService: ProductsService,
-    @Inject(SUPPLIER_SERVICE) private readonly supplyService: ClientProxy,
-  ) {}
+  constructor(private readonly productsService: ProductsService) {}
 
-  @Get('/update-data')
-  async setDataBase() {
-    return this.supplyService.send('update_supply_data', {}).pipe(
-      map((res) => {
-        return this.productsService.setDataBase(res);
-      }),
-    );
+  @MessagePattern('set_supply_categories')
+  async setDataCategories(@Payload() data) {
+    console.log(`set_supply_categories ${data}`);
+    return data;
   }
 
-  @Get()
-  async findAllOffer() {
-    return this.productsService.findAllOffer();
+  @MessagePattern('set_supply_offers')
+  async setDataOffers(@Payload() data) {
+    console.log(`set_supply_offers ${data}`);
+    return data;
   }
-
-  @Get(':id')
-  async findOneOffer(@Param('id') id: string) {
-    return this.productsService.findOneOffer(id);
-  }
-
-  @Get('/categories')
-  async findAllCategories() {
-    return this.productsService.findAllCategories();
-  }
-
-  @Get('/category/:id')
-  async findOneCategory(@Param('id') id: string) {
-    return this.productsService.findOneCategory(id);
-  }
-  
 }

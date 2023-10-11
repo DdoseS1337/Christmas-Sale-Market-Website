@@ -1,1 +1,1 @@
-export const SUPPLIER_SERVICE = 'supplier-service';
+export const PRODUCT_SERVICE = 'products-service';
