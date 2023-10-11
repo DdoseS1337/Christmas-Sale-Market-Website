@@ -55,7 +55,6 @@ export class SupplierService {
 
   async getElkiShopCategories(categories: Category[]) {
     const categoryList = JSON.stringify(categories);
-    console.log(categoryList)
     return this.productService.send('set_supply_categories', categoryList).pipe(
       map(res => {
         return res;
@@ -64,7 +63,6 @@ export class SupplierService {
 
   async getElkiShopOffers(offers: { offer: Offer[] }) {
     const offerList = JSON.stringify(offers);
-    // console.log(offerList)
     return this.productService.send('set_supply_offers', offerList).pipe(
       map(res => {
         return res;
