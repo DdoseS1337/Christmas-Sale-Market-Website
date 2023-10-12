@@ -3,13 +3,11 @@ import { Link } from "react-router-dom";
 import Basket from "./Basket";
 
 const BasketContainer = () => {
-    return (
-        <Container className="d-flex justify-content-center">
-            <Link to="/basket" className="link-settings">
-                <Basket />
-            </Link>
-        </Container>
-    );
+	return (
+		<Link to="/basket" className="link-settings d-flex justify-content-end">
+			<Basket />
+		</Link>
+	);
 };
 
 export default BasketContainer;

@@ -2,7 +2,7 @@ import { Col, Row } from "react-bootstrap";
 
 const HeaderContactsBar = () => {
     return (
-        <Row style={{ marginLeft: "8rem" }}>
+        <Row>
             <Col>
                 <a href="tel:+1234567890" rel="noreferrer">
                     <img
