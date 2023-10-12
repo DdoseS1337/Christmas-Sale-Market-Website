@@ -8,11 +8,14 @@ import OrderPage from "./pages/OrderPage";
 import Header from "./components/ui/Header";
 import Footer from "./components/ui/Footer";
 import MainContainer from "./components/ui/MainContainer";
+import NavBar from "./components/ui/Navbar";
+import NotFoundPage from "./pages/NotFoundPage";
 
 const App = () => {
     return (
         <Router>
             <Header />
+            <NavBar />
             <MainContainer>
                 <Routes>
                     <Route path="/" element={<MainPage />} />
@@ -21,11 +24,12 @@ const App = () => {
                     <Route path="/contacts" element={<ContactsPage />} />
                     <Route path="/basket" element={<BasketPage />} />
                     <Route path="/basket/order" element={<OrderPage />} />
+                    <Route path="*" element={<NotFoundPage />} />
                 </Routes>
             </MainContainer>
             <Footer />
         </Router>
     );
-}
+};
 
 export default App;
