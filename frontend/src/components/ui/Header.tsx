@@ -5,31 +5,35 @@ import NavBar from "../header/HeaderNavBar";
 import SearchBar from "../header/HeaderSearchbar";
 import Snowfall from "./Snowfall";
 import { Col, Container, Row } from "react-bootstrap";
+import { BackgroundType, Section } from "../common/Section";
 
 const Header = () => {
     return (
-        <Container fluid>
-            <Row className="red_theme p-3 text-center position-relative">
-                <Snowfall />
-                <Col>
-                    <Logo />
-                </Col>
-                <Col>
-                    <SearchBar />
-                </Col>
-                <Col>
-                    <Basket />
-                </Col>
-            </Row>
-            <Row className="p-2 white_theme_black">
-                <Col>
-                    <NavBar />
-                </Col>
-                <Col className="d-flex justify-content-center align-items-center">
-                    <ContactsBar />
-                </Col>
-            </Row>
-        </Container>
+        <>
+            <Section backgroundType={BackgroundType.RedWithSnow} haveMargin={false}>
+                <Row className="p-3">
+                    <Col>
+                        <Logo />
+                    </Col>
+                    <Col xs={6}>
+                        <SearchBar />
+                    </Col>
+                    <Col>
+                        <Basket />
+                    </Col>
+                </Row>
+            </Section>
+            <Section haveMargin={false} bulge={30}>
+                <Row className="p-2 white_theme_black">
+                    <Col>
+                        <NavBar />
+                    </Col>
+                    <Col className="d-flex justify-content-end align-items-center">
+                        <ContactsBar />
+                    </Col>
+                </Row>
+            </Section>
+        </>
     );
 };
 
