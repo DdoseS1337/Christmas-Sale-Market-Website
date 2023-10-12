@@ -21,7 +21,7 @@ const SubscribeOnEmailSection = () => {
                 </Row>
                 <img
                     className="footer-email-section__tree-icon"
-                    src="images/pictures/tree-presents.png"
+                    src="/images/pictures/tree-presents.png"
                     alt="christmas-tree-with-presents"
                 />
             </Container>
