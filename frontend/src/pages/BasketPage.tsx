@@ -1,4 +1,4 @@
-function BasketPage() {
+const BasketPage = () => {
     return <div></div>;
 }
 

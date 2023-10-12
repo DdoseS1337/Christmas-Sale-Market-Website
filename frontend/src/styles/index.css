@@ -1,5 +1,4 @@
 @import url("./components/header.css");
-@import url("./components/footer.css");
 @import url("./components/main.css");
 @import url("./components/snowfall.css");
 
@@ -8,7 +7,7 @@
     src: url("../../public/fonts/Candcu__.ttf") format("truetype");
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&display=swap");
 
 * {
     font-family: "Golos Text", sans-serif;
@@ -60,12 +59,12 @@ code {
 }
 
 :root {
-    --bg-primary: #C93F4F;
+    --bg-primary: #c93f4f;
     --light: white;
-    --light-gray: #F7F7F7;
-    --gray-100: #E6E6E6;
-    --gray-50: #F7F7F7;
-    --gray-200: #CCCCCC;
+    --light-gray: #f7f7f7;
+    --gray-100: #e6e6e6;
+    --gray-50: #f7f7f7;
+    --gray-200: #cccccc;
 }
 
 .bold_text {
@@ -80,3 +79,4 @@ code {
 .link-settings:hover {
     cursor: pointer;
 }
+

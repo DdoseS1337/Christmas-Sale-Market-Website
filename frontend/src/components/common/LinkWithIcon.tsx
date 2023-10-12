@@ -1,4 +1,3 @@
-import React, { RefAttributes } from 'react'
 import { Link, LinkProps, NavLinkProps, RelativeRoutingType, To } from 'react-router-dom'
 import '../../styles/components/common/link-with-icon.css'
 

@@ -4,7 +4,7 @@ const HeaderContactsBar = () => {
     return (
         <Row style={{ marginLeft: "8rem" }}>
             <Col>
-                <a href="https://uk.wikipedia.org/wiki/Telephone" target="_blank">
+                <a href="tel:+1234567890" rel="noreferrer">
                     <img
                         src="./images/icons/telephone.png"
                         alt="telephone"
@@ -13,7 +13,11 @@ const HeaderContactsBar = () => {
                 </a>
             </Col>
             <Col>
-                <a href="https://www.viber.com/ua/" target="_blank">
+                <a
+                    href="https://www.viber.com/ua/"
+                    target="_blank"
+                    rel="noreferrer"
+                >
                     <img
                         src="./images/icons/viber.png"
                         alt="telephone"
@@ -22,7 +26,11 @@ const HeaderContactsBar = () => {
                 </a>
             </Col>
             <Col>
-                <a href="https://www.google.com/intl/uk/gmail/about/" target="_blank">
+                <a
+                    href="mailto:example@gmail.com"
+                    target="_blank"
+                    rel="noreferrer"
+                >
                     <img
                         src="./images/icons/gmail.png"
                         alt="telephone"
