@@ -6,7 +6,7 @@ const HeaderContactsBar = () => {
             <Col>
                 <a href="tel:+1234567890" rel="noreferrer">
                     <img
-                        src="./images/icons/telephone.png"
+                        src="/images/icons/telephone.png"
                         alt="telephone"
                         className="contact-icon"
                     />
@@ -19,7 +19,7 @@ const HeaderContactsBar = () => {
                     rel="noreferrer"
                 >
                     <img
-                        src="./images/icons/viber.png"
+                        src="/images/icons/viber.png"
                         alt="telephone"
                         className="contact-icon"
                     />
@@ -32,7 +32,7 @@ const HeaderContactsBar = () => {
                     rel="noreferrer"
                 >
                     <img
-                        src="./images/icons/gmail.png"
+                        src="/images/icons/gmail.png"
                         alt="telephone"
                         className="contact-icon"
                     />
