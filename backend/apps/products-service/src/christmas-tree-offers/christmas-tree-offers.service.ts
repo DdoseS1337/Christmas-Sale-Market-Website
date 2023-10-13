@@ -12,13 +12,13 @@ export class ChristmasTreeOffersService {
     return this.christmasTreeOffersRepository.create(data);
   }
 
-//   findAll() {
-//     return this.christmasTreeOffersRepository.find({});
-//   }
+  findAll() {
+    return this.christmasTreeOffersRepository.find({});
+  }
 
-//   findOne(_id: string) {
-//     return this.christmasTreeOffersRepository.findOne({ _id });
-//   }
+  findOne(_id: string) {
+    return this.christmasTreeOffersRepository.findOne({ _id });
+  }
 
 //   update(_id: string) {
 //     return this.christmasTreeOffersRepository.findOneAndUpdate(
