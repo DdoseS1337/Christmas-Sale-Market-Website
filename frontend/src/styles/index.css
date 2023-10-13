@@ -80,3 +80,39 @@ code {
     cursor: pointer;
 }
 
+.btn_white_theme {
+    border: 2px solid white;
+    border-radius: 6px;
+    transition: 0.2s;
+    background-color: white;
+    color: #c93f4f;
+}
+
+.btn_white_theme:hover {
+    background-color: #c93f4f;
+    color: white;
+}
+
+.btn_white_theme:active {
+    background-color: white;
+    color: #c93f4f;
+    border: 2px solid white;
+}
+
+.btn-red-theme {
+    border: 2px solid #c93f4f;
+    border-radius: 10px;
+    transition: 0.2s;
+    color: white;
+    background-color: #c93f4f;
+}
+
+.btn-red-theme:hover {
+    background-color: white;
+    color: #c93f4f;
+}
+
+.btn-red-theme:active {
+    background-color: #c93f4f;
+    color: white;
+}

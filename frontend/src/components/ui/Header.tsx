@@ -3,8 +3,7 @@ import Basket from "../header/BasketContainer";
 import ContactsBar from "../header/HeaderContactsBar";
 import NavBar from "../header/HeaderNavBar";
 import SearchBar from "../header/HeaderSearchbar";
-import Snowfall from "./Snowfall";
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import { BackgroundType, Section } from "../common/Section";
 
 const Header = () => {
