@@ -74,9 +74,6 @@ code {
 .link-settings {
     color: white;
     text-decoration: none;
-}
-
-.link-settings:hover {
     cursor: pointer;
 }
 
@@ -86,6 +83,7 @@ code {
     transition: 0.2s;
     background-color: white;
     color: #c93f4f;
+    cursor: pointer;
 }
 
 .btn_white_theme:hover {
@@ -105,6 +103,7 @@ code {
     transition: 0.2s;
     color: white;
     background-color: #c93f4f;
+    cursor: pointer;
 }
 
 .btn-red-theme:hover {
@@ -116,3 +115,4 @@ code {
     background-color: #c93f4f;
     color: white;
 }
+

@@ -1,4 +1,6 @@
 import { Container } from "react-bootstrap";
+import ScrollButton from "../main/ScrollButton";
+import "../../styles/components/scrollButton.css";
 
 interface Props {
     children: React.ReactNode;
@@ -13,6 +15,7 @@ const MainContainer = (prop: Props) => {
                 className="position-absolute bottom-0 ms-4"
                 style={{ width: "14rem", pointerEvents: "none" }}
             />
+            <ScrollButton />
             {prop.children}
         </Container>
     );
