@@ -1,5 +1,11 @@
+import { PresentSection } from "../components/sections/present-section/PresentSection";
+
 const MainPage = () => {
-    return <div></div>;
+	return (
+		<>
+			<PresentSection />
+		</>
+	);
 };
 
 export default MainPage;

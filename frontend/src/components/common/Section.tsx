@@ -12,19 +12,19 @@ interface IProps {
 	backgroundType?: BackgroundType;
 	isFluid?: boolean;
 	children: ReactNode[] | ReactNode;
-	haveMargin?: boolean;
+	haveMargin?: boolean	;
 	bulge?: number;
 }
 
 export const Section = (props: IProps) => {
-	const isRedWithSnow = props.backgroundType == BackgroundType.RedWithSnow;
+	const isRedWithSnow = props.backgroundType === BackgroundType.RedWithSnow;
 
 	return (
 		<div
-			className={`position-relative section ${isRedWithSnow && "section--red"} ${props.haveMargin ?? "m-5"}`}
+			className={`position-relative section ${isRedWithSnow ? "section--red" : ""}`}
 		>
 			{isRedWithSnow && <Snowfall />}
-			<Container fluid={props.isFluid}>
+			<Container fluid={props.isFluid} className={`${props.haveMargin ? "py-5" : ""}`}>
 				<div
 					style={{
 						margin: `0px -${props.bulge}px`,
@@ -36,3 +36,7 @@ export const Section = (props: IProps) => {
 		</div>
 	);
 };
+
+Section.defaultProps = {
+	haveMargin: true
+}
