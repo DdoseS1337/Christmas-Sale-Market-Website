@@ -12,13 +12,13 @@ export class ChristmasTreeCategoriesService {
     return this.christmastreeCategoryRepository.create(data);
   }
 
-  //   findAll() {
-  //     return this.christmastreeCategoryRepository.find({});
-  //   }
+    findAll() {
+      return this.christmastreeCategoryRepository.find({});
+    }
 
-  //   findOne(_id: string) {
-  //     return this.christmastreeCategoryRepository.findOne({ _id });
-  //   }
+    findOne(_id: string) {
+      return this.christmastreeCategoryRepository.findOne({ _id });
+    }
 
   //   update(_id: string, updateReservationDto: UpdateReservationDto) {
   //     return this.christmastreeCategoryRepository.findOneAndUpdate(
