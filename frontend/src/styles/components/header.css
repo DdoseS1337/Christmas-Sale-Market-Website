@@ -18,23 +18,6 @@
     color: white;
 }
 
-.btn_white_theme {
-    border: 2px solid white;
-    border-radius: 6px;
-    transition: 0.2s;
-}
-
-.btn_white_theme:hover {
-    background-color: #c93f4f;
-    color: white;
-}
-
-.btn_white_theme:active {
-    background-color: white;
-    color: #c93f4f;
-    border: 2px solid white;
-}
-
 .btn_sizer {
     padding: 0.3rem 1rem;
 }

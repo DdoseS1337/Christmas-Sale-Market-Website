@@ -34,9 +34,9 @@ const ContactsPage: React.FC = () => {
                             onMouseEnter={() => handleIconMouseEnter("viber")}
                             onMouseLeave={handleIconMouseLeave}
                         >
-                            <a href="https://www.viber.com/ua/" target="_blank">
+                            <a href="https://www.viber.com/ua/" target="_blank" rel="noreferrer">
                                 <img
-                                    src={`./images/icons/viber${
+                                    src={`/images/icons/viber${
                                         hoveredIcon === "viber" ? "-fill" : ""
                                     }.svg`}
                                     alt="viber-icon"
@@ -57,7 +57,7 @@ const ContactsPage: React.FC = () => {
                             onMouseLeave={handleIconMouseLeave}
                             className="contact-container-icon mx-auto"
                         >
-                            <a href="mailto:example@gmail.com" target="_blank">
+                            <a href="mailto:example@gmail.com" target="_blank" rel="noreferrer">
                                 {getIcon(
                                     <Envelope
                                         key="envelope"
@@ -84,7 +84,7 @@ const ContactsPage: React.FC = () => {
                             onMouseLeave={handleIconMouseLeave}
                             className="contact-container-icon mx-auto"
                         >
-                            <a href="tel:+1234567890">
+                            <a href="tel:+1234567890" rel="noreferrer">
                                 {getIcon(
                                     <TelephoneOutbound
                                         key="telephone"
