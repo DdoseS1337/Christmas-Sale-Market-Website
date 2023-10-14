@@ -1,4 +1,3 @@
-import { PlusLg } from "react-bootstrap-icons";
 import "../../../styles/components/sections/present-section/left-menu.css";
 import {
 	ReactElement,
@@ -9,10 +8,11 @@ import {
 	useEffect,
 } from "react";
 
-interface IProps extends Omit<React.AnchorHTMLAttributes<HTMLUListElement>, "ref"> {
+interface IProps
+	extends Omit<React.AnchorHTMLAttributes<HTMLUListElement>, "ref"> {
 	items: ILeftMenuItem[];
 	intervalInSeconds: number;
-	onSelectItem?: (index: number, name: string) => void;
+	onSelectItem?: (index: number) => void;
 }
 
 export interface ILeftMenuItem {
@@ -33,9 +33,9 @@ export const LeftMenu = (props: IProps) => {
 			ulRef.current?.children,
 			e.target
 		);
-		setActiveItemIndex(newActiveIndex);
 
-		props.onSelectItem!(newActiveIndex, props.items[newActiveIndex].name);
+		setActiveItemIndex(newActiveIndex);
+		props.onSelectItem!(newActiveIndex);
 	};
 
 	useEffect(() => {
@@ -45,47 +45,33 @@ export const LeftMenu = (props: IProps) => {
 					? 0
 					: activeItemIndex + 1;
 
-			props.onSelectItem!(
-				nextActiveIndex,
-				props.items[nextActiveIndex].name
-			);
-
 			setActiveItemIndex(nextActiveIndex);
+			props.onSelectItem!(nextActiveIndex);
 		}, props.intervalInSeconds * 1000);
 
 		return () => clearInterval(id);
 	}, [props, activeItemIndex]);
 
-	const mapedItems: ReactElement[] = props.items.map<ReactElement>(
-		(item, index) => {
-			return (
-				<li
-					className={`left-menu__item ${
-						activeItemIndex === index
-							? "left-menu__item--active"
-							: ""
-					}`}
-					onClick={selectItem}
-					key={index}
-				>
-					{item.icon && (
-						<div className="left-menu__icon">{item.icon}</div>
-					)}
-					{item.name}
-				</li>
-			);
-		}
-	);
-
 	return (
 		<ul {...props} className={`left-menu ${props.className}`} ref={ulRef}>
-			{mapedItems}
-			<li className="left-menu__item left-menu__item--view-all">
-				<div className="left-menu__icon">
-					<PlusLg />
-				</div>
-				View all
-			</li>
+			{props.items.map<ReactElement>((item, index) => {
+				return (
+					<li
+						className={`left-menu__item ${
+							activeItemIndex === index
+								? "left-menu__item--active"
+								: ""
+						}`}
+						onClick={selectItem}
+						key={index}
+					>
+						{item.icon && (
+							<div className="left-menu__icon">{item.icon}</div>
+						)}
+						{item.name}
+					</li>
+				);
+			})}
 		</ul>
 	);
 };

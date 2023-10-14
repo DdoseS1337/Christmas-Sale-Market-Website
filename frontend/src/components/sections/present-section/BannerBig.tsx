@@ -1,4 +1,3 @@
-import React from "react";
 import "../../../styles/components/sections/present-section/banner-big.css";
 import { ArrowRight } from "react-bootstrap-icons";
 
@@ -14,10 +13,10 @@ export interface IBannerInfo {
 export const BannerBigItem = (props: IBannerInfo) => {
 	return (
 		<div
-			className="banner-big"
+			className={`banner-big`}
 			style={{
-				backgroundImage:
-					`linear-gradient(99deg, rgba(0, 0, 0, 0.60) 10.4%, rgba(0, 0, 0, 0.00) 59.43%), url(${props.imagePath})`,
+				backgroundImage: `linear-gradient(99deg, rgba(0, 0, 0, 0.60) 10.4%, rgba(0, 0, 0, 0.00) 59.43%), url(${props.imagePath})`,
+				paddingBottom: !props.haveDiscount ? "60px" : "",
 			}}
 		>
 			<h1 className="banner-big__title">{props.title}</h1>

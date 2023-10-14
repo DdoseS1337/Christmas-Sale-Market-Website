@@ -12,6 +12,7 @@ export const BannerBigCarousel = (props: IProps) => {
 			activeIndex={props.activeIndex}
 			controls={false}
 			interval={null}
+			indicators={false}
 		>
 			{props.items.map((item) => (
 				<Carousel.Item>
