@@ -10,12 +10,12 @@ import {
 } from "react";
 
 interface IProps extends Omit<React.AnchorHTMLAttributes<HTMLUListElement>, "ref"> {
-	items: IItem[];
+	items: ILeftMenuItem[];
 	intervalInSeconds: number;
 	onSelectItem?: (index: number, name: string) => void;
 }
 
-interface IItem {
+export interface ILeftMenuItem {
 	icon?: ReactNode;
 	name: string;
 }
