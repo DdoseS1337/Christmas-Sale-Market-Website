@@ -12,3 +12,14 @@ export interface Shop {
   categories: Category[];
   offers: Offer[];
 }
+
+interface Currency {
+  id: string;
+  rate: string;
+}
+
+export interface Category {
+  _: string;
+  id: string;
+  parentId?: string;
+}

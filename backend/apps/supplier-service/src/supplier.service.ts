@@ -1,8 +1,7 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import axios from 'axios';
 import * as xml2js from 'xml2js';
-import { YmlCatalog } from './interfaces/catalog.interface';
-import { Offer } from './interfaces/offers.interface';
+import { YmlCatalog, Offer, Category } from './interfaces';
 import { PRODUCT_SERVICE } from '@app/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { map } from 'rxjs';
