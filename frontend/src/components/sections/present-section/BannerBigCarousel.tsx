@@ -3,7 +3,7 @@ import { BannerBigItem, IBannerInfo } from "./BannerBig";
 
 interface IProps {
 	activeIndex: number;
-	items: IBannerInfo[];
+	items: IBannerInfo[]
 }
 
 export const BannerBigCarousel = (props: IProps) => {

@@ -8,11 +8,11 @@ export enum BackgroundType {
 	RedWithSnow,
 }
 
-interface IProps {
+interface IProps extends React.AnchorHTMLAttributes<HTMLDivElement> {
 	backgroundType?: BackgroundType;
 	isFluid?: boolean;
 	children: ReactNode[] | ReactNode;
-	haveMargin?: boolean	;
+	haveMargin?: boolean;
 	bulge?: number;
 }
 
@@ -21,10 +21,11 @@ export const Section = (props: IProps) => {
 
 	return (
 		<div
-			className={`position-relative section ${isRedWithSnow ? "section--red" : ""}`}
+			className={`position-relative section ${isRedWithSnow ? "section--red" : ""} ${props.className}`}
+			{...props}
 		>
 			{isRedWithSnow && <Snowfall />}
-			<Container fluid={props.isFluid} className={`${props.haveMargin ? "py-5" : ""}`}>
+			<Container fluid={props.isFluid} className={`position-relative ${props.haveMargin ? "py-5" : ""}`}>
 				<div
 					style={{
 						margin: `0px -${props.bulge}px`,

@@ -5,6 +5,8 @@ import { AppIndicator, UniversalAccess } from "react-bootstrap-icons";
 import { BannerBigCarousel } from "./BannerBigCarousel";
 import { useState } from "react";
 import { IBannerInfo } from "./BannerBig";
+import { Featured } from "./Featured";
+import "../../../styles/components/sections/present-section/present-section.css"
 
 export const PresentSection = () => {
 	const [activeIndex, setActiveIndex] = useState(0);
@@ -39,8 +41,8 @@ export const PresentSection = () => {
 	];
 
 	return (
-		<Section backgroundType={BackgroundType.RedWithSnow}>
-			<Row>
+		<Section style={{marginBottom: 50}} backgroundType={BackgroundType.RedWithSnow}>
+			<Row style={{margin: "0 -12px"}}>
 				<Col xs={3}>
 					<LeftMenu
 						intervalInSeconds={5}
@@ -57,6 +59,8 @@ export const PresentSection = () => {
 					/>
 				</Col>
 			</Row>
+			<Featured />
+			<img className="present-tree" src="/images/pictures/decorated-christmas-tree.png" />
 		</Section>
 	);
 };
