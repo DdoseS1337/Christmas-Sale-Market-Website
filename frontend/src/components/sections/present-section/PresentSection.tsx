@@ -60,7 +60,7 @@ export const PresentSection = () => {
 				</Col>
 			</Row>
 			<Featured />
-			<img className="present-tree" src="/images/pictures/decorated-christmas-tree.png" />
+			<img className="present-tree" src="/images/pictures/decorated-christmas-tree.png" alt="decorated-christmas-tree" />
 		</Section>
 	);
 };

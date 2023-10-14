@@ -3,19 +3,19 @@ import { BannerBigItem, IBannerInfo } from "./BannerBig";
 
 interface IProps {
 	activeIndex: number;
-	items: IBannerInfo[]
+	items: IBannerInfo[];
 }
 
-export const BannerBigCarousel = (props: IProps) => {
+export const BannerBigCarousel = ({ activeIndex, items }: IProps) => {
 	return (
 		<Carousel
-			activeIndex={props.activeIndex}
+			activeIndex={activeIndex}
 			controls={false}
 			interval={null}
 			indicators={false}
 		>
-			{props.items.map((item) => (
-				<Carousel.Item>
+			{items.map((item, index) => (
+				<Carousel.Item key={index}>
 					<BannerBigItem {...item} />
 				</Carousel.Item>
 			))}

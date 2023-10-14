@@ -16,22 +16,37 @@ interface IProps extends React.AnchorHTMLAttributes<HTMLDivElement> {
 	bulge?: number;
 }
 
-export const Section = (props: IProps) => {
-	const isRedWithSnow = props.backgroundType === BackgroundType.RedWithSnow;
+export const Section = ({
+	backgroundType,
+	isFluid,
+	children,
+	haveMargin,
+	bulge,
+	className,
+	...divProps
+}: IProps) => {
+	const isRedWithSnow = backgroundType === BackgroundType.RedWithSnow;
 
 	return (
 		<div
-			className={`position-relative section ${isRedWithSnow ? "section--red" : ""} ${props.className}`}
-			{...props}
+			className={`position-relative section ${
+				isRedWithSnow ? "section--red" : ""
+			} ${className}`}
+			{...divProps}
 		>
 			{isRedWithSnow && <Snowfall />}
-			<Container fluid={props.isFluid} className={`position-relative ${props.haveMargin ? "py-5" : ""}`}>
+			<Container
+				fluid={isFluid}
+				className={`position-relative ${
+					haveMargin ? "py-5" : ""
+				}`}
+			>
 				<div
 					style={{
-						margin: `0px -${props.bulge}px`,
+						margin: `0px -${bulge}px`,
 					}}
 				>
-					{props.children}
+					{children}
 				</div>
 			</Container>
 		</div>
@@ -39,5 +54,5 @@ export const Section = (props: IProps) => {
 };
 
 Section.defaultProps = {
-	haveMargin: true
-}
+	haveMargin: true,
+};

@@ -20,7 +20,11 @@ export const Featured = () => {
 				title="Тут щось буде"
 				description="30 Days Money-Back Guarantee"
 			/>
-			<img className="featured__snowman" src="/images/pictures/snowman.png" />
+			<img
+				className="featured__snowman"
+				src="/images/pictures/snowman.png"
+				alt="snowman"
+			/>
 		</div>
 	);
 };

@@ -20,9 +20,15 @@ export interface ILeftMenuItem {
 	name: string;
 }
 
-export const LeftMenu = (props: IProps) => {
-	if (props.items.length === 0) throw new Error("items lenght is zero");
-	if (props.intervalInSeconds <= 0)
+export const LeftMenu = ({
+	items,
+	intervalInSeconds,
+	onSelectItem,
+	className,
+	...ulProps
+}: IProps) => {
+	if (items.length === 0) throw new Error("items lenght is zero");
+	if (intervalInSeconds <= 0)
 		throw new Error("intervalInSeconds equal ot or less than 0");
 
 	const ulRef = createRef<HTMLUListElement>();
@@ -35,26 +41,24 @@ export const LeftMenu = (props: IProps) => {
 		);
 
 		setActiveItemIndex(newActiveIndex);
-		props.onSelectItem!(newActiveIndex);
+		onSelectItem!(newActiveIndex);
 	};
 
 	useEffect(() => {
 		const id = setInterval(() => {
 			const nextActiveIndex =
-				activeItemIndex === props.items.length - 1
-					? 0
-					: activeItemIndex + 1;
+				activeItemIndex === items.length - 1 ? 0 : activeItemIndex + 1;
 
 			setActiveItemIndex(nextActiveIndex);
-			props.onSelectItem!(nextActiveIndex);
-		}, props.intervalInSeconds * 1000);
+			onSelectItem!(nextActiveIndex);
+		}, intervalInSeconds * 1000);
 
 		return () => clearInterval(id);
-	}, [props, activeItemIndex]);
+	}, [items, intervalInSeconds, onSelectItem, activeItemIndex]);
 
 	return (
-		<ul {...props} className={`left-menu ${props.className}`} ref={ulRef}>
-			{props.items.map<ReactElement>((item, index) => {
+		<ul {...ulProps} className={`left-menu ${className}`} ref={ulRef}>
+			{items.map<ReactElement>((item, index) => {
 				return (
 					<li
 						className={`left-menu__item ${

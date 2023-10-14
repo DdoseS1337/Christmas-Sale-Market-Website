@@ -1,25 +1,19 @@
-import { Link, LinkProps, NavLinkProps, RelativeRoutingType, To } from 'react-router-dom'
+import { Link, LinkProps } from 'react-router-dom'
 import '../../styles/components/common/link-with-icon.css'
 
-interface IProps extends NavLinkProps {
-  reloadDocument?: boolean;
-  replace?: boolean;
-  state?: any;
-  preventScrollReset?: boolean;
-  relative?: RelativeRoutingType;
-  to: To;
+interface IProps extends LinkProps {
   src: string;
   text: string;
 }
 
-export const LinkWithIcon = (props: IProps) => {
+export const LinkWithIcon = ({className, src, text, ...linkProps}: IProps) => {
   return (
-    <Link {...(props as LinkProps)} className={'link-with-icon ' + props.className}>
+    <Link {...linkProps} className={'link-with-icon ' + className}>
       <img
-        src={props.src}
-        alt="image"
+        src={src}
+        alt="icon"
         className="link-with-icon__icon" />
-      <span className='link-with-icon__text'>{props.text}</span>
+      <span className='link-with-icon__text'>{text}</span>
     </Link>
   )
 }
