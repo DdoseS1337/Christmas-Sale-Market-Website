@@ -1,26 +1,33 @@
 import { Type } from 'class-transformer';
-import { IsNotEmpty, IsDate, IsString, IsArray, ArrayNotEmpty, ValidateNested } from 'class-validator';
+import { IsNotEmpty, IsString, IsArray, ArrayNotEmpty, ValidateNested } from 'class-validator';
 
 export class ChristmasTreeDto {
   @IsNotEmpty()
+  @IsString()
   readonly id: string;
 
   @IsNotEmpty()
+  @IsString()
   readonly group_id: string;
 
   @IsNotEmpty()
+  @IsString()
   readonly available: boolean;
 
   @IsNotEmpty()
+  @IsString()
   readonly url: string;
 
   @IsNotEmpty()
+  @IsString()
   readonly name: string;
 
   @IsNotEmpty()
+  @IsString()
   readonly price: number;
 
   @IsNotEmpty()
+  @IsString()
   readonly currencyId: string;
 
   @IsNotEmpty()
