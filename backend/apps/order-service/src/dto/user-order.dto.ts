@@ -1,4 +1,4 @@
-import { IsString, IsEmail, IsOptional, IsNotEmpty, IsPhoneNumber } from 'class-validator';
+import { IsString, IsEmail, IsOptional, IsNotEmpty, IsPhoneNumber, IsArray } from 'class-validator';
 
 export class CreateUserOrderDto {
   @IsString()
@@ -26,8 +26,8 @@ export class CreateUserOrderDto {
   @IsPhoneNumber('UA')
   phone_number: string;
 
-  @IsString()
   @IsNotEmpty()
+  @IsArray()
   productsIds: string[];
 
   @IsOptional()
