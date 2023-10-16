@@ -1,9 +1,9 @@
 .section {
-    /* padding: 50px 0; */
     z-index: 0;
+    position: relative;
 }
 
-.section--red {
-    background: var(--bg-primary);
+.section.section--red {
     color: var(--light);
+    background: var(--bg-primary);
 }

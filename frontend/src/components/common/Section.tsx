@@ -29,7 +29,7 @@ export const Section = ({
 
 	return (
 		<div
-			className={`position-relative section ${
+			className={`section ${
 				isRedWithSnow ? "section--red" : ""
 			} ${className}`}
 			{...divProps}
