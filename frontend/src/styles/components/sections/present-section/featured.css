@@ -1,6 +1,6 @@
 .featured {
-    margin: 48px 0 -120px 0;
-    padding: 40px;
+    margin: 48px 0 -100px 0;
+    padding: 25px;
     background-color: var(--light);
     border-radius: 15px;
     box-shadow: 0px 8px 40px 0px rgba(0, 38, 3, 0.08);
@@ -32,12 +32,12 @@
 .feature__icon > * {
     width: 40px;
     height: 40px;
-    color: var(--gray-scale-gray-900, #1A1A1A);
+    color: var(--gray-scale-gray-900, #1a1a1a);
     margin-right: 16px;
 }
 
 .feature__title {
-    color: var(--gray-scale-gray-900, #1A1A1A);
+    color: var(--gray-scale-gray-900, #1a1a1a);
     font-size: 16px;
     font-style: normal;
     font-weight: 600;
