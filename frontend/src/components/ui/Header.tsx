@@ -22,7 +22,7 @@ const Header = () => {
                     </Col>
                 </Row>
             </Section>
-            <Section haveMargin={false} bulge={30}>
+            <Section haveMargin={false} bulge={30} className="z-1">
                 <Row className="p-2 white_theme_black">
                     <Col>
                         <NavBar />
