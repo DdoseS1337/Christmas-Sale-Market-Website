@@ -1,26 +1,100 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
+import axios from 'axios';
+import { BACKEND_KEYS , STORAGE_KEYS } from '../common/consts';
 
-enum Methods {
-    GET,
-    POST
+interface ConfigData {
+  url: string;
+  headers?: any;
 }
 
-async function callAPI<TData>(path: string, data?: any, method: Methods = Methods.GET): Promise<AxiosResponse<TData>> {
-    const serverDomen = process.env.REACT_APP_SERVER_DOMEN;
+type ConfigWithoutDataAndUrl = Omit<any, keyof ConfigData>;
 
-    let config = {
-        method: Methods[method],
-        headers: {
-            Accept: 'application/json',
-            "Content-Type": "application/json",
-        }
-    } as AxiosRequestConfig;
+class HttpService {
+  baseUrl: string;
 
-    method === Methods.GET ?
-        config.params = data :
-        config.data = data;
+  fetchingService: any;
 
-    return await axios(serverDomen + path, config);
+  constructor(
+    baseUrl = BACKEND_KEYS.PRODUCTS_SERVER_URL || '',
+    fetchingService = axios,
+  ) {
+    this.baseUrl = baseUrl;
+    this.fetchingService = fetchingService;
+  }
+
+  getFullApiUrl(url: string) {
+    return `${this.baseUrl}/${url}`;
+  }
+
+  populateTokenToHeaderConfig() {
+    const token = localStorage.getItem(STORAGE_KEYS.ACCESSTOKEN);
+    if (token) {
+      return {
+        Authorization: `Bearer ${token}`
+      };
+    }
+    return {};
+  }
+
+  extractUrlAndDataFromConfig({
+    data,
+    url,
+    ...configWithoutDataAndUrl
+  }: ConfigData & ConfigWithoutDataAndUrl) {
+    return configWithoutDataAndUrl;
+  }
+
+  get(config: { [x: string]: any; headers?: any; url: any; data?: any }, withAuth = true) {
+    if (withAuth) {
+      config.headers = {
+        ...config.headers,
+        ...this.populateTokenToHeaderConfig()
+      };
+    }
+    return this.fetchingService
+      .get(this.getFullApiUrl(config.url), this.extractUrlAndDataFromConfig(config))
+      .then((res: any) => res.data);
+  }
+
+  post(config: { [x: string]: any; headers?: any; url: any; data: any }, withAuth = true) {
+    if (withAuth) {
+      config.headers = {
+        ...config.headers,
+        ...this.populateTokenToHeaderConfig()
+      };
+    }
+    return this.fetchingService.post(
+      this.getFullApiUrl(config.url),
+      config.data,
+      this.extractUrlAndDataFromConfig(config)
+    );
+  }
+
+  patch(config: { [x: string]: any; headers?: any; url: any; data: any }, withAuth = true) {
+    if (withAuth) {
+      config.headers = {
+        ...config.headers,
+        ...this.populateTokenToHeaderConfig()
+      };
+    }
+    return this.fetchingService.patch(
+      this.getFullApiUrl(config.url),
+      config.data,
+      this.extractUrlAndDataFromConfig(config)
+    );
+  }
+
+  delete(config: { [x: string]: any; headers?: any; url: any; data: any }, withAuth = true) {
+    if (withAuth) {
+      config.headers = {
+        ...config.headers,
+        ...this.populateTokenToHeaderConfig()
+      };
+    }
+    return this.fetchingService.delete(
+      this.getFullApiUrl(config.url),
+      this.extractUrlAndDataFromConfig(config)
+    );
+  }
 }
 
-export default callAPI;
+export default HttpService;
