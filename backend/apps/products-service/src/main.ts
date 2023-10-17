@@ -6,7 +6,7 @@ import { Transport } from '@nestjs/microservices';
 
 async function bootstrap() {
   const app = await NestFactory.create(ProductsServiceModule);
-  
+  app.enableCors();
   const configService = app.get(ConfigService);
   app.connectMicroservice({
     transport: Transport.TCP,

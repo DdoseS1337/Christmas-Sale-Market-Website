@@ -15,6 +15,7 @@ async function bootstrap() {
       port: configService.get('TCP_PORT'),
     },
   });
+  app.enableCors();
   app.useLogger(app.get(Logger));
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
   await app.startAllMicroservices();
