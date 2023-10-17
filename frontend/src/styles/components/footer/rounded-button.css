@@ -1,10 +1,38 @@
-.rounded-button {
-    padding: 16px 40px;
+.rounded-button, .circle-button {
     font-size: 16px;
     font-weight: 600;
     line-height: 20px;
-    border-radius: 43px !important;
     border: 0;
-    background-color: var(--bg-primary);
-    color: var(--light);
+    text-decoration: none;
+    cursor: pointer;
+    transition: .1s;
+}
+
+.rounded-button {
+    padding: 16px 40px;
+    border-radius: 43px !important;
+}
+
+.circle-button {
+    width: 52px;
+    height: 52px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+}
+
+.rounded-button--background-red {
+    background-color: var(--primary);
+    color: var(--primary-text);
+}
+
+.rounded-button--background-gray {
+    background-color: var(--gray-100);
+    color: var(--secondary-text);
+}
+
+.rounded-button--background-gray:hover {
+    background-color: var(--primary);
+    color: var(--primary-text);
 }

@@ -60,12 +60,24 @@ code {
 }
 
 :root {
-    --bg-primary: #c93f4f;
-    --light: white;
-    --light-gray: #f7f7f7;
-    --gray-100: #e6e6e6;
+    --primary: #c93f4f;
+    --secondary: white;
+
+    --primary-text: white;
+    --secondary-text: #000000;
+    --gray-text: var(--gray-400);
+    --dark-gray-text: var(--gray-400);
+
     --gray-50: #f7f7f7;
+    --gray-100: #e6e6e6;
     --gray-200: #cccccc;
+    --gray-400: #999999;
+    --gray-900: #1A1A1A;
+
+    /* old variable */
+    --light: var(--secondary);
+    --bg-primary: var(--primary);
+    --light-gray: var(--gray-50);
 }
 
 .bold_text {
