@@ -20,10 +20,10 @@ import * as Joi from 'joi';
       {
         name: PRODUCT_SERVICE,
         useFactory: (configService: ConfigService) => ({
-          transport: Transport.TCP,
+          transport: Transport.RMQ,
           options: {
-            host: configService.get('PRODUCT_HOST'),
-            port: configService.get('PRODUCT_PORT'),
+            urls: [configService.getOrThrow<string>('RABBITMQ_URI')],
+            queue: 'products',
           },
         }),
         inject: [ConfigService],
