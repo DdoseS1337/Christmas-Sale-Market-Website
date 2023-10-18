@@ -4,23 +4,21 @@ import "../../styles/components/common/product-card.css";
 import RoundedButton from "./RoundedButton";
 import { Link, To } from "react-router-dom";
 import { useRef, useState } from "react";
+import { IShortProductInfo } from "../../interfaces/Product";
 
-interface IProps {
-	title: string;
-	actualPrice: number;
-	oldPrice?: number;
-	imagePath: string;
-	sale?: string;
+interface IProps extends IShortProductInfo {
 	link: To;
+	className?: string;
 }
 
 export const ProductCard = ({
+	id,
 	title,
 	actualPrice,
 	oldPrice,
-	imagePath,
-	sale,
+	image,
 	link,
+	className,
 }: IProps) => {
 	const linkRef = useRef<HTMLAnchorElement>(null);
 
@@ -31,11 +29,15 @@ export const ProductCard = ({
 		useState(addToBasketIcon);
 
 	const addToBasket = () => {
+		// use id here
+		// logic of adding a product to the basket
 		setIconOnBasketButton(removeFromBasketIcon);
 		setActualBasketButtonCallback(() => removeFromBasket);
 	};
 
 	const removeFromBasket = () => {
+		// use id here
+		// logic of adding a product to the basket
 		setIconOnBasketButton(addToBasketIcon);
 		setActualBasketButtonCallback(() => addToBasket);
 	};
@@ -44,24 +46,28 @@ export const ProductCard = ({
 		useState<() => void>(() => addToBasket);
 
 	let clickedOnBasked = false;
+	let discount =
+		oldPrice && Math.abs((actualPrice - oldPrice) / actualPrice) * 100;
 
 	return (
 		<Card
 			body
-			className="product-card"
+			className={"product-card " + className}
 			onClick={() => {
 				!clickedOnBasked && linkRef.current?.click();
 				clickedOnBasked = false;
 			}}
 		>
-			{sale && (
+			{discount && (
 				<Card.Header>
-					<div className="product-card__sale">Знижка {sale}</div>
+					<div className="product-card__sale">
+						Знижка {discount.toFixed(0)}%
+					</div>
 				</Card.Header>
 			)}
 			<Card.Img
 				className="product-card__image"
-				src={imagePath}
+				src={image}
 				alt="product image"
 			/>
 			<Card.Footer>
@@ -86,7 +92,7 @@ export const ProductCard = ({
 					isCircle
 					backgroundIsGray
 					className="product-card__button z-1"
-					onClick={(e) => {
+					onClick={() => {
 						clickedOnBasked = true;
 						actualBasketButtonCallback &&
 							actualBasketButtonCallback();
