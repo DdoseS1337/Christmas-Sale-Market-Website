@@ -4,6 +4,7 @@ const MainPage = () => {
 	return (
 		<>
 			<PresentSection />
+			
 		</>
 	);
 };
