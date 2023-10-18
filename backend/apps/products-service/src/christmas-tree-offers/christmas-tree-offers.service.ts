@@ -20,6 +20,9 @@ export class ChristmasTreeOffersService {
     return this.christmasTreeOffersRepository.findOne({ _id });
   }
 
+  deleteAll() {
+    return this.christmasTreeOffersRepository.deleteMany({});
+  }
 //   update(_id: string) {
 //     return this.christmasTreeOffersRepository.findOneAndUpdate(
 //       { _id },
