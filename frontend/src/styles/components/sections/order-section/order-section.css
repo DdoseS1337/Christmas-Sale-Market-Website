@@ -1,0 +1,9 @@
+.Biling {
+    color: var(--gray-scale-gray-900, #1A1A1A);
+
+/* Body XXL/Body XXL, 500 */
+font-size: 24px;
+font-style: normal;
+font-weight: 500;
+line-height: 150%; /* 36px */
+}
