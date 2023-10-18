@@ -1,6 +1,6 @@
 import "../../../styles/components/sections/present-section/featured.css";
 import { FeaturedItem } from "./FeaturedItem";
-import { Basket, Box, Headset } from "react-bootstrap-icons";
+import { Basket, Truck, Headset } from "react-bootstrap-icons";
 
 export const Featured = () => {
     return (
@@ -16,9 +16,9 @@ export const Featured = () => {
                 description="Ми гарантуємо, що ваші гроші будуть в безпеці"
             />
             <FeaturedItem
-                icon={<Box />}
-                title="Тут щось буде"
-                description="30 Days Money-Back Guarantee"
+                icon={<Truck />}
+                title="Швидка доставка"
+                description="Відправлення здійснюємо у день замовлення!"
             />
             <img
                 className="featured__snowman"
