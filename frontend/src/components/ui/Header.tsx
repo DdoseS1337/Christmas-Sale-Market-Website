@@ -9,7 +9,7 @@ import { BackgroundType, Section } from "../common/Section";
 const Header = () => {
     return (
         <>
-            <Section backgroundType={BackgroundType.RedWithSnow} haveMargin={false}>
+            <Section backgroundType={BackgroundType.RedWithSnow} haveMargin={false} bulge={32}>
                 <Row className="p-3">
                     <Col>
                         <Logo />

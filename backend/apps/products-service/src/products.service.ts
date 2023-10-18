@@ -13,6 +13,11 @@ export class ProductsService {
 
   async setCategories(dataArray: ChristmastreeCategoryDto[]) {
     try {
+      const existingCategories = await this.christmasTreeCategoriesService.findAll();
+
+      if (existingCategories.length > 0) {
+        await this.christmasTreeCategoriesService.deleteAll(); 
+      }
       for (const data of dataArray) {
         this.christmasTreeCategoriesService.create(data);
       }
@@ -24,6 +29,12 @@ export class ProductsService {
 
   async setOffers(dataArray: ChristmasTreeDto[]) {
     try {
+      const existingCategories = await this.christmasTreeOffersService.findAll();
+      
+      if (existingCategories.length > 0) {
+        await this.christmasTreeOffersService.deleteAll(); 
+      }
+
       for (const data of dataArray) {
         this.christmasTreeOffersService.create(data);
       }
@@ -32,4 +43,7 @@ export class ProductsService {
       throw new BadRequestException('Get error with input Christmas Tree');
     }
   }
+
+  async updateCategories() {}
+  async updateOffers() {}
 }

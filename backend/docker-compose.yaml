@@ -35,3 +35,7 @@ services:
       - "3003:3003"
     volumes:
       - .:/usr/src/app
+  rabbitmq:
+    image: rabbitmq
+    ports:
+      - "5672:5672"

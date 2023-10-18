@@ -10,7 +10,7 @@
 .left-menu__item {
     padding: 16px 20px;
     cursor: pointer;
-    transition: .1s;
+    transition: 0.1s;
     display: flex;
     align-items: center;
 }
@@ -21,7 +21,7 @@
 
 .left-menu__item--active {
     background-color: var(--light);
-    color: var(--gray-scale-gray-900, #1A1A1A);
+    color: var(--gray-scale-gray-900, #1a1a1a);
     font-weight: 600;
 }
 
