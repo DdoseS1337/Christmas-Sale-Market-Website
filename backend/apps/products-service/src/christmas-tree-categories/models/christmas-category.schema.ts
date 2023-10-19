@@ -9,6 +9,9 @@ export class ChristmastreeCategoryDocument extends AbstactDocument {
   @Prop()
   name: string;
 
+  @Prop()
+  supplier_name: string;
+
   @Prop({ default: null })
   parentId: string;
 }

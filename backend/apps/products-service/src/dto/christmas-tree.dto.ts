@@ -24,7 +24,15 @@ export class ChristmasTreeDto {
 
   @IsNotEmpty()
   @IsString()
+  readonly supplier_name: string;
+
+  @IsNotEmpty()
+  @IsString()
   readonly price: number;
+
+  @IsNotEmpty()
+  @IsString()
+  readonly newPrice: number;
 
   @IsNotEmpty()
   @IsString()
