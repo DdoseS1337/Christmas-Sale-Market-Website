@@ -44,6 +44,10 @@ export class ProductsService {
     }
   }
 
+  findOne(id: string) {
+    return this.christmasTreeOffersService.findOne(id);
+  }
+
   async updateCategories() {}
   async updateOffers() {}
 }

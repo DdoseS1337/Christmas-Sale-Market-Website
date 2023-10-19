@@ -12,8 +12,7 @@ import * as Joi from 'joi';
       isGlobal: true,
       validationSchema: Joi.object({
         PORT: Joi.number().required(),
-        PRODUCT_HOST: Joi.string().required(),
-        PRODUCT_PORT: Joi.number().required(),
+        RABBITMQ_URI: Joi.string().required()
       }),
     }),
     ClientsModule.registerAsync([

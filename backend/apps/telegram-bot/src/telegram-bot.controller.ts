@@ -1,12 +1,16 @@
-import { Controller, Get } from '@nestjs/common';
-import { TelegramBotService } from './telegram-bot.service';
+import { Controller } from "@nestjs/common";
+import { EventPattern, Payload } from "@nestjs/microservices";
+import { TelegramBotService } from "./telegram-bot.service";
+import { CreateUserOrderDto } from "./dto/user-order.dto";
+
 
 @Controller()
 export class TelegramBotController {
   constructor(private readonly telegramBotService: TelegramBotService) {}
 
-  @Get()
-  getHello(): string {
-    return this.telegramBotService.getHello();
+
+  @EventPattern('notify_bot')
+  async notifyEmail(@Payload() data : CreateUserOrderDto) {
+    this.telegramBotService.onOrder(data);
   }
 }
