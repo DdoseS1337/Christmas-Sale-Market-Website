@@ -1,11 +1,12 @@
 import { Module } from '@nestjs/common';
 import { OrderServiceController } from './order-service.controller';
 import { OrderServiceService } from './order-service.service';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as Joi from 'joi';
-import { DatabaseModule, LoggerModule } from '@app/common';
+import { DatabaseModule, LoggerModule, TELEGRAM_BOT } from '@app/common';
 import { UserOrderRepository } from './order-service.repository';
 import { UserOrderDocument, UserOrderSchema } from './models/user-order.schema';
+import { ClientsModule, Transport } from '@nestjs/microservices';
 
 @Module({
   imports: [
@@ -21,10 +22,23 @@ import { UserOrderDocument, UserOrderSchema } from './models/user-order.schema';
       isGlobal: true,
       validationSchema: Joi.object({
         HTTP_PORT: Joi.number().required(),
-        TCP_PORT: Joi.number().required(),
         MONGODB_URI: Joi.string().required(),
+        RABBITMQ_URI: Joi.string().required(),
       }),
     }),
+    ClientsModule.registerAsync([
+      {
+        name: TELEGRAM_BOT,
+        useFactory: (configService: ConfigService) => ({
+          transport: Transport.RMQ,
+          options: {
+            urls: [configService.getOrThrow<string>('RABBITMQ_URI')],
+            queue: 'telegram-bot',
+          },
+        }),
+        inject: [ConfigService],
+      },
+    ]),
   ],
   controllers: [OrderServiceController],
   providers: [OrderServiceService, UserOrderRepository],
