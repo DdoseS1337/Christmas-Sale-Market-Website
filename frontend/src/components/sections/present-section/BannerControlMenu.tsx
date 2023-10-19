@@ -10,31 +10,31 @@ import {
 
 interface IProps
 	extends Omit<React.AnchorHTMLAttributes<HTMLUListElement>, "ref"> {
-	items: ILeftMenuItem[];
+	items: IBannerControlInfo[];
 	intervalInSeconds: number;
 	onSelectItem?: (index: number) => void;
 }
 
-export interface ILeftMenuItem {
+export interface IBannerControlInfo {
 	icon?: ReactNode;
-	name: string;
+	title: string;
 }
 
-export const LeftMenu = ({
+export const BannerControlMenu = ({
 	items,
 	intervalInSeconds,
 	onSelectItem,
 	className,
 	...ulProps
 }: IProps) => {
-	if (items.length === 0) throw new Error("items lenght is zero");
+	if (items.length === 0) throw new Error("items length is zero");
 	if (intervalInSeconds <= 0)
 		throw new Error("intervalInSeconds equal ot or less than 0");
 
 	const ulRef = createRef<HTMLUListElement>();
 	const [activeItemIndex, setActiveItemIndex] = useState(0);
 
-	const selectItem = (e: MouseEvent<HTMLLIElement>) => {
+	const selectControlByClick = (e: MouseEvent<HTMLLIElement>) => {
 		var newActiveIndex = Array.prototype.indexOf.call(
 			ulRef.current?.children,
 			e.target
@@ -66,13 +66,13 @@ export const LeftMenu = ({
 								? "left-menu__item--active"
 								: ""
 						}`}
-						onClick={selectItem}
+						onClick={selectControlByClick}
 						key={index}
 					>
 						{item.icon && (
 							<div className="left-menu__icon">{item.icon}</div>
 						)}
-						{item.name}
+						{item.title}
 					</li>
 				);
 			})}
@@ -80,6 +80,6 @@ export const LeftMenu = ({
 	);
 };
 
-LeftMenu.defaultValues = {
+BannerControlMenu.defaultValues = {
 	onSelectItem: () => {},
 };

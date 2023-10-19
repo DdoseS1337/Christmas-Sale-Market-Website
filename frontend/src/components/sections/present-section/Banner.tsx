@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import "../../../styles/components/sections/present-section/banner-big.css";
 import { ArrowRight } from "react-bootstrap-icons";
 import { MouseEvent } from "react";
+
 export interface IBannerInfo {
     imagePath: string;
     title: string;
@@ -13,7 +14,7 @@ export interface IBannerInfo {
     onClick?: (event: MouseEvent<HTMLDivElement>) => void;
 }
 
-export const BannerBigItem = ({
+export const Banner = ({
     imagePath,
     title,
     haveDiscount,

@@ -1,6 +1,6 @@
 import { Col, Row } from "react-bootstrap";
 import { BackgroundType, Section } from "../../common/Section";
-import { ILeftMenuItem, LeftMenu } from "./LeftMenu";
+import { BannerControlMenu, IBannerControlInfo } from "./BannerControlMenu";
 import {
     Stars,
     TreeFill,
@@ -12,23 +12,30 @@ import {
     Box2Fill,
     EmojiSmileFill,
 } from "react-bootstrap-icons";
-import { BannerBigCarousel } from "./BannerBigCarousel";
+import { BannerCarousel } from "./BannerCarousel";
 import { useState } from "react";
-import { IBannerInfo } from "./BannerBig";
 import { Featured } from "./Featured";
 import Confetti from "react-confetti";
 import "../../../styles/components/sections/present-section/present-section.css";
+import { IBannerInfo } from "./Banner";
+
+interface IBannerWithControlInfo extends
+    Omit<IBannerInfo, "title">, 
+    Omit<IBannerControlInfo, "title"> {
+    bannerTitle: string;
+    controlTitle: string;
+}
 
 export const PresentSection = () => {
     const [activeIndex, setActiveIndex] = useState(0);
     const [showConfetti, setShowConfetti] = useState(false);
 
-    const items: (IBannerInfo | ILeftMenuItem)[] = [
+    const items: IBannerWithControlInfo[] = [
         {
             icon: <GiftFill />,
-            name: "Шалені знижки",
+            controlTitle: "Шалені знижки",
             imagePath: "/images/banners/banner1.png",
-            title: "Ялинки та подарунки на новий рік",
+            bannerTitle: "Ялинки та подарунки на новий рік",
             haveDiscount: true,
             discountNumber: 30,
             discountDescription: "Неймовірні знижки перед новим роком",
@@ -37,44 +44,44 @@ export const PresentSection = () => {
         },
         {
             icon: <TreeFill />,
-            name: "Штучні литі ялинки",
+            controlTitle: "Штучні литі ялинки",
             imagePath: "/images/banners/banner2.png",
-            title: "Штучні литі ялинки від виробника",
+            bannerTitle: "Штучні литі ялинки від виробника",
             haveDiscount: false,
             orderLink: "/catalog",
             buttonName: "Дивитись",
         },
         {
             icon: <Box2HeartFill />,
-            name: "Без передоплати",
+            controlTitle: "Без передоплати",
             imagePath: "/images/banners/banner8.png",
-            title: `Оплата при отриманні товару`,
+            bannerTitle: `Оплата при отриманні товару`,
             orderLink: "/catalog",
             buttonName: "Замовити",
         },
         {
             icon: <RecordCircleFill />,
-            name: "Новорічні вінки",
+            controlTitle: "Новорічні вінки",
             imagePath: "/images/banners/banner3.png",
-            title: "Різноманітні новорічні вінки",
+            bannerTitle: "Різноманітні новорічні вінки",
             haveDiscount: false,
             orderLink: "/catalog",
             buttonName: "Дивитись",
         },
         {
             icon: <BagHeartFill />,
-            name: "Преміум ялинки",
+            controlTitle: "Преміум ялинки",
             imagePath: "/images/banners/banner5.png",
-            title: "Штучні литі ялинки преміум класу",
+            bannerTitle: "Штучні литі ялинки преміум класу",
             haveDiscount: false,
             orderLink: "/catalog",
             buttonName: "Дивитись",
         },
         {
             icon: <Box2Fill />,
-            name: "Оптом дешевше",
+            controlTitle: "Оптом дешевше",
             imagePath: "/images/banners/banner6.png",
-            title: "Купувати разом вигідно!",
+            bannerTitle: "Купувати разом вигідно!",
             haveDiscount: true,
             discountNumber: 15,
             discountDescription:
@@ -84,26 +91,26 @@ export const PresentSection = () => {
         },
         {
             icon: <EmojiSmileFill />,
-            name: "Щасливі діти",
+            controlTitle: "Щасливі діти",
             imagePath: "/images/banners/banner9.png",
-            title: "Створіть свято для вашої дитини!",
+            bannerTitle: "Створіть свято для вашої дитини!",
             orderLink: "/catalog",
             buttonName: "Замовити",
         },
         {
             icon: <TelephoneFill />,
-            name: "Зв'язатися з нами",
+            controlTitle: "Зв'язатися з нами",
             imagePath: "/images/banners/banner4.png",
-            title: "Залишились питання? Зв'яжись з нами!",
+            bannerTitle: "Залишились питання? Зв'яжись з нами!",
             haveDiscount: false,
             orderLink: "/contacts",
             buttonName: "Зв'язатись",
         },
         {
             icon: <Stars />,
-            name: "З Новим роком!",
+            controlTitle: "З Новим роком!",
             imagePath: "/images/banners/banner7.png",
-            title: `З новим ${new Date().getFullYear()} роком!`,
+            bannerTitle: `З новим ${new Date().getFullYear()} роком!`,
             haveDiscount: false,
             buttonName: "🎉 Ура!",
             onClick: () => {
@@ -131,18 +138,28 @@ export const PresentSection = () => {
             >
                 <Row style={{ margin: "0 -12px" }}>
                     <Col xs={3}>
-                        <LeftMenu
+                        <BannerControlMenu
                             intervalInSeconds={4}
                             onSelectItem={(index: number) => {
                                 setActiveIndex(index);
                             }}
-                            items={items as ILeftMenuItem[]}
+                            items={items.map(item => {
+                                return {
+                                    ...item,
+                                    title: item.controlTitle
+                                }
+                            })}
                         />
                     </Col>
                     <Col>
-                        <BannerBigCarousel
+                        <BannerCarousel
                             activeIndex={activeIndex}
-                            items={items as IBannerInfo[]}
+                            items={items.map(item => {
+                                return {
+                                    ...item,
+                                    title: item.bannerTitle
+                                }
+                            })}
                         />
                     </Col>
                 </Row>

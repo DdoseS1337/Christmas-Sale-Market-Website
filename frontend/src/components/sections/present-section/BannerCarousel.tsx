@@ -1,12 +1,12 @@
 import { Carousel } from "react-bootstrap";
-import { BannerBigItem, IBannerInfo } from "./BannerBig";
+import { Banner, IBannerInfo } from "./Banner";
 
 interface IProps {
 	activeIndex: number;
 	items: IBannerInfo[];
 }
 
-export const BannerBigCarousel = ({ activeIndex, items }: IProps) => {
+export const BannerCarousel = ({ activeIndex, items }: IProps) => {
 	return (
 		<Carousel
 			activeIndex={activeIndex}
@@ -16,7 +16,7 @@ export const BannerBigCarousel = ({ activeIndex, items }: IProps) => {
 		>
 			{items.map((item, index) => (
 				<Carousel.Item key={index}>
-					<BannerBigItem {...item} />
+					<Banner {...item} />
 				</Carousel.Item>
 			))}
 		</Carousel>
