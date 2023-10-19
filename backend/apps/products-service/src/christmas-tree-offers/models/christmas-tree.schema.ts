@@ -17,9 +17,15 @@ export class ChristmasTreeDocument extends AbstactDocument {
 
   @Prop()
   name: string;
+  
+  @Prop()
+  supplier_name: string;
 
   @Prop()
   price: number;
+
+  @Prop()
+  newPrice: number;
 
   @Prop()
   currencyId: string;

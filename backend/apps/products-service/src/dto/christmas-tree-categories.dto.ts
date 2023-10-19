@@ -7,6 +7,9 @@ export class ChristmastreeCategoryDto {
   @IsNotEmpty()
   readonly name: string;
 
+  @IsNotEmpty()
+  readonly supplier_name: string;
+
   @IsString()
   readonly parentId: string | null;
 }

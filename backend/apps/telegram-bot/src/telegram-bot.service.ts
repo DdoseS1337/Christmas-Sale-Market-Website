@@ -5,7 +5,7 @@ import { CreateUserOrderDto } from './dto/user-order.dto';
 import { PRODUCT_SERVICE } from '@app/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { Inject } from '@nestjs/common';
-import { switchMap, of, forkJoin } from 'rxjs';
+import { forkJoin } from 'rxjs';
 
 @Update()
 export class TelegramBotService extends Telegraf<Context> {
@@ -48,7 +48,7 @@ export class TelegramBotService extends Telegraf<Context> {
       const productsMessage = productsDataArray
       .map(
         (product) =>
-          `<b>${product.name}</b>\nID: ${product.id}\nPrice: ${product.price}`,
+          `<b>${product.name}</b>\nID: ${product.id}\nPrice: ${product.price} ₴`,
       )
       .join('\n\n');
     
@@ -59,11 +59,11 @@ export class TelegramBotService extends Telegraf<Context> {
     const userInfo = `
     Name: ${data.first_name}
     Second name: ${data.second_name}
-    Email: ${data.email}
+    Email: ${data.email || 'not provided'}
     City: ${data.city}
     Nova Poshta: ${data.Branch_nova_poshta}
     Phone number: ${data.phone_number}
-    Additional info: ${data.additional_info}
+    Additional info: ${data.additional_info || 'not provided'}
     `;
     
     const message = `
@@ -72,10 +72,10 @@ export class TelegramBotService extends Telegraf<Context> {
     ${userInfo}
     
     <b>Order:</b>
-    
+
     ${productsMessage}
     
-    <b>Total Amount:</b> ${totalAmount}
+    <b>Total Amount:</b> ${totalAmount} ₴
     `;
 
       for (const adminChatId of admins) {
