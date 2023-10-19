@@ -37,9 +37,7 @@ export const Section = ({
 			{isRedWithSnow && <Snowfall />}
 			<Container
 				fluid={isFluid}
-				className={`position-relative ${
-					haveMargin ? "py-5" : ""
-				}`}
+				className={`position-relative ${haveMargin ? "py-5" : ""}`}
 			>
 				<div
 					style={{
