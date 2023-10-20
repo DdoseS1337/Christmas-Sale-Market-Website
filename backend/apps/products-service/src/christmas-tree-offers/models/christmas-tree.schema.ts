@@ -17,7 +17,7 @@ export class ChristmasTreeDocument extends AbstactDocument {
 
   @Prop()
   name: string;
-  
+
   @Prop()
   supplier_name: string;
 
@@ -29,6 +29,9 @@ export class ChristmasTreeDocument extends AbstactDocument {
 
   @Prop()
   currencyId: string;
+
+  @Prop()
+  categoryId: number;
 
   @Prop({ type: [String] })
   picture: string[];
@@ -47,9 +50,6 @@ export class ChristmasTreeDocument extends AbstactDocument {
 
   @Prop()
   manufacturer_warranty: boolean;
-
-  @Prop()
-  category: number;
 
   @Prop({ type: [String], default: [] })
   vendorCode: string[];
