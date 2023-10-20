@@ -12,8 +12,8 @@ export class ChristmasTreeOffersService {
     return this.christmasTreeOffersRepository.create(data);
   }
 
-  findAll() {
-    return this.christmasTreeOffersRepository.find({});
+  findAll(options: object) {
+    return this.christmasTreeOffersRepository.find(options);
   }
 
   findOne(_id: string) {
@@ -23,6 +23,7 @@ export class ChristmasTreeOffersService {
   deleteAll() {
     return this.christmasTreeOffersRepository.deleteMany({});
   }
+  
 //   update(_id: string) {
 //     return this.christmasTreeOffersRepository.findOneAndUpdate(
 //       { _id },

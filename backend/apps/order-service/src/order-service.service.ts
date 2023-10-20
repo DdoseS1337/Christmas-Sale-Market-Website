@@ -4,7 +4,8 @@ import {
   UnprocessableEntityException,
 } from '@nestjs/common';
 import { UserOrderRepository } from './order-service.repository';
-import { CreateUserOrderDto, GetUserOrderDto } from './dto';
+import { GetUserOrderDto } from './dto';
+import { CreateUserOrderDto } from '@app/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { TELEGRAM_BOT } from '@app/common';
 
