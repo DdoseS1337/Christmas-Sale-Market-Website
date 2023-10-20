@@ -1,6 +1,7 @@
 import { Body, Controller, Post, Get, Param } from '@nestjs/common';
 import { OrderServiceService } from './order-service.service';
-import { CreateUserOrderDto, GetUserOrderDto } from './dto';
+import { GetUserOrderDto } from './dto';
+import { CreateUserOrderDto } from '@app/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 
 @Controller('user-order')
@@ -21,5 +22,4 @@ export class OrderServiceController {
   async getOfferById(@Payload() id: GetUserOrderDto) {
     return this.orderServiceService.findOne(id);
   }
-
 }

@@ -1,7 +1,7 @@
 import { Controller } from "@nestjs/common";
 import { EventPattern, Payload } from "@nestjs/microservices";
 import { TelegramBotService } from "./telegram-bot.service";
-import { CreateUserOrderDto } from "./dto/user-order.dto";
+import { CreateUserOrderDto } from "@app/common";
 
 
 @Controller()

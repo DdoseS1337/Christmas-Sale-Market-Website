@@ -1,8 +1,7 @@
 import { ConfigService } from '@nestjs/config';
 import { Start, Ctx, Update, On, Message } from 'nestjs-telegraf';
 import { Context, Telegraf } from 'telegraf';
-import { CreateUserOrderDto } from './dto/user-order.dto';
-import { PRODUCT_SERVICE } from '@app/common';
+import { PRODUCT_SERVICE, CreateUserOrderDto } from '@app/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { Inject } from '@nestjs/common';
 import { forkJoin } from 'rxjs';
