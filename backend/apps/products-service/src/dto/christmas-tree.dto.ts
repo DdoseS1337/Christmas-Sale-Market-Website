@@ -24,11 +24,22 @@ export class ChristmasTreeDto {
 
   @IsNotEmpty()
   @IsString()
+  readonly supplier_name: string;
+
+  @IsNotEmpty()
+  @IsString()
   readonly price: number;
 
   @IsNotEmpty()
   @IsString()
+  readonly newPrice: number;
+
+  @IsNotEmpty()
+  @IsString()
   readonly currencyId: string;
+
+  @IsNotEmpty()
+  readonly categoryId: number;
 
   @IsNotEmpty()
   readonly picture: string[];
@@ -47,9 +58,6 @@ export class ChristmasTreeDto {
 
   @IsNotEmpty()
   readonly manufacturer_warranty: boolean;
-
-  @IsNotEmpty()
-  readonly category: number;
 
   @IsNotEmpty()
   readonly vendorCode: string[];

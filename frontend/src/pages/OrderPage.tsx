@@ -1,5 +1,11 @@
+import { Container} from "react-bootstrap";
+
 const OrderPage = () => {
-    return <div></div>;
-}
+    return (
+        <Container>
+
+        </Container>
+    );
+};
 
 export default OrderPage;

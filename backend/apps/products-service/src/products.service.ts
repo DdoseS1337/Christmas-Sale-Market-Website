@@ -29,7 +29,7 @@ export class ProductsService {
 
   async setOffers(dataArray: ChristmasTreeDto[]) {
     try {
-      const existingCategories = await this.christmasTreeOffersService.findAll();
+      const existingCategories = await this.christmasTreeOffersService.findAll({});
       
       if (existingCategories.length > 0) {
         await this.christmasTreeOffersService.deleteAll(); 
@@ -42,6 +42,10 @@ export class ProductsService {
     } catch (error) {
       throw new BadRequestException('Get error with input Christmas Tree');
     }
+  }
+
+  findOne(id: string) {
+    return this.christmasTreeOffersService.findOne(id);
   }
 
   async updateCategories() {}

@@ -3,6 +3,7 @@ import { ProductsServiceModule } from './products.module';
 import { ConfigService } from '@nestjs/config';
 import { Logger } from 'nestjs-pino';
 import { Transport } from '@nestjs/microservices';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(ProductsServiceModule);
@@ -16,6 +17,7 @@ async function bootstrap() {
     },
   });
   app.useLogger(app.get(Logger));
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true , transform: true}));
   await app.startAllMicroservices();
   await app.listen(configService.get('HTTP_PORT'));
 }

@@ -1,12 +1,24 @@
-import { Injectable, UnprocessableEntityException } from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+  UnprocessableEntityException,
+} from '@nestjs/common';
 import { UserOrderRepository } from './order-service.repository';
-import { CreateUserOrderDto, GetUserOrderDto } from './dto';
+import { GetUserOrderDto } from './dto';
+import { CreateUserOrderDto } from '@app/common';
+import { ClientProxy } from '@nestjs/microservices';
+import { TELEGRAM_BOT } from '@app/common';
 
 @Injectable()
 export class OrderServiceService {
-  constructor(private readonly userOrderRepository: UserOrderRepository) {}
+  constructor(
+    private readonly userOrderRepository: UserOrderRepository,
+    @Inject(TELEGRAM_BOT)
+    private readonly telegtamBotService: ClientProxy,
+  ) {}
   async create(createUserOrderDto: CreateUserOrderDto) {
     try {
+      this.telegtamBotService.emit('notify_bot', createUserOrderDto);
       await this.userOrderRepository.findOne({
         phone_number: createUserOrderDto.phone_number,
       });

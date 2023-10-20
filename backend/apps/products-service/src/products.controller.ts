@@ -19,4 +19,9 @@ export class ProductsController {
     const offers = JSON.parse(data);
     return this.productsService.setOffers(offers);
   }
+
+  @MessagePattern('get-tree-offer')
+  async getTreeOfferFromMicroservice(@Payload() id: string) {
+    return this.productsService.findOne(id);
+  }
 }
