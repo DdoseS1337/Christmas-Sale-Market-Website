@@ -29,7 +29,7 @@ export class ProductsService {
 
   async setOffers(dataArray: ChristmasTreeDto[]) {
     try {
-      const existingCategories = await this.christmasTreeOffersService.findAll();
+      const existingCategories = await this.christmasTreeOffersService.findAll({});
       
       if (existingCategories.length > 0) {
         await this.christmasTreeOffersService.deleteAll(); 

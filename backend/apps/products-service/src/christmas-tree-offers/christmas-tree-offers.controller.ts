@@ -1,5 +1,6 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
 import { ChristmasTreeOffersService } from './christmas-tree-offers.service';
+import { TreeOffersValidator } from './dto/tree-offers-validator.dto';
 
 @Controller('christmas-tree-offers')
 export class ChristmasTreeOffersController {
@@ -7,8 +8,23 @@ export class ChristmasTreeOffersController {
     private readonly christmasTreeOffersService: ChristmasTreeOffersService,
   ) {}
   @Get()
-  async GetTreeOffers() {
-    return this.christmasTreeOffersService.findAll();
+  async GetTreeOffers(@Query() query: TreeOffersValidator) {
+    let options = { ...query };
+
+    if (query.type_name) {
+      options['name'] = { $regex: query.type_name };
+      delete options.type_name;
+    } else if (query.pricemin && query.pricemax) {
+      options['newPrice'] = {
+        $gte: query.pricemin,
+        $lte: query.pricemax,
+      };
+      delete options.pricemin;
+      delete options.pricemax;
+    } 
+
+
+    return this.christmasTreeOffersService.findAll(options);
   }
 
   @Get(':id')
