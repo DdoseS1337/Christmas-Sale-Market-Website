@@ -19,7 +19,7 @@ export const ProductsRow = ({ categoryId, categoryTitle }: IProps) => {
 	);
 
 	return (
-		<div className={"products-of-category " + categoryId}>
+		<div className="products-of-category">
 			<div className="products-of-category__header">
 				<h2 className="products-of-category__title">{categoryTitle}</h2>
 				<a className="products-of-category__view-all" href="#">
