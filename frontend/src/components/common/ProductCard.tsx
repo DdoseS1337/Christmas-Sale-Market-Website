@@ -4,10 +4,9 @@ import "../../styles/components/common/product-card.css";
 import RoundedButton from "./RoundedButton";
 import { Link, To } from "react-router-dom";
 import { useRef, useState } from "react";
-import { IShortProductInfo } from "../../interfaces/Product";
+import { IShortOffer } from "../../interfaces/Offer";
 
-interface IProps extends IShortProductInfo {
-	link: To;
+interface IProps extends IShortOffer {
 	className?: string;
 }
 
@@ -17,7 +16,6 @@ export const ProductCard = ({
 	actualPrice,
 	oldPrice,
 	image,
-	link,
 	className,
 }: IProps) => {
 	const linkRef = useRef<HTMLAnchorElement>(null);
@@ -46,13 +44,12 @@ export const ProductCard = ({
 		useState<() => void>(() => addToBasket);
 
 	let clickedOnBasked = false;
-	let discount =
-		oldPrice && Math.abs((actualPrice - oldPrice) / actualPrice) * 100;
+	let discount = oldPrice && (100 * (oldPrice - actualPrice)) / oldPrice;
 
 	return (
 		<Card
 			body
-			className={"product-card " + className}
+			className={"product-card " + className + " " + id}
 			onClick={() => {
 				!clickedOnBasked && linkRef.current?.click();
 				clickedOnBasked = false;
@@ -73,7 +70,7 @@ export const ProductCard = ({
 			<Card.Footer>
 				<div>
 					<Card.Title className="product-card__title">
-						<Link to={link} ref={linkRef}>
+						<Link to={`/catalog/${id}`} ref={linkRef}>
 							{title}
 						</Link>
 					</Card.Title>
