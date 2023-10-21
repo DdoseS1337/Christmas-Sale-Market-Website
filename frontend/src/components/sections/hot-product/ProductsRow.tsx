@@ -11,9 +11,8 @@ interface IProps {
 
 export const ProductsRow = ({ categoryId, categoryTitle }: IProps) => {
 	const { items: offers } = useFetchData<IOffer[]>(
-		() => christmasTreeApi.getAllOffers(),
+		() => christmasTreeApi.getOffersByCategoryId(categoryId, true),
 		{
-			filter: (offer: IOffer) => offer.categoryId == categoryId,
 			count: 5,
 		}
 	);
