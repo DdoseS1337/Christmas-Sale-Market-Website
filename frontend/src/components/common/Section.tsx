@@ -11,7 +11,7 @@ export enum BackgroundType {
 
 interface IProps extends React.AnchorHTMLAttributes<HTMLDivElement> {
 	backgroundType?: BackgroundType;
-	isFluid?: boolean;
+	isFluid?: string | boolean;
 	children: ReactNode[] | ReactNode;
 	unPadded?: boolean;
 	width?: string;
@@ -41,7 +41,7 @@ export const Section = ({
 		>
 			{isRedWithSnow && <Snowfall />}
 			<Container
-				fluid={isFluid}
+				fluid={isFluid ?? "xl"}
 				className={`position-relative ${unPadded ? "" : "py-5"}`}
 				style={
 					isDesktop
