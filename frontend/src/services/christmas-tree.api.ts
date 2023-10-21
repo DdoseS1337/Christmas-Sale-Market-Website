@@ -30,6 +30,12 @@ class ChristmasTreeApi extends HttpService {
             url: `${BACKEND_KEYS.CHRISTMAS_TREE_OFFERS}/${id}`,
         });
     }
+
+    async getOffersByCategoryId(categoryId: number, available: boolean) {
+        return this.get({
+            url: `${BACKEND_KEYS.CHRISTMAS_TREE_OFFERS}?categoryId=${categoryId}&available=${available}`,
+        });
+    }
 }
 
 const christmasTreeApi = new ChristmasTreeApi();

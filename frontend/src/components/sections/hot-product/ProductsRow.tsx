@@ -11,15 +11,14 @@ interface IProps {
 
 export const ProductsRow = ({ categoryId, categoryTitle }: IProps) => {
 	const { items: offers } = useFetchData<IOffer[]>(
-		() => christmasTreeApi.getAllOffers(),
+		() => christmasTreeApi.getOffersByCategoryId(categoryId, true),
 		{
-			filter: (offer: IOffer) => offer.categoryId == categoryId,
 			count: 5,
 		}
 	);
 
 	return (
-		<div className={"products-of-category " + categoryId}>
+		<div className="products-of-category">
 			<div className="products-of-category__header">
 				<h2 className="products-of-category__title">{categoryTitle}</h2>
 				<a className="products-of-category__view-all" href="#">
