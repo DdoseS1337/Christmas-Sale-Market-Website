@@ -49,7 +49,7 @@ export const ProductCard = ({
 	return (
 		<Card
 			body
-			className={"product-card " + className + " " + id}
+			className={"product-card " + className}
 			onClick={() => {
 				!clickedOnBasked && linkRef.current?.click();
 				clickedOnBasked = false;
