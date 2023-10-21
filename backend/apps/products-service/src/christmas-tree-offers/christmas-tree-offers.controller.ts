@@ -14,7 +14,7 @@ export class ChristmasTreeOffersController {
     if (query.type_name) {
       options['name'] = { $regex: query.type_name };
       delete options.type_name;
-    } 
+    }
     if (query.pricemin && query.pricemax) {
       options['newPrice'] = {
         $gte: query.pricemin,
@@ -22,8 +22,7 @@ export class ChristmasTreeOffersController {
       };
       delete options.pricemin;
       delete options.pricemax;
-    } 
-
+    }
 
     return this.christmasTreeOffersService.findAll(options);
   }

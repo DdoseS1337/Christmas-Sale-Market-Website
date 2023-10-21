@@ -1,6 +1,5 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { ChristmasTreeCategoriesService } from './christmas-tree-categories.service';
-
 @Controller('christmas-tree-categories')
 export class ChristmasTreeCategoriesController {
   constructor(

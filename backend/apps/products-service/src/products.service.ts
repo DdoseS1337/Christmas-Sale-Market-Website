@@ -1,5 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
-import { iProductDto } from './dto/products-info.dto';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { ChristmastreeCategoryDto } from './dto/christmas-tree-categories.dto';
 import { ChristmasTreeDto } from './dto/christmas-tree.dto';
 import { ChristmasTreeCategoriesService } from './christmas-tree-categories/christmas-tree-categories.service';
@@ -13,26 +16,31 @@ export class ProductsService {
 
   async setCategories(dataArray: ChristmastreeCategoryDto[]) {
     try {
-      const existingCategories = await this.christmasTreeCategoriesService.findAll();
+      const existingCategories =
+        await this.christmasTreeCategoriesService.findAll();
 
       if (existingCategories.length > 0) {
-        await this.christmasTreeCategoriesService.deleteAll(); 
+        await this.christmasTreeCategoriesService.deleteAll();
       }
       for (const data of dataArray) {
         this.christmasTreeCategoriesService.create(data);
       }
       return;
     } catch (error) {
-      throw new BadRequestException('Get error with input Christmas Tree Category');
+      throw new BadRequestException(
+        'Get error with input Christmas Tree Category',
+      );
     }
   }
 
   async setOffers(dataArray: ChristmasTreeDto[]) {
     try {
-      const existingCategories = await this.christmasTreeOffersService.findAll({});
-      
+      const existingCategories = await this.christmasTreeOffersService.findAll(
+        {},
+      );
+
       if (existingCategories.length > 0) {
-        await this.christmasTreeOffersService.deleteAll(); 
+        await this.christmasTreeOffersService.deleteAll();
       }
 
       for (const data of dataArray) {

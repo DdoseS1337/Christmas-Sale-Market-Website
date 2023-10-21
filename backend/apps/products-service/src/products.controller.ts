@@ -1,4 +1,4 @@
-import { Controller,UseInterceptors  } from '@nestjs/common';
+import { Controller, UseInterceptors } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { FormatResponseInterceptor } from '@app/common';
