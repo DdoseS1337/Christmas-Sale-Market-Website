@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 
-interface IAdditionalParameters {
+interface IFetchDataParameters<T> {
+    callApi: () => Promise<T>
     filter?: (value: any, index: number, array: any[]) => boolean;
     count?: number;
 }
 
-export const useFetchData = <T>(callApi: () => Promise<T>, additionalParameters?: IAdditionalParameters) => {
+export const useFetchData = <T>({callApi, filter, count}: IFetchDataParameters<T>) => {
     const [items, setItems] = useState<T>();
     const [error, setError] = useState<any>();
     
@@ -16,12 +17,12 @@ export const useFetchData = <T>(callApi: () => Promise<T>, additionalParameters?
                 return;
             }
 
-            if (additionalParameters?.filter) {
-                result = result.filter(additionalParameters.filter);
+            if (filter) {
+                result = result.filter(filter);
             }
 
-            if (additionalParameters?.count){ 
-                result = result.slice(0, additionalParameters?.count);
+            if (count){ 
+                result = result.slice(0, count);
             }
 
             setItems(result);
