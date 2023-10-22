@@ -10,12 +10,10 @@ interface IProps {
 }
 
 export const ProductsRow = ({ categoryId, categoryTitle }: IProps) => {
-	const { items: offers } = useFetchData<IOffer[]>(
-		() => christmasTreeApi.getOffersByCategoryId(categoryId, true),
-		{
-			count: 5,
-		}
-	);
+	const { items: offers } = useFetchData<IOffer[]>({
+		callApi: () => christmasTreeApi.getOffersByCategoryId(categoryId, true),
+		count: 5,
+	});
 
 	return (
 		<div className="products-of-category">
