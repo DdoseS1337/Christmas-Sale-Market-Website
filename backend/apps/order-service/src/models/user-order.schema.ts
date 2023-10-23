@@ -1,8 +1,8 @@
-import { AbstactDocument } from '@app/common';
+import { AbstractDocument } from '@app/common';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 @Schema()
-export class UserOrderDocument extends AbstactDocument {
+export class UserOrderDocument extends AbstractDocument {
   @Prop()
   first_name: string;
 

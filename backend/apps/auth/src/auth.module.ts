@@ -1,16 +1,18 @@
 import { Module } from '@nestjs/common';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
-import { UserModule } from './user/user.module';
+import { UsersModule } from './users/users.module';
 import { JwtModule } from '@nestjs/jwt';
 import { LoggerModule } from '@app/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as Joi from 'joi';
+import { JwtStrategy } from './strategies/jwt.strategy';
+import { LocalStategy } from './strategies/local.strategy';
 
 @Module({
   imports: [
     LoggerModule,
-    UserModule,
+    UsersModule,
     ConfigModule.forRoot({
       isGlobal: true,
       validationSchema: Joi.object({
@@ -32,6 +34,6 @@ import * as Joi from 'joi';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService],
+  providers: [AuthService, LocalStategy, JwtStrategy],
 })
 export class AuthModule {}
