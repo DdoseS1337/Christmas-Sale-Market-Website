@@ -12,5 +12,4 @@ export class SupplierController {
   async getDataFromButikElok(): Promise<string> {
     return this.supplierService.getDataElkiShop();
   }
-
 }

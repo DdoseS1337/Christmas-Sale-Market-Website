@@ -4,11 +4,13 @@ import * as xml2js from 'xml2js';
 import { YmlCatalog, Offer, Category } from './interfaces';
 import { PRODUCT_SERVICE } from '@app/common';
 import { ClientProxy } from '@nestjs/microservices';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class SupplierService {
   constructor(
     @Inject(PRODUCT_SERVICE) private readonly productService: ClientProxy,
+    private readonly configService: ConfigService,
   ) {}
 
   async xmlParser(url: string): Promise<any> {
@@ -30,9 +32,8 @@ export class SupplierService {
   }
 
   async getDataElkiShop() {
-    const url = 'https://butik-elok.in.ua/yandex/yml.xml';
-
     try {
+      const url = this.configService.get('ELKI_URL');
       const result = await this.xmlParser(url);
       const catalog: YmlCatalog = result.yml_catalog;
 
@@ -54,7 +55,11 @@ export class SupplierService {
 
   async getElkiShopCategories(categories: Category[]) {
     const transformCategories = categories.map((category) => {
-      return { ...category, name: category._ , supplier_name: this.getDataElkiShop.name };
+      return {
+        ...category,
+        name: category._,
+        supplier_name: this.getDataElkiShop.name,
+      };
     });
     const jsonData = JSON.stringify(transformCategories);
     return this.productService
@@ -64,13 +69,19 @@ export class SupplierService {
       });
   }
 
-  async getElkiShopOffers(offers: Offer[] ) {
+  async getElkiShopOffers(offers: Offer[]) {
     const transformOffers = offers.map((offer) => {
-      const modifiedParams = offer.param.map(item => {
-        return {name: item.name,  description: item._}
+      const modifiedParams = offer.param.map((item) => {
+        return { name: item.name, description: item._ };
       });
-      return {...offer, param: modifiedParams, supplier_name: this.getDataElkiShop.name, newPrice: String(Number(offer.price) * 2), price: String(Number(offer.price) * 4) }
-    })
+      return {
+        ...offer,
+        param: modifiedParams,
+        supplier_name: this.getDataElkiShop.name,
+        newPrice: String(Number(offer.price) * 2),
+        price: String(Number(offer.price) * 4),
+      };
+    });
 
     const jsonData = JSON.stringify(transformOffers);
     return this.productService
