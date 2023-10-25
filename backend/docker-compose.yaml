@@ -47,6 +47,18 @@ services:
       - "3003:3003"
     volumes:
       - .:/usr/src/app
+  auth:
+    build:
+      context: .
+      dockerfile: ./apps/auth/Dockerfile
+      target: development
+    command: npm run start:dev auth
+    env_file:
+      - ./apps/auth/.env
+    ports:
+      - "3004:3004"
+    volumes:
+      - .:/usr/src/app
   rabbitmq:
     image: rabbitmq
     ports:
