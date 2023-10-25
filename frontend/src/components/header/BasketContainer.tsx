@@ -3,7 +3,7 @@ import Basket from "./Basket";
 
 const BasketContainer = () => {
 	return (
-		<Link to="/basket" className="link-settings d-flex justify-content-end">
+		<Link to="/basket" className="link-settings d-inline-flex">
 			<Basket />
 		</Link>
 	);

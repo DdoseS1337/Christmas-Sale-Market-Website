@@ -12,7 +12,7 @@ const NotFoundPage = () => {
                 існує
             </h5>
             <Link to="/">
-                <button className="mt-4 btn-red-theme p-2">
+                <button className="mt-4 btn-red-theme p-2"> {/* ARROW BUTTON HERE*/}
                     Повернутись на головну
                 </button>
             </Link>
