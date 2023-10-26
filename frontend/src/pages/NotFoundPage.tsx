@@ -11,9 +11,9 @@ const NotFoundPage = () => {
                 Неправильно набрано адресу або такої сторінки на сайті більше не
                 існує
             </h5>
-            <Link to="/">
-                <button className="mt-4 btn-red-theme p-2"> {/* ARROW BUTTON HERE*/}
-                    Повернутись на головну
+            <Link to="/" className="link-settings">
+                <button className="mt-4 arrow-button mx-auto arrow-button-red-theme">
+                    <span className="arrow"></span>Повернутись на головну
                 </button>
             </Link>
         </Container>

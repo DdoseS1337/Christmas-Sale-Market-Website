@@ -10,7 +10,7 @@ interface Props {
 const MainContainer = (prop: Props) => {
     return (
         <Container fluid className="p-0 pt-5 pb-5 position-relative">
-            <MediaQuery minWidth={1224}>
+            <MediaQuery minWidth={1755}>
                 <img
                     src="/images/pictures/santa-chimney.png"
                     alt="santa-chimney"

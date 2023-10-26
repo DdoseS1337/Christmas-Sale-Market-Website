@@ -1,32 +1,23 @@
 import { Col, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { XCircle } from "react-bootstrap-icons";
+import ItemCard from "./ItemCard";
 
-const BasketItems = () => {
+const BasketItems = (props: any) => {
     return (
-        <Container className="border rounded py-3 position-relative">
+        <Container className="border rounded py-3">
             <Row className="text-center">
-                <Col>Продукт</Col>
-                <Col>Постачальник</Col>
-                <Col>Вартість</Col>
-                <Col>Кількість</Col>
-                <Col>Всього</Col>
+                <Col xs={4}>Продукт</Col>
+                <Col xs={2}>Склад</Col>
+                <Col xs={3}>Кількість</Col>
+                <Col xs={2}>Всього</Col>
                 <Col></Col>
             </Row>
-            <Row className="text-center">
-                <Col>Продукт</Col>
-                <Col>Постачальник</Col>
-                <Col>Вартість</Col>
-                <Col>Кількість</Col>
-                <Col>Всього</Col>
-                <Col className="d-flex justify-content-center">
-                    <XCircle className="basket-close-btn" />
-                </Col>
-            </Row>
+            <div className="basket-delimiter" />
+            {/* <ItemCard /> */}
             <Link
                 to="/catalog"
-                className="arrow-button position-absolute"
-                style={{ width: "16rem", bottom: "1rem", left: "1rem" }}
+                className="arrow-button mt-4"
+                style={{ width: "16rem"}}
             >
                 <span className="arrow"></span>Повернутись до каталогу
             </Link>

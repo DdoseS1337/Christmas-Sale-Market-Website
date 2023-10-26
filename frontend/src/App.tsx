@@ -10,6 +10,7 @@ import Footer from "./components/ui/Footer";
 import MainContainer from "./components/ui/MainContainer";
 import NavBar from "./components/ui/Navbar";
 import NotFoundPage from "./pages/NotFoundPage";
+import InfoPage from "./pages/InfoPage";
 
 const App = () => {
     return (
@@ -19,6 +20,7 @@ const App = () => {
             <MainContainer>
                 <Routes>
                     <Route path="/" element={<MainPage />} />
+                    <Route path="/information" element={<InfoPage />} />
                     <Route path="/catalog" element={<CatalogPage />} />
                     <Route path="/catalog/:id" element={<ProductPage />} />
                     <Route path="/contacts" element={<ContactsPage />} />

@@ -50,7 +50,6 @@
 .arrow-button:hover > .arrow {
     transform: rotate(45deg) translate(-4px, 4px);
     border-color: text-hover-color;
-    /* border-color: #c93f4f; */
 }
 
 .arrow-button:hover > .arrow::before {
@@ -72,4 +71,63 @@
 
 .basket-close-btn:hover {
     color: #c93f4f;
+}
+
+.arrow-button-red-theme {
+    border: 2px solid #c93f4f;
+    color: white;
+    background-color: #c93f4f;
+    border-radius: 10px;
+    font-size: medium;
+    font-weight: normal;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+.arrow-button-red-theme > .arrow {
+    border-color: white;
+}
+
+.arrow-button-red-theme:hover > .arrow {
+    border-color: #c93f4f;
+}
+
+.arrow-button-red-theme:hover {
+    background-color: white;
+    color: #c93f4f;
+}
+
+.arrow-button-red-theme > .arrow::before {
+    background-color: #c93f4f;
+}
+
+.basket-delimiter {
+    border: 1px solid #e6e6e6;
+    width: 98%;
+    margin-top: 0.3rem;
+    margin-bottom: 0.3rem;
+}
+
+.basket-product-image {
+    width: 6.25rem;
+    height: 6.25rem;
+}
+
+.basket-btn-quantity {
+    color: #c93f4f;
+    width: 1.5rem;
+    height: 1.5rem;
+    cursor: pointer;
+}
+
+.basket-storage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #c93f4f;
+    border-radius: 50%;
+    width: 1rem;
+    height: 1rem;
+    padding: 0.8rem;
+    font-weight: bold;
 }
