@@ -4,6 +4,7 @@ const localizations: Record<string, string> = {
     contacts: "Контакти",
     basket: "Кошик",
     order: "Замовлення",
+    information: "Часті запитання",
 };
 
 export default localizations;

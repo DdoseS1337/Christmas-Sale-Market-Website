@@ -50,10 +50,13 @@ const BottomFooter = () => {
                     </Col>
                     <Col>
                         <FooterList
-                            title="Helps"
+                            title="Інформація"
                             list={[
-                                { text: "Contact", link: "" },
-                                { text: "Faqs", link: "" },
+                                { text: "Контакти", link: "/contacts" },
+                                {
+                                    text: "Часті запитання",
+                                    link: "/information",
+                                },
                                 { text: "Terms & Condition", link: "" },
                                 { text: "Privacy Policy", link: "" },
                             ]}
@@ -63,10 +66,14 @@ const BottomFooter = () => {
                         <FooterList
                             title="Сторінки"
                             list={[
-                                { text: "Головна сторінка", link: "" },
-                                { text: "Каталог", link: "" },
-                                { text: "Кошик", link: "" },
-                                { text: "Контакти", link: "" },
+                                { text: "Головна сторінка", link: "/" },
+                                { text: "Каталог", link: "/catalog" },
+                                { text: "Кошик", link: "/basket" },
+                                { text: "Контакти", link: "/contacts" },
+                                {
+                                    text: "Часті запитання",
+                                    link: "/information",
+                                },
                             ]}
                         />
                     </Col>

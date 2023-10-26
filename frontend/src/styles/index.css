@@ -85,6 +85,7 @@ code {
 }
 
 .link-settings {
+    display: inline-flex;
     color: white;
     text-decoration: none;
     cursor: pointer;

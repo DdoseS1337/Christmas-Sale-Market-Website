@@ -66,6 +66,10 @@ const HeaderNavBar = () => {
                         <LinkContainer to="/contacts">
                             <NavDropdown.Item>Контакти</NavDropdown.Item>
                         </LinkContainer>
+                        <NavDropdown.Divider />
+                        <LinkContainer to="/information">
+                            <NavDropdown.Item>Часті запитання</NavDropdown.Item>
+                        </LinkContainer>
                     </NavDropdown>
                     <LinkContainer to="/contacts">
                         <Nav.Link>Контакти</Nav.Link>
