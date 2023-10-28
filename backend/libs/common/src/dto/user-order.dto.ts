@@ -1,4 +1,24 @@
-import { IsString, IsEmail, IsOptional, IsNotEmpty, IsPhoneNumber, IsArray } from 'class-validator';
+import {
+  IsString,
+  IsEmail,
+  IsOptional,
+  IsNotEmpty,
+  IsPhoneNumber,
+  IsArray,
+  ValidateNested,
+} from 'class-validator';
+import { Type } from 'class-transformer';
+
+export class Product {
+  @IsString()
+  id: string;
+
+  @IsString()
+  name: string;
+
+  @IsString()
+  price: string;
+}
 
 export class CreateUserOrderDto {
   @IsString()
@@ -26,11 +46,19 @@ export class CreateUserOrderDto {
   @IsPhoneNumber('UA')
   phone_number: string;
 
-  @IsNotEmpty()
   @IsArray()
+  @IsNotEmpty()
   productsIds: string[];
 
   @IsOptional()
   @IsString()
   additional_info: string;
+}
+
+export class TelegramOrderDto extends CreateUserOrderDto {
+  @ValidateNested({ each: true })
+  @Type(() => Product)
+  @IsArray()
+  @IsNotEmpty()
+  products: Product[]; 
 }
