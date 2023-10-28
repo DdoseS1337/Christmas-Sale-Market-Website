@@ -1,7 +1,7 @@
 import { Controller } from "@nestjs/common";
 import { EventPattern, Payload } from "@nestjs/microservices";
 import { TelegramBotService } from "./telegram-bot.service";
-import { CreateUserOrderDto } from "@app/common";
+import { TelegramOrderDto } from "@app/common";
 
 
 @Controller()
@@ -10,7 +10,7 @@ export class TelegramBotController {
 
 
   @EventPattern('notify_bot')
-  async notifyEmail(@Payload() data : CreateUserOrderDto) {
+  async notifyEmail(@Payload() data : TelegramOrderDto) {
     this.telegramBotService.onOrder(data);
   }
 }
