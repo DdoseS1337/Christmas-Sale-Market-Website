@@ -19,4 +19,8 @@ import {
     @IsString({ each: true })
     @IsNotEmpty({ each: true })
     roles?: string[];
+
+    @IsString()
+    @IsOptional()
+    telegramChatId?: string
   }

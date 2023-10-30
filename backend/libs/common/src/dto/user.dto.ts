@@ -3,5 +3,5 @@ export interface UserDto {
     email: string;
     password: string;
     roles?: string[];
-    tgChatId?: number;
+    telegramChatId?: number;
   }

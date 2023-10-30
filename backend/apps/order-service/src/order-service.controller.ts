@@ -1,16 +1,48 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { OrderServiceService } from './order-service.service';
-import { GetUserOrderDto } from './dto';
-import { CreateUserOrderDto } from '@app/common';
+import { CreateUserOrderDto, JwtAuthGuard, Roles } from '@app/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
+import { UpdateUserOrderDto } from './dto';
 
 @Controller('user-order')
 export class OrderServiceController {
   constructor(private readonly orderServiceService: OrderServiceService) {}
 
   @Post()
-  CreateUserOrder(@Body() createUserOrderDto: CreateUserOrderDto) {
+  async CreateUserOrder(@Body() createUserOrderDto: CreateUserOrderDto) {
     return this.orderServiceService.create(createUserOrderDto);
+  }
+
+  @Get()
+  @UseGuards(JwtAuthGuard)
+  @Roles('Admin', 'Owner')
+  async GetUserOffer() {
+    return this.orderServiceService.findAll();
+  }
+
+  @Get(':id')
+  @UseGuards(JwtAuthGuard)
+  @Roles('Admin', 'Owner')
+  async GetUserOfferById(@Param('id') id: string) {
+    return this.orderServiceService.findOne(id);
+  }
+
+  @Patch(':id')
+  @UseGuards(JwtAuthGuard)
+  @Roles('Admin', 'Owner')
+  async UpdateUserOrder(
+    @Param('id') id: string,
+    @Body() updateUserOrderDto: UpdateUserOrderDto,
+  ) {
+    return this.orderServiceService.update(id, updateUserOrderDto);
   }
 
   @MessagePattern('info_about_all_offers')
@@ -19,7 +51,7 @@ export class OrderServiceController {
   }
 
   @MessagePattern('info_about_offer')
-  async getOfferById(@Payload() id: GetUserOrderDto) {
+  async GetOfferById(@Payload() id: string) {
     return this.orderServiceService.findOne(id);
   }
 }

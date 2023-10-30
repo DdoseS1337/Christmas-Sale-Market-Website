@@ -1,14 +1,10 @@
-import {
-  Inject,
-  Injectable,
-  UnprocessableEntityException,
-} from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { UserOrderRepository } from './order-service.repository';
-import { GetUserOrderDto } from './dto';
 import { CreateUserOrderDto, PRODUCT_SERVICE } from '@app/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { TELEGRAM_BOT } from '@app/common';
-import { catchError, forkJoin, of, throwError } from 'rxjs';
+import { catchError, forkJoin, of } from 'rxjs';
+import { UpdateUserOrderDto } from './dto';
 
 @Injectable()
 export class OrderServiceService {
@@ -20,16 +16,15 @@ export class OrderServiceService {
   ) {}
   async create(createUserOrderDto: CreateUserOrderDto) {
     try {
+      await this.getProductsData(createUserOrderDto);
       await this.userOrderRepository.findOne({
         phone_number: createUserOrderDto.phone_number,
       });
     } catch (error) {
-      await this.getProductsData(createUserOrderDto);
       return this.userOrderRepository.create(createUserOrderDto);
     }
 
-    await this.getProductsData(createUserOrderDto);
-    return this.update(
+    return this.updateOrderList(
       createUserOrderDto.phone_number,
       createUserOrderDto.productsIds,
     );
@@ -73,14 +68,21 @@ export class OrderServiceService {
     return this.userOrderRepository.find({});
   }
 
-  async findOne(_id: GetUserOrderDto) {
+  async findOne(_id: string) {
     return this.userOrderRepository.findOne({ _id });
   }
 
-  async update(phone_number: string, productsIds: string[]) {
+  async updateOrderList(phone_number: string, productsIds: string[]) {
     return this.userOrderRepository.findOneAndUpdate(
       { phone_number },
       { $push: { productsIds: { $each: productsIds } } },
+    );
+  }
+
+  async update(_id: string, updateUserOrderDto: UpdateUserOrderDto) {
+    return this.userOrderRepository.findOneAndUpdate(
+      { _id },
+      { $set: updateUserOrderDto },
     );
   }
 }

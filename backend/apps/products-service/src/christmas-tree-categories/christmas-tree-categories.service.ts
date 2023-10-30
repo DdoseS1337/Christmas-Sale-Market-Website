@@ -12,27 +12,26 @@ export class ChristmasTreeCategoriesService {
     return this.christmastreeCategoryRepository.create(data);
   }
 
-    findAll() {
-      return this.christmastreeCategoryRepository.find({});
-    }
+  findAll() {
+    return this.christmastreeCategoryRepository.find({});
+  }
 
-    findOne(_id: string) {
-      return this.christmastreeCategoryRepository.findOne({ _id });
-    }
-    
+  findOne(id: string) {
+    return this.christmastreeCategoryRepository.findOne({ id });
+  }
 
-    update(_id: string, updateReservationDto) {
-      return this.christmastreeCategoryRepository.findOneAndUpdate(
-        { _id },
-        { $set: updateReservationDto },
-      );
-    }
+  update(id: string, updateCategoryDto) {
+    return this.christmastreeCategoryRepository.findOneAndUpdate(
+      { id },
+      { $set: updateCategoryDto },
+    );
+  }
 
-    deleteAll() {
-      return this.christmastreeCategoryRepository.deleteMany({});
-    }
-    
-    remove(_id: string) {
-      return this.christmastreeCategoryRepository.findOneAndDelete({ _id });
-    }
+  deleteAll() {
+    return this.christmastreeCategoryRepository.deleteMany({});
+  }
+
+  remove(id: string) {
+    return this.christmastreeCategoryRepository.findOneAndDelete({ id });
+  }
 }

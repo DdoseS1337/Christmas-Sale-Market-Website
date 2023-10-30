@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ChristmasTreeOffersRepository } from './christmas-tree-offers.repository';
 import { ChristmasTreeDto } from '../dto/christmas-tree.dto';
+import { UpdateOfferDto } from './dto';
 
 @Injectable()
 export class ChristmasTreeOffersService {
@@ -16,22 +17,22 @@ export class ChristmasTreeOffersService {
     return this.christmasTreeOffersRepository.find(options);
   }
 
-  findOne(_id: string) {
-    return this.christmasTreeOffersRepository.findOne({ _id });
+  findOne(id: string) {
+    return this.christmasTreeOffersRepository.findOne({ id });
   }
 
   deleteAll() {
     return this.christmasTreeOffersRepository.deleteMany({});
   }
   
-//   update(_id: string) {
-//     return this.christmasTreeOffersRepository.findOneAndUpdate(
-//       { _id },
-//       { $set: updateReservationDto },
-//     );
-//   }
+  update(id: string, updateOfferDto: UpdateOfferDto) {
+    return this.christmasTreeOffersRepository.findOneAndUpdate(
+      { id },
+      { $set: updateOfferDto },
+    );
+  }
 
-//   remove(_id: string) {
-//     return this.christmasTreeOffersRepository.findOneAndDelete({ _id });
-//   }
+  remove(id: string) {
+    return this.christmasTreeOffersRepository.findOneAndDelete({ id });
+  }
 }

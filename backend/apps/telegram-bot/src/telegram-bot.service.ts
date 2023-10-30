@@ -1,16 +1,12 @@
 import { ConfigService } from '@nestjs/config';
 import { Start, Ctx, Update, On, Message } from 'nestjs-telegraf';
 import { Context, Telegraf } from 'telegraf';
-import { PRODUCT_SERVICE, CreateUserOrderDto, Product, TelegramOrderDto } from '@app/common';
-import { ClientProxy } from '@nestjs/microservices';
+import { TelegramOrderDto } from '@app/common';
 import { BadRequestException, Inject } from '@nestjs/common';
 
 @Update()
 export class TelegramBotService extends Telegraf<Context> {
-  constructor(
-    private readonly configService: ConfigService,
-    @Inject(PRODUCT_SERVICE) private readonly productService: ClientProxy,
-  ) {
+  constructor(private readonly configService: ConfigService) {
     super(configService.get('TELEGRAM_BOT_TOKEN'));
   }
   @Start()
