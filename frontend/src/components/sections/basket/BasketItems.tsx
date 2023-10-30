@@ -9,10 +9,6 @@ const BasketItems = () => {
     const [totalCartPrice, setTotalCartPrice] = useState(0);
 
     useEffect(() => {
-        CartService.loadCart();
-    }, []);
-
-    useEffect(() => {
         const totalPrice = CartService.getTotalPrice();
         setTotalCartPrice(totalPrice);
     }, [cartItems]);

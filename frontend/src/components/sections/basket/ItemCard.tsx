@@ -51,7 +51,6 @@ const ItemCard = ({ item, onItemRemoved }: ItemCardProps) => {
     };
 
     const handleRemoveItem = () => {
-        // Викликайте onItemRemoved для видалення товару візуально
         onItemRemoved(item.id);
     };
 

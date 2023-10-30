@@ -24,8 +24,8 @@ export class CartService {
     }
 
     // Збереження корзини в Local Storage з опціональним списком товарів
-    static saveCart(updatedCart?: CartItem[]): void {
-        const cartToSave = updatedCart || this.cart;
+    static saveCart(newCart?: CartItem[]): void {
+        const cartToSave = newCart || this.cart;
         const validCart = cartToSave.filter(this.isValidCartItem);
         localStorage.setItem(
             "christmasMarketBasket",

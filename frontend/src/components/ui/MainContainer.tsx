@@ -10,6 +10,7 @@ interface Props {
 const MainContainer = (prop: Props) => {
     return (
         <Container fluid className="p-0 pt-5 pb-5 position-relative">
+            <ScrollButton />
             <MediaQuery minWidth={1755}>
                 <img
                     src="/images/pictures/santa-chimney.png"
@@ -18,8 +19,6 @@ const MainContainer = (prop: Props) => {
                     style={{ width: "14rem", pointerEvents: "none" }}
                 />
             </MediaQuery>
-
-            <ScrollButton />
             {prop.children}
         </Container>
     );
