@@ -72,7 +72,7 @@ code {
     --gray-100: #e6e6e6;
     --gray-200: #cccccc;
     --gray-400: #999999;
-    --gray-900: #1A1A1A;
+    --gray-900: #1a1a1a;
 
     /* old variable */
     --light: var(--secondary);
@@ -129,4 +129,3 @@ code {
     background-color: #c93f4f;
     color: white;
 }
-

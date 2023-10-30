@@ -1,6 +1,5 @@
-import { Col, Container, Row } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import BasketItems from "../components/sections/basket/BasketItems";
-import CartTotal from "../components/sections/basket/CartTotal";
 import { Link } from "react-router-dom";
 import lottie from "lottie-web";
 import { useEffect, useState } from "react";
@@ -73,19 +72,12 @@ const BasketPage = () => {
     const localStorageExists = useLocalStorageExists("christmasMarketBasket");
 
     return localStorageExists ? (
-        <div>
+        <>
             <h1 className="text-center basket-logo">Кошик</h1>
             <Container className="mt-5">
-                <Row>
-                    <Col xs={9}>
-                        <BasketItems />
-                    </Col>
-                    <Col>
-                        <CartTotal />
-                    </Col>
-                </Row>
+                <BasketItems />
             </Container>
-        </div>
+        </>
     ) : (
         <AnimatedBasket />
     );
