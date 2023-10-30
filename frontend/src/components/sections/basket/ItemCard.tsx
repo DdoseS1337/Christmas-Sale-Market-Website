@@ -8,10 +8,17 @@ import {
     PlusCircleFill,
 } from "react-bootstrap-icons";
 import Image from "react-bootstrap/Image";
+import { CartItem, CartService } from "../../../services/basketService";
 
-const ItemCard = (item: any) => {
+interface ItemCardProps {
+    item: CartItem;
+    onItemRemoved: (itemId: string) => void;
+}
+
+const ItemCard = ({ item, onItemRemoved }: ItemCardProps) => {
     const [isMinusHovered, setIsMinusHovered] = useState(false);
     const [isPlusHovered, setIsPlusHovered] = useState(false);
+    const [amount, setAmount] = useState(item.amount);
 
     const handleMinusMouseEnter = () => {
         setIsMinusHovered(true);
@@ -29,19 +36,34 @@ const ItemCard = (item: any) => {
         setIsPlusHovered(false);
     };
 
+    const amountChange = (operation: string) => {
+        if (operation === "+") {
+            const newAmount = amount + 1;
+            setAmount(newAmount);
+            CartService.updateCartItem(item.id, { amount: newAmount });
+        } else if (operation === "-") {
+            const newAmount = amount - 1;
+            if (newAmount >= 1) {
+                setAmount(newAmount);
+                CartService.updateCartItem(item.id, { amount: newAmount });
+            }
+        }
+    };
+
+    const handleRemoveItem = () => {
+        onItemRemoved(item.id);
+    };
+
     return (
         <>
             <Row className="text-center align-items-center">
-                <Col
-                    xs={4}
-                    className="d-flex justify-content-between align-items-center"
-                >
+                <Col xs={4} className="d-flex align-items-center">
                     <Image
-                        src="https://butik-elok.in.ua/files/resized/products/img_9037.800x600.jpg"
-                        alt="{product.name}"
+                        src={item.picture[0]}
+                        alt={item.name}
                         className="basket-product-image"
                     />
-                    <span>Віденський вінок блакитний великий</span>
+                    <span className="ms-4">{item.name}</span>
                 </Col>
                 <Col
                     xs={2}
@@ -51,13 +73,14 @@ const ItemCard = (item: any) => {
                 </Col>
                 <Col xs={3} className="d-flex justify-content-center">
                     <Container
-                        className="d-flex justify-content-between p-2 border rounded-pill w-50 align-items-center"
-                        style={{ minWidth: "80px" }}
+                        className="d-flex justify-content-between p-2 border rounded-pill align-items-center"
+                        style={{ minWidth: "80px", width: "7rem" }}
                     >
                         {isMinusHovered ? (
                             <DashCircleFill
                                 className="basket-btn-quantity"
                                 onMouseLeave={handleMinusMouseLeave}
+                                onClick={() => amountChange("-")}
                             />
                         ) : (
                             <DashCircle
@@ -65,11 +88,12 @@ const ItemCard = (item: any) => {
                                 onMouseEnter={handleMinusMouseEnter}
                             />
                         )}
-                        <span>1</span>
+                        <span>{amount}</span>
                         {isPlusHovered ? (
                             <PlusCircleFill
                                 className="basket-btn-quantity"
                                 onMouseLeave={handlePlusMouseLeave}
+                                onClick={() => amountChange("+")}
                             />
                         ) : (
                             <PlusCircle
@@ -79,9 +103,14 @@ const ItemCard = (item: any) => {
                         )}
                     </Container>
                 </Col>
-                <Col xs={2}>1123 грн</Col>
+                <Col xs={2}>
+                    <h5>{item.newPrice * amount} ₴</h5>
+                </Col>
                 <Col className="d-flex justify-content-center">
-                    <XCircle className="basket-close-btn" />
+                    <XCircle
+                        className="basket-close-btn"
+                        onClick={handleRemoveItem}
+                    />
                 </Col>
             </Row>
             <div className="basket-delimiter" />
