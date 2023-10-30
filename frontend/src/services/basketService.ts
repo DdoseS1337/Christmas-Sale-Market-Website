@@ -47,16 +47,11 @@ export class CartService {
         this.saveCart();
     }
 
-    // Видалення товару з корзини
+    // Видалення товару
     static removeFromCart(itemId: string): void {
         const index = this.cart.findIndex((item) => item.id === itemId);
         if (index !== -1) {
-            const item = this.cart[index];
-            if (item.amount > 1) {
-                item.amount -= 1;
-            } else {
-                this.cart.splice(index, 1);
-            }
+            this.cart.splice(index, 1);
             this.saveCart();
         }
     }

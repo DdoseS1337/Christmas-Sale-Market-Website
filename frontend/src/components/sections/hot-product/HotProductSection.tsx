@@ -8,7 +8,7 @@ export const HotProductSection = () => {
     const { items: categories } = useFetchData<any[]>({
         callApi: () =>
             Promise.all([
-                christmasTreeApi.getCategoryById("653fa7d4c5703a21db6d7c01"),
+                christmasTreeApi.getCategoryById("653fa7d5c5703a21db6d7c02"),
                 christmasTreeApi.getCategoryById("653fa7d5c5703a21db6d7c02"),
                 christmasTreeApi.getCategoryById("653fa7d5c5703a21db6d7c04"),
             ]).then((result) => {

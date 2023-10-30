@@ -12,9 +12,10 @@ import { CartItem, CartService } from "../../../services/basketService";
 
 interface ItemCardProps {
     item: CartItem;
+    onItemRemoved: (itemId: string) => void;
 }
 
-const ItemCard = ({ item }: ItemCardProps) => {
+const ItemCard = ({ item, onItemRemoved }: ItemCardProps) => {
     const [isMinusHovered, setIsMinusHovered] = useState(false);
     const [isPlusHovered, setIsPlusHovered] = useState(false);
     const [amount, setAmount] = useState(item.amount);
@@ -47,6 +48,11 @@ const ItemCard = ({ item }: ItemCardProps) => {
                 CartService.updateCartItem(item.id, { amount: newAmount });
             }
         }
+    };
+
+    const handleRemoveItem = () => {
+        // Викликайте onItemRemoved для видалення товару візуально
+        onItemRemoved(item.id);
     };
 
     return (
@@ -102,7 +108,10 @@ const ItemCard = ({ item }: ItemCardProps) => {
                     <h5>{item.newPrice * amount} ₴</h5>
                 </Col>
                 <Col className="d-flex justify-content-center">
-                    <XCircle className="basket-close-btn" />
+                    <XCircle
+                        className="basket-close-btn"
+                        onClick={handleRemoveItem}
+                    />
                 </Col>
             </Row>
             <div className="basket-delimiter" />

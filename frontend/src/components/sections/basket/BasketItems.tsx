@@ -1,12 +1,31 @@
+import { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import ItemCard from "./ItemCard";
-import { CartService } from "../../../services/basketService";
+import { CartService, CartItem } from "../../../services/basketService";
 
-const BasketItems = (props: any) => {
-    CartService.loadCart();
-    const cartItems = CartService.getCart();
-    const totalCartPrice = CartService.getTotalPrice(); // Отримання загальної суми
+const BasketItems = () => {
+    const [cartItems, setCartItems] = useState(CartService.getCart());
+    const [totalCartPrice, setTotalCartPrice] = useState(0);
+
+    useEffect(() => {
+        CartService.loadCart();
+    }, []);
+
+    useEffect(() => {
+        const totalPrice = CartService.getTotalPrice();
+        setTotalCartPrice(totalPrice);
+    }, [cartItems]);
+
+    const updateCart = (newCart: CartItem[]) => {
+        setCartItems(newCart);
+        CartService.saveCart(newCart);
+    };
+
+    const removeItemFromCart = (itemId: string) => {
+        CartService.removeFromCart(itemId);
+        updateCart(cartItems.filter((item) => item.id !== itemId));
+    };
 
     return (
         <Container className="border rounded py-3">
@@ -20,7 +39,11 @@ const BasketItems = (props: any) => {
             <div className="basket-delimiter" />
 
             {cartItems.map((item) => (
-                <ItemCard key={item.id} item={item} />
+                <ItemCard
+                    key={item.id}
+                    item={item}
+                    onItemRemoved={removeItemFromCart}
+                />
             ))}
 
             <Container
