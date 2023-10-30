@@ -1,1 +1,1 @@
-export * from './get-user-order.dto';
+export * from './update-user-order.dto';

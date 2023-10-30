@@ -26,12 +26,11 @@ export class JwtAuthGuard implements CanActivate {
   ): boolean | Promise<boolean> | Observable<boolean> {
     const jwt =
       context.switchToHttp().getRequest().cookies?.Authentication ||
-      context.switchToHttp().getRequest().headers?.authentication;
+      context.switchToHttp().getRequest().headers?.Authentication;
 
     if (!jwt) {
       return false;
     }
-
     const roles = this.reflector.get<string[]>('roles', context.getHandler());
 
     return this.authClient
@@ -40,6 +39,7 @@ export class JwtAuthGuard implements CanActivate {
       })
       .pipe(
         tap((res) => {
+          console.log(res);
           if (roles) {
             for (const role of roles) {
               if (!res.roles?.includes(role)) {

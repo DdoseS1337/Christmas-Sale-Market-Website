@@ -76,10 +76,11 @@ export class SupplierService {
       });
       return {
         ...offer,
+        // categoryId: offer.categoryId.toString(),
         param: modifiedParams,
         supplier_name: this.getDataElkiShop.name,
-        newPrice: String(Number(offer.price) * 2),
-        price: String(Number(offer.price) * 4),
+        newPrice: (Number(offer.price) * 2).toString(),
+        price: (Number(offer.price) * 4).toString(),
       };
     });
 

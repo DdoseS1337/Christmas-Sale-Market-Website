@@ -1,6 +1,7 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Query, UseGuards } from '@nestjs/common';
 import { ChristmasTreeOffersService } from './christmas-tree-offers.service';
-import { TreeOffersValidator } from './dto/tree-offers-validator.dto';
+import { TreeOffersValidator, UpdateOfferDto } from './dto';
+import { JwtAuthGuard, Roles } from '@app/common';
 
 @Controller('christmas-tree-offers')
 export class ChristmasTreeOffersController {
@@ -30,5 +31,15 @@ export class ChristmasTreeOffersController {
   @Get(':id')
   async GetTreeOffer(@Param('id') id: string) {
     return this.christmasTreeOffersService.findOne(id);
+  }
+
+  @Patch(':id')
+  @UseGuards(JwtAuthGuard)
+  @Roles('Admin', 'Owner')
+  async UpdateTreeOffer(
+    @Param('id') id: string,
+    @Body() updateOfferDto: UpdateOfferDto,
+  ) {
+    return this.christmasTreeOffersService.update(id, updateOfferDto);
   }
 }

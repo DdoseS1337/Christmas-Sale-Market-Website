@@ -22,19 +22,6 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
         token: configService.get('TELEGRAM_BOT_TOKEN'),
       }),
     }),
-    ClientsModule.registerAsync([
-      {
-        name: PRODUCT_SERVICE,
-        useFactory: (configService: ConfigService) => ({
-          transport: Transport.RMQ,
-          options: {
-            urls: [configService.getOrThrow<string>('RABBITMQ_URI')],
-            queue: 'products',
-          },
-        }),
-        inject: [ConfigService],
-      },
-    ]),
   ],
   controllers: [TelegramBotController],
   providers: [TelegramBotService],

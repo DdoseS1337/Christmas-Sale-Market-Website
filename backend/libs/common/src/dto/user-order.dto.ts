@@ -6,8 +6,17 @@ import {
   IsPhoneNumber,
   IsArray,
   ValidateNested,
+  IsEnum,
 } from 'class-validator';
 import { Type } from 'class-transformer';
+
+export enum OrderStatus {
+  PENDING = 'pending',
+  PROCESSING = 'processing',
+  SHIPPED = 'shipped',
+  DELIVERED = 'delivered',
+  CANCELLED = 'cancelled',
+}
 
 export class Product {
   @IsString()
@@ -53,6 +62,10 @@ export class CreateUserOrderDto {
   @IsOptional()
   @IsString()
   additional_info: string;
+
+  @IsOptional()
+  @IsEnum(OrderStatus)
+  status: OrderStatus;
 }
 
 export class TelegramOrderDto extends CreateUserOrderDto {
@@ -60,5 +73,5 @@ export class TelegramOrderDto extends CreateUserOrderDto {
   @Type(() => Product)
   @IsArray()
   @IsNotEmpty()
-  products: Product[]; 
+  products: Product[];
 }
