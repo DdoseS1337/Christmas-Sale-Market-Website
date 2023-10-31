@@ -2,7 +2,7 @@ import { Card } from "react-bootstrap";
 import { BagDash, Dash } from "react-bootstrap-icons";
 import "../../styles/components/common/product-card.css";
 import RoundedButton from "./RoundedButton";
-import { Link, To } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useRef, useState } from "react";
 import { IShortOffer } from "../../interfaces/Offer";
 
@@ -12,10 +12,10 @@ interface IProps extends IShortOffer {
 
 export const ProductCard = ({
 	id,
-	title,
-	actualPrice,
-	oldPrice,
-	image,
+	name: title,
+	newPrice: actualPrice,
+	price: oldPrice,
+	picture: image,
 	className,
 }: IProps) => {
 	const linkRef = useRef<HTMLAnchorElement>(null);
