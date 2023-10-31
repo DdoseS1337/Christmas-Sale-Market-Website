@@ -1,0 +1,12 @@
+.catalog {
+}
+
+.catalog__offers {
+    display: inline-flex;
+    flex-wrap: wrap;
+    margin: -20px;
+}
+
+.catalog__product {
+    margin: 20px;
+}

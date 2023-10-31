@@ -1,0 +1,11 @@
+.catalog-filter {
+    min-width: 312px;
+    margin-right: 35px;
+    position: sticky;
+    top: 0;
+    left: 0;
+}
+
+.catalog-filter__radio-control {
+    display: flex;
+}

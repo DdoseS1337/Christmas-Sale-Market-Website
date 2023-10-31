@@ -1,16 +1,20 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 interface IFetchDataParameters<T> {
     callApi: () => Promise<T>
     filter?: (value: any, index: number, array: any[]) => boolean;
     count?: number;
+    dependencies?: React.DependencyList;
 }
 
-export const useFetchData = <T>({callApi, filter, count}: IFetchDataParameters<T>) => {
+export const useFetchData = <T>(fetchDataParameters: IFetchDataParameters<T>) => {
     const [items, setItems] = useState<T>();
     const [error, setError] = useState<any>();
-    
-    const refresh = () => {
+
+    const refresh = useCallback((refreshDataParameters?: IFetchDataParameters<T>) => {
+        console.log("refresh")
+        const { callApi, filter, count } = refreshDataParameters ?? fetchDataParameters;
+
         callApi().then((result: any) =>  {
             if (Array.isArray(result) === false) {
                 setItems(result);
@@ -30,12 +34,12 @@ export const useFetchData = <T>({callApi, filter, count}: IFetchDataParameters<T
             setError(e);
             console.log(e);
         });
-    };
+    }, fetchDataParameters.dependencies ?? []);
 
     useEffect(() => {
         refresh();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, fetchDataParameters.dependencies ?? []);
 
     return { items, refresh, error };
 }
