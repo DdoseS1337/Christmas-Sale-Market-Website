@@ -1,12 +1,17 @@
 import { ConfigService } from '@nestjs/config';
 import { Start, Ctx, Update, On, Message } from 'nestjs-telegraf';
 import { Context, Telegraf } from 'telegraf';
-import { TelegramOrderDto } from '@app/common';
+import { AUTH_SERVICE, TelegramOrderDto, UserDto } from '@app/common';
 import { BadRequestException, Inject } from '@nestjs/common';
+import { ClientProxy } from '@nestjs/microservices';
+import { tap } from 'rxjs';
 
 @Update()
 export class TelegramBotService extends Telegraf<Context> {
-  constructor(private readonly configService: ConfigService) {
+  constructor(
+    private readonly configService: ConfigService,
+    @Inject(AUTH_SERVICE) private readonly authService: ClientProxy,
+  ) {
     super(configService.get('TELEGRAM_BOT_TOKEN'));
   }
   @Start()
@@ -32,7 +37,6 @@ export class TelegramBotService extends Telegraf<Context> {
   }
 
   async onOrder(data: TelegramOrderDto) {
-    const admins = [596621527];
     const productsDataArray = data.products;
     const productsMessage = productsDataArray
       .map(
@@ -66,10 +70,19 @@ export class TelegramBotService extends Telegraf<Context> {
 
     <b>Total Amount:</b> ${totalAmount} ₴
     `;
-    for (const adminChatId of admins) {
-      this.telegram.sendMessage(adminChatId, message, {
-        parse_mode: 'HTML',
-      });
-    }
+    return this.authService
+      .send('get-admins', {})
+      .pipe(
+        tap((adminsResponse: UserDto[]) => {
+          adminsResponse
+            .filter((admin) => admin.telegramChatId)
+            .map((admin) => {
+              this.telegram.sendMessage(admin.telegramChatId, message, {
+                parse_mode: 'HTML',
+              });
+            });
+        }),
+      )
+      .subscribe();
   }
 }

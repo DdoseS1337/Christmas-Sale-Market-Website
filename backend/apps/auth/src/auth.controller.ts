@@ -30,8 +30,8 @@ export class AuthController {
     return data.user;
   }
 
-  @MessagePattern('authenticate')
-  async getAdmins() {
-    return this.usersService.getUser;
+  @MessagePattern('get-admins')
+  async GetAdmins() {
+    return this.usersService.getAdmins();
   }
 }
