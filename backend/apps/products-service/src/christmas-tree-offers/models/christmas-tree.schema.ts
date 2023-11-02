@@ -22,10 +22,10 @@ export class ChristmasTreeDocument extends AbstractDocument {
   supplier_name: string;
 
   @Prop()
-  price: string;
+  price: number;
 
   @Prop()
-  newPrice: string;
+  newPrice: number;
 
   @Prop()
   currencyId: string;

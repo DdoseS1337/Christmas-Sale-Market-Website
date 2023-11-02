@@ -5,9 +5,11 @@ import { LoggerModule, PRODUCT_SERVICE } from '@app/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as Joi from 'joi';
+import { ScheduleModule } from '@nestjs/schedule';
 @Module({
   imports: [
     LoggerModule,
+    ScheduleModule.forRoot(),
     ConfigModule.forRoot({
       isGlobal: true,
       validationSchema: Joi.object({

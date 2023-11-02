@@ -20,6 +20,17 @@ export class ProductsController {
     return this.productsService.setOffers(offers);
   }
 
+  @MessagePattern('update_supply_categories')
+  async updateDataCategories(@Payload() data) {
+    const categories = JSON.parse(data);
+    return this.productsService.updateCategories(categories);
+  }
+  @MessagePattern('update_supply_offers')
+  async updateDataOffers(@Payload() data) {
+    const offers = JSON.parse(data);
+    return this.productsService.updateOffers(offers);
+  }
+
   @MessagePattern('get-tree-offer')
   async getTreeOfferFromMicroservice(@Payload() id: string) {
     return this.productsService.findOne(id);
