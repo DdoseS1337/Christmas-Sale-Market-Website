@@ -13,7 +13,7 @@ export class UserDocument extends AbstractDocument {
   roles?: string[];
 
   @Prop()
-  tgChatId?: number;
+  telegramChatId?: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(UserDocument);

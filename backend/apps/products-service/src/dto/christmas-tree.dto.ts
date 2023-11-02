@@ -1,5 +1,5 @@
 import { Type } from 'class-transformer';
-import { IsNotEmpty, IsString, IsArray, ArrayNotEmpty, ValidateNested, IsNumberString } from 'class-validator';
+import { IsNotEmpty, IsString, IsArray, ArrayNotEmpty, ValidateNested, IsNumberString, IsNumber } from 'class-validator';
 
 export class ChristmasTreeDto {
   @IsNotEmpty()
@@ -27,12 +27,12 @@ export class ChristmasTreeDto {
   readonly supplier_name: string;
 
   @IsNotEmpty()
-  @IsNumberString()
-  readonly price: string;
+  @IsNumber()
+  readonly price: number;
 
   @IsNotEmpty()
-  @IsNumberString()
-  readonly newPrice: string;
+  @IsNumber()
+  readonly newPrice: number;
 
   @IsNotEmpty()
   @IsString()

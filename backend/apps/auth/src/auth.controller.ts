@@ -5,10 +5,14 @@ import { CurrentUser, UserDocument } from '@app/common';
 import { AuthService } from './auth.service';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { LocalAuthGuard } from './guards/local-auth.guard';
+import { UsersService } from './users/users.service';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly usersService: UsersService,
+  ) {}
 
   @UseGuards(LocalAuthGuard)
   @Post('login')
@@ -23,7 +27,11 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)
   @MessagePattern('authenticate')
   async authenticate(@Payload() data: any) {
-    console.log(data.user);
     return data.user;
+  }
+
+  @MessagePattern('get-admins')
+  async GetAdmins() {
+    return this.usersService.getAdmins();
   }
 }

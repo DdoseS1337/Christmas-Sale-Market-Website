@@ -2,6 +2,7 @@ import {
     IsArray,
     IsEmail,
     IsNotEmpty,
+    IsNumberString,
     IsOptional,
     IsString,
     IsStrongPassword,
@@ -20,7 +21,8 @@ import {
     @IsNotEmpty({ each: true })
     roles?: string[];
 
-    @IsString()
+    @IsNumberString()
     @IsOptional()
     telegramChatId?: string
   }
+
