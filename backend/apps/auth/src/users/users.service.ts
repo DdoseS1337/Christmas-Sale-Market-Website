@@ -41,4 +41,8 @@ import {
     async getUser(getUserDto: GetUserDto) {
       return this.usersRepository.findOne(getUserDto);
     }
+
+    async getAdmins() {
+      return this.usersRepository.find({});
+    }
   }
