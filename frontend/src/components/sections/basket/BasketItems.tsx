@@ -23,6 +23,12 @@ const BasketItems = () => {
         updateCart(cartItems.filter((item) => item.id !== itemId));
     };
 
+    const handleAmountChanged = (newPrice: any) => {
+        setTotalCartPrice(() => {
+            return newPrice;
+        });
+    };
+
     return (
         <Container className="border rounded py-3">
             <Row className="text-center">
@@ -39,6 +45,7 @@ const BasketItems = () => {
                     key={item.id}
                     item={item}
                     onItemRemoved={removeItemFromCart}
+                    onAmountChanged={handleAmountChanged}
                 />
             ))}
 
