@@ -51,19 +51,18 @@ const AnimatedBasket = () => {
 const BasketPage = () => {
     function useLocalStorageExists(key: any) {
         const [localStorageExists, setLocalStorageExists] = useState(
-            !!localStorage.getItem(key)
+            !!localStorage.getItem(key) && localStorage.getItem(key) != "[]"
         );
 
         useEffect(() => {
             const storageChangeHandler = () => {
-                setLocalStorageExists(!!localStorage.getItem(key));
+                setLocalStorageExists(
+                    !!localStorage.getItem(key) &&
+                        localStorage.getItem(key) != "[]"
+                );
             };
 
             window.addEventListener("storage", storageChangeHandler);
-
-            return () => {
-                window.removeEventListener("storage", storageChangeHandler);
-            };
         }, [key]);
 
         return localStorageExists;

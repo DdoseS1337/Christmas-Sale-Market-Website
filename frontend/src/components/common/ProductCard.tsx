@@ -5,99 +5,107 @@ import RoundedButton from "./RoundedButton";
 import { Link } from "react-router-dom";
 import { useRef, useState } from "react";
 import { IShortOffer } from "../../interfaces/Offer";
+import { CartService } from "../../services/basketService";
 
 interface IProps extends IShortOffer {
-	className?: string;
+    className?: string;
 }
 
 export const ProductCard = ({
-	id,
-	name: title,
-	newPrice: actualPrice,
-	price: oldPrice,
-	picture: image,
-	className,
+    id,
+    name: title,
+    newPrice: actualPrice,
+    price: oldPrice,
+    picture: image,
+    className,
 }: IProps) => {
-	const linkRef = useRef<HTMLAnchorElement>(null);
+    const linkRef = useRef<HTMLAnchorElement>(null);
 
-	const addToBasketIcon = <BagDash style={{ width: 20, height: 20 }} />;
-	const removeFromBasketIcon = <Dash style={{ width: 20, height: 20 }} />;
+    const addToBasketIcon = <BagDash style={{ width: 20, height: 20 }} />;
+    const removeFromBasketIcon = <Dash style={{ width: 20, height: 20 }} />;
 
-	const [iconOnBasketButton, setIconOnBasketButton] =
-		useState(addToBasketIcon);
+    const [iconOnBasketButton, setIconOnBasketButton] =
+        useState(addToBasketIcon);
 
-	const addToBasket = () => {
-		// use id here
-		// logic of adding a product to the basket
-		setIconOnBasketButton(removeFromBasketIcon);
-		setActualBasketButtonCallback(() => removeFromBasket);
-	};
+    const addToBasket = () => {
+        CartService.loadCart();
+        CartService.addToCart({
+            id: String(id),
+            name: title,
+            newPrice: actualPrice,
+            picture: [image],
+            amount: 1,
+        });
 
-	const removeFromBasket = () => {
-		// use id here
-		// logic of adding a product to the basket
-		setIconOnBasketButton(addToBasketIcon);
-		setActualBasketButtonCallback(() => addToBasket);
-	};
+        setIconOnBasketButton(removeFromBasketIcon);
+        setActualBasketButtonCallback(() => removeFromBasket);
+    };
 
-	const [actualBasketButtonCallback, setActualBasketButtonCallback] =
-		useState<() => void>(() => addToBasket);
+    const removeFromBasket = () => {
+        CartService.removeFromCart(String(id));
 
-	let clickedOnBasked = false;
-	let discount = oldPrice && (100 * (oldPrice - actualPrice)) / oldPrice;
+        setIconOnBasketButton(addToBasketIcon);
+        setActualBasketButtonCallback(() => addToBasket);
+    };
 
-	return (
-		<Card
-			body
-			className={"product-card " + className}
-			onClick={() => {
-				!clickedOnBasked && linkRef.current?.click();
-				clickedOnBasked = false;
-			}}
-		>
-			{discount && (
-				<Card.Header>
-					<div className="product-card__sale">
-						Знижка {discount.toFixed(0)}%
-					</div>
-				</Card.Header>
-			)}
-			<Card.Img
-				className="product-card__image"
-				src={image}
-				alt="product image"
-			/>
-			<Card.Footer>
-				<div>
-					<Card.Title className="product-card__title">
-						<Link to={`/catalog/${id}`} ref={linkRef}>
-							{title}
-						</Link>
-					</Card.Title>
-					<div className="product-card__price">
-						<div className="product-card__price-actual me-2">
-							{actualPrice} грн
-						</div>
-						{oldPrice && (
-							<div className="product-card__price-old">
-								{oldPrice} грн
-							</div>
-						)}
-					</div>
-				</div>
-				<RoundedButton
-					isCircle
-					backgroundIsGray
-					className="product-card__button z-1"
-					onClick={() => {
-						clickedOnBasked = true;
-						actualBasketButtonCallback &&
-							actualBasketButtonCallback();
-					}}
-				>
-					{iconOnBasketButton}
-				</RoundedButton>
-			</Card.Footer>
-		</Card>
-	);
+    const [actualBasketButtonCallback, setActualBasketButtonCallback] =
+        useState<() => void>(() => addToBasket);
+
+    let clickedOnBasked = false;
+    let discount = oldPrice && (100 * (oldPrice - actualPrice)) / oldPrice;
+
+    return (
+        <Card
+            body
+            className={"product-card " + className}
+            onClick={() => {
+                !clickedOnBasked && linkRef.current?.click();
+                clickedOnBasked = false;
+            }}
+        >
+            {discount && (
+                <Card.Header>
+                    <div className="product-card__sale">
+                        Знижка {discount.toFixed(0)}%
+                    </div>
+                </Card.Header>
+            )}
+            <Card.Img
+                className="product-card__image"
+                src={image}
+                alt="product image"
+            />
+            <Card.Footer>
+                <div>
+                    <Card.Title className="product-card__title">
+                        <Link to={`/catalog/${id}`} ref={linkRef}>
+                            {title}
+                        </Link>
+                    </Card.Title>
+                    <div className="product-card__price">
+                        <div className="product-card__price-actual me-2">
+                            {actualPrice} грн
+                        </div>
+                        {oldPrice && (
+                            <div className="product-card__price-old">
+                                {oldPrice} грн
+                            </div>
+                        )}
+                    </div>
+                </div>
+                <RoundedButton
+                    isCircle
+                    backgroundIsGray
+                    className="product-card__button z-1"
+                    onClick={() => {
+                        clickedOnBasked = true;
+                        actualBasketButtonCallback &&
+                            actualBasketButtonCallback();
+                    }}
+                >
+                    {iconOnBasketButton}
+                </RoundedButton>
+            </Card.Footer>
+        </Card>
+    );
 };
