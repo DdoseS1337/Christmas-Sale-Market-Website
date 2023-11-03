@@ -1,8 +1,0 @@
-.footer-input-bar {
-    display: flex;
-    flex-wrap: nowrap;
-    border-radius: 46px;
-    border: 1px solid var(--gray-100, #E6E6E6);
-    background: var(--light, #FFF);
-    width: 550px;
-}
