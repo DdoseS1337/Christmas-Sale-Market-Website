@@ -5,17 +5,15 @@ import { PRODUCT_SERVICE } from '@app/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { ConfigService } from '@nestjs/config';
 import { Cron } from '@nestjs/schedule';
-
+import * as momentTimezone from 'moment-timezone';
 import { YmlCatalog, Offer, Category } from './interfaces';
 @Injectable()
 export class SupplierService {
-  private readonly logger = new Logger(SupplierService.name)
+  private readonly logger = new Logger(SupplierService.name);
   constructor(
     @Inject(PRODUCT_SERVICE) private readonly productService: ClientProxy,
     private readonly configService: ConfigService,
-  ) {
-    
-  }
+  ) {}
 
   async xmlParser(url: string): Promise<any> {
     try {
@@ -80,41 +78,40 @@ export class SupplierService {
     }
   }
 
-  @Cron('5 9,14,19,23 * * *')
+  @Cron(momentTimezone.tz('5 9,14,19,23 * * *', 'Europe/Kiev').format())
   async updateDate() {
     try {
       this.logger.log('Data start updating');
       const catalogData = await this.getDataElkiShop();
-  
+
       const transformCategories = await this.getElkiShopCategories(
         catalogData.shop.categories,
       );
       const transformOffers = await this.getElkiShopOffers(
         catalogData.shop.offers,
       );
-  
+
       const jsonDataCategories = JSON.stringify(transformCategories);
-  
+
       const categories = this.productService
         .send('update_supply_categories', jsonDataCategories)
         .subscribe((res) => {
           return res;
         });
-  
+
       const jsonDataOffers = JSON.stringify(transformOffers);
       const offers = this.productService
         .send('update_supply_offers', jsonDataOffers)
         .subscribe((res) => {
           return res;
         });
-  
+
       if (categories && offers) {
         this.logger.log('Data successfully updated');
       }
     } catch (error) {
       this.logger.error('Error update');
     }
-
   }
   async getElkiShopCategories(categories: Category[]) {
     const transformCategories = categories.map((category) => {
