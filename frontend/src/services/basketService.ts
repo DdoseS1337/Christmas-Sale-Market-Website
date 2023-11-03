@@ -19,13 +19,13 @@ export class CartService {
         } else {
             localStorage.setItem("christmasMarketBasket", "");
         }
-
         this.cart = cartData.filter(this.isValidCartItem);
     }
 
     // Збереження корзини в Local Storage з опціональним списком товарів
     static saveCart(newCart?: CartItem[]): void {
         const cartToSave = newCart || this.cart;
+
         const validCart = cartToSave.filter(this.isValidCartItem);
         localStorage.setItem(
             "christmasMarketBasket",
@@ -52,16 +52,22 @@ export class CartService {
         const index = this.cart.findIndex((item) => item.id === itemId);
         if (index !== -1) {
             this.cart.splice(index, 1);
-            this.saveCart();
         }
+        this.saveCart();
     }
 
     // Отримання суми товарів в кошику
     static getTotalPrice(): number {
+        this.loadCart();
         return this.cart.reduce(
             (total, item) => total + item.newPrice * item.amount,
             0
         );
+    }
+
+    static getTotalAmount(): number {
+        this.loadCart();
+        return this.cart.reduce((total, item) => total + item.amount, 0);
     }
 
     // Перевірка, чи товар відповідає очікуваному формату
@@ -79,7 +85,7 @@ export class CartService {
 
     // Отримати список товарів з Local Storage
     static getCart(): CartItem[] {
-        this.loadCart(); // Завантажимо дані з Local Storage
+        this.loadCart();
         return this.cart;
     }
 

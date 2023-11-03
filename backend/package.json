@@ -41,6 +41,7 @@
     "joi": "^17.11.0",
     "js-yaml": "^4.1.0",
     "jsdom": "^22.1.0",
+    "moment-timezone": "^0.5.43",
     "mongoose": "^7.6.0",
     "nestjs-pino": "^3.5.0",
     "nestjs-telegraf": "^2.7.0",

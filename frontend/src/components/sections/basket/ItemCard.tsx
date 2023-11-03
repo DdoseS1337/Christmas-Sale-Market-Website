@@ -13,9 +13,10 @@ import { CartItem, CartService } from "../../../services/basketService";
 interface ItemCardProps {
     item: CartItem;
     onItemRemoved: (itemId: string) => void;
+    onAmountChanged: (newAmount: number) => void;
 }
 
-const ItemCard = ({ item, onItemRemoved }: ItemCardProps) => {
+const ItemCard = ({ item, onItemRemoved, onAmountChanged }: ItemCardProps) => {
     const [isMinusHovered, setIsMinusHovered] = useState(false);
     const [isPlusHovered, setIsPlusHovered] = useState(false);
     const [amount, setAmount] = useState(item.amount);
@@ -41,11 +42,13 @@ const ItemCard = ({ item, onItemRemoved }: ItemCardProps) => {
             const newAmount = amount + 1;
             setAmount(newAmount);
             CartService.updateCartItem(item.id, { amount: newAmount });
+            onAmountChanged(CartService.getTotalPrice());
         } else if (operation === "-") {
             const newAmount = amount - 1;
             if (newAmount >= 1) {
                 setAmount(newAmount);
                 CartService.updateCartItem(item.id, { amount: newAmount });
+                onAmountChanged(CartService.getTotalPrice());
             }
         }
     };
