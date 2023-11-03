@@ -5,7 +5,7 @@ import { PRODUCT_SERVICE } from '@app/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { ConfigService } from '@nestjs/config';
 import { Cron } from '@nestjs/schedule';
-import * as momentTimezone from 'moment-timezone';
+
 
 import { YmlCatalog, Offer, Category } from './interfaces';
 @Injectable()
@@ -79,7 +79,7 @@ export class SupplierService {
     }
   }
 
-  @Cron(momentTimezone.tz('5 9,14,19,23 * * *', 'Europe/Kiev').format())
+  @Cron('5 9,14,19,23 * * *')
   async updateDate() {
     try {
       this.logger.log('Data start updating');

@@ -14,8 +14,7 @@
   "dependencies": {
     "axios": "^1.5.1",
     "xml2js": "^0.6.2",
-    "@nestjs/schedule": "^4.0.0",
-    "moment-timezone": "^0.5.43"
+    "@nestjs/schedule": "^4.0.0"
   },
   "devDependencies": {
     "@types/xml2js": "^0.4.12"

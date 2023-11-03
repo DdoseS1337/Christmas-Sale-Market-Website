@@ -7,16 +7,16 @@ WORKDIR /usr/src/app
 
 COPY package.json ./
 COPY tsconfig.json  tsconfig.json
-
-RUN npm install
+COPY nest-cli.json nest-cli.json
 
 
 COPY apps/supplier-service apps/supplier-service
 COPY libs libs
 
-RUN cd apps/supplier-service && npm install
 
-RUN npm run build
+RUN npm install -r
+
+RUN npm run build supplier-service
 
 FROM node:alpine As production
 
