@@ -7,16 +7,16 @@ WORKDIR /usr/src/app
 
 COPY package.json ./
 COPY tsconfig.json  tsconfig.json
-
-RUN npm install
+COPY nest-cli.json nest-cli.json
 
 
 COPY apps/telegram-bot apps/telegram-bot
 COPY libs libs
 
-RUN cd apps/telegram-bot && npm install
 
-RUN npm run build
+RUN npm install -r
+
+RUN npm run build telegram-bot
 
 FROM node:alpine As production
 
