@@ -2,7 +2,7 @@ export interface IShortOffer {
     id: number;
 	name: string;
 	newPrice: number;
-	price: number;
+	price?: number;
 	picture: string;
 }
 

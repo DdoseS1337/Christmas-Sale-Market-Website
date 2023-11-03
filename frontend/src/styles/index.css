@@ -24,6 +24,7 @@ body {
 }
 
 #root {
+    /* TODO: need will to remove the overflow */
     overflow: hidden;
 }
 

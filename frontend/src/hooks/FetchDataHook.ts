@@ -1,18 +1,18 @@
 import { useCallback, useEffect, useState } from "react";
 
-interface IFetchDataParameters<T> {
+export interface IFetchDataParameters<T> {
     callApi: () => Promise<T>
     filter?: (value: any, index: number, array: any[]) => boolean | Promise<boolean>;
     count?: number;
+    defaultValue?: T;
     dependencies?: React.DependencyList;
 }
 
 export const useFetchData = <T>(fetchDataParameters: IFetchDataParameters<T>) => {
-    const [items, setItems] = useState<T>();
+    const [items, setItems] = useState<T | undefined>(fetchDataParameters.defaultValue);
     const [error, setError] = useState<any>();
 
     const refresh = useCallback(async (refreshDataParameters?: IFetchDataParameters<T>) => {
-        console.log("refresh")
         const { callApi, filter, count } = refreshDataParameters ?? fetchDataParameters;
 
         let result: any = await callApi().catch(e => {
@@ -29,18 +29,19 @@ export const useFetchData = <T>(fetchDataParameters: IFetchDataParameters<T>) =>
             result = await asyncFilter(result, filter);
         }
 
-        if (count){ 
+        if (count) { 
             result = result.slice(0, count);
         }
 
         setItems(result);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, fetchDataParameters.dependencies ?? []);
 
     useEffect(() => {
         refresh();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, fetchDataParameters.dependencies ?? []);
-
+    
     return { items, refresh, error };
 }
 
@@ -48,4 +49,3 @@ const asyncFilter = async (arr: Array<any>, func: (value: any, index: number, ar
     const boolArr = await Promise.all(arr.map(func));
     return arr.filter((_, i) => boolArr[i]);
 }
-  

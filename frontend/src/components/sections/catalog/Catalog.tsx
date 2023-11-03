@@ -1,38 +1,43 @@
 import "../../../styles/components/sections/catalog/catalog.css";
-import { useFetchData } from "../../../hooks/FetchDataHook";
-import christmasTreeApi from "../../../services/christmas-tree.api";
 import { IOffer } from "../../../interfaces/Offer";
 import { ProductCard } from "../../common/ProductCard";
 
 interface IProps {
-	category: any;
+	categoryName?: string;
+	offers?: Array<IOffer>;
 }
 
-export const Catalog = ({ category }: IProps) => {
-	const { items: offers } = useFetchData<IOffer[]>({
-		callApi: () =>
-			christmasTreeApi.getOffersByCategoryId(category.id, true),
-		count: 20,
-		dependencies: [category],
-	});
+export const Catalog = ({ categoryName, offers }: IProps) => {
+	const offersIsEmpty = offers?.length === 0;
 
 	return (
 		<div className="catalog">
-			<h1>{category.name}</h1>
-			<div className="catalog__offers">
-				{offers?.map((offer) => {
-					return (
-						<ProductCard
-							key={offer._id}
-							className="catalog__product"
-							id={offer._id}
-							title={offer.name}
-							actualPrice={offer.price}
-							image={offer.picture[0]}
-						/>
-					);
-				})}
-			</div>
+			<h1 className="catalog__title">{categoryName}</h1>
+			{offersIsEmpty ? (
+				<span className="catalog__not-found">Товарів не знайдено</span>
+			) : (
+				<OffersPresenter offers={offers} />
+			)}
+		</div>
+	);
+};
+
+const OffersPresenter = ({ offers }: { offers?: Array<IOffer> }) => {
+	return (
+		<div className="catalog__offers">
+			{offers?.map((offer) => {
+				return (
+					<ProductCard
+						key={offer.id}
+						className="catalog__product"
+						id={offer.id}
+						name={offer.name}
+						newPrice={offer.newPrice}
+						price={offer.price}
+						picture={offer.picture[0]}
+					/>
+				);
+			})}
 		</div>
 	);
 };
