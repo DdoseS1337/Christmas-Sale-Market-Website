@@ -5,11 +5,14 @@ WORKDIR /usr/src/app
 
 
 COPY package.json ./
+COPY tsconfig.json  tsconfig.json
 
+RUN npm install 
 
-RUN npm install
+COPY apps/order-service apps/order-service
+COPY libs libs
 
-COPY . .
+RUN cd apps/order-service && npm install
 
 RUN npm run build
 

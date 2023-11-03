@@ -5,11 +5,14 @@ WORKDIR /usr/src/app
 
 
 COPY package.json ./
-
+COPY tsconfig.json  tsconfig.json
 
 RUN npm install
 
-COPY . .
+COPY apps/products-service apps/products-service
+COPY libs libs
+
+RUN cd apps/products-service && npm install
 
 RUN npm run build
 

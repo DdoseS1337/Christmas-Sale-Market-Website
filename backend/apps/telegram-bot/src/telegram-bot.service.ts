@@ -2,7 +2,7 @@ import { ConfigService } from '@nestjs/config';
 import { Start, Ctx, Update, On, Message } from 'nestjs-telegraf';
 import { Context, Telegraf } from 'telegraf';
 import { AUTH_SERVICE, TelegramOrderDto, UserDto } from '@app/common';
-import { BadRequestException, Inject } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { tap } from 'rxjs';
 
@@ -16,24 +16,16 @@ export class TelegramBotService extends Telegraf<Context> {
   }
   @Start()
   onStart(@Ctx() ctx: Context) {
-    try {
-      ctx.replyWithHTML(`<b>Hello baby, ${ctx.from.username}</b>
+    ctx.replyWithHTML(`<b>Hello baby, ${ctx.from.username}</b>
       You gona get info soon
         `);
-    } catch (error) {
-      throw new BadRequestException('smth bad happend');
-    }
   }
 
   @On('text')
   onMessage(@Message('text') message: string, @Ctx() ctx: Context) {
-    try {
-      ctx.replyWithHTML(`<b>i get, ${message}</b>
+    ctx.replyWithHTML(`<b>i get, ${message}</b>
       You gona get info soon
         `);
-    } catch (error) {
-      throw new BadRequestException('smth bad happend');
-    }
   }
 
   async onOrder(data: TelegramOrderDto) {

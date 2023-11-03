@@ -1,5 +1,5 @@
 import { Type } from 'class-transformer';
-import { IsNotEmpty, IsString, IsArray, ArrayNotEmpty, ValidateNested, IsNumberString, IsNumber } from 'class-validator';
+import { IsNotEmpty, IsString, IsArray, ArrayNotEmpty, ValidateNested, IsNumber } from 'class-validator';
 
 export class ChristmasTreeDto {
   @IsNotEmpty()

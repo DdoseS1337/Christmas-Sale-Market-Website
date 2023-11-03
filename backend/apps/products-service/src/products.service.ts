@@ -1,7 +1,6 @@
 import {
   BadRequestException,
   Injectable,
-  NotFoundException,
 } from '@nestjs/common';
 import { ChristmastreeCategoryDto } from './dto/christmas-tree-categories.dto';
 import { ChristmasTreeDto } from './dto/christmas-tree.dto';
