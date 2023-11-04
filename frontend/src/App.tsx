@@ -13,25 +13,25 @@ import NotFoundPage from "./pages/NotFoundPage";
 import InfoPage from "./pages/InfoPage";
 
 const App = () => {
-    return (
-        <Router>
-            <Header />
-            <NavBar />
-            <MainContainer>
-                <Routes>
-                    <Route path="/" element={<MainPage />} />
-                    <Route path="/information" element={<InfoPage />} />
-                    <Route path="/catalog" element={<CatalogPage />} />
-                    <Route path="/catalog/:id" element={<ProductPage />} />
-                    <Route path="/contacts" element={<ContactsPage />} />
-                    <Route path="/basket" element={<BasketPage />} />
-                    <Route path="/basket/order" element={<OrderPage />} />
-                    <Route path="*" element={<NotFoundPage />} />
-                </Routes>
-            </MainContainer>
-            <Footer />
-        </Router>
-    );
+	return (
+		<Router>
+			<Header />
+			<NavBar />
+			<MainContainer>
+				<Routes>
+					<Route path="/" element={<MainPage />} />
+					<Route path="/information" element={<InfoPage />} />
+					<Route path="/catalog" element={<CatalogPage />} />
+					<Route path="/catalog/:id" element={<ProductPage />} />
+					<Route path="/contacts" element={<ContactsPage />} />
+					<Route path="/basket" element={<BasketPage />} />
+					<Route path="/basket/order" element={<OrderPage />} />
+					<Route path="*" element={<NotFoundPage />} />
+				</Routes>
+			</MainContainer>
+			<Footer />
+		</Router>
+	);
 };
 
 export default App;

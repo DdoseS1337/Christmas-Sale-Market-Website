@@ -1,16 +1,20 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
-interface IFetchDataParameters<T> {
+export interface IFetchDataParameters<T> {
     callApi: () => Promise<T>
     filter?: (value: any, index: number, array: any[]) => boolean | Promise<boolean>;
     count?: number;
+    defaultValue?: T;
+    dependencies?: React.DependencyList;
 }
 
-export const useFetchData = <T>({callApi, filter, count}: IFetchDataParameters<T>) => {
-    const [items, setItems] = useState<T>();
+export const useFetchData = <T>(fetchDataParameters: IFetchDataParameters<T>) => {
+    const [items, setItems] = useState<T | undefined>(fetchDataParameters.defaultValue);
     const [error, setError] = useState<any>();
-    
-    const refresh = async () => {
+
+    const refresh = useCallback(async (refreshDataParameters?: IFetchDataParameters<T>) => {
+        const { callApi, filter, count } = refreshDataParameters ?? fetchDataParameters;
+
         let result: any = await callApi().catch(e => {
             setError(e);
             console.log(e);
@@ -22,25 +26,26 @@ export const useFetchData = <T>({callApi, filter, count}: IFetchDataParameters<T
         }
 
         if (filter) {
-            result = await asyncFilter(result, filter); // result.filter(filter);
+            result = await asyncFilter(result, filter);
         }
 
-        if (count){ 
+        if (count) { 
             result = result.slice(0, count);
         }
 
         setItems(result);
-    };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, fetchDataParameters.dependencies ?? []);
 
     useEffect(() => {
         refresh();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
+    }, fetchDataParameters.dependencies ?? []);
+    
     return { items, refresh, error };
 }
 
-function asyncFilter(arr: Array<any>, func: (value: any, index: number, array: any[]) => boolean | Promise<boolean>) {
-    return Promise.all(arr.map(func)).then(boolArr => arr.filter((_, i) => boolArr[i]));
+const asyncFilter = async (arr: Array<any>, func: (value: any, index: number, array: any[]) => boolean | Promise<boolean>) => {
+    const boolArr = await Promise.all(arr.map(func));
+    return arr.filter((_, i) => boolArr[i]);
 }
-  
