@@ -28,39 +28,32 @@ export const CatalogFilter = ({
 				<Accordion.Header className="catalog-filter__title">
 					Категорії
 				</Accordion.Header>
-				<Accordion.Collapse
-					className="show catalog-filter__body"
-					eventKey="0"
-				>
-					<Accordion.Body className="catalog-filter__body">
-						{categories?.map((category, index) => {
-							return (
-								<Form.Check
-									key={category.id}
-									name="catalog-filter__category"
-									type="radio"
-									id={`catalog-filter__category-${index}`}
-									className="catalog-filter__radio-control"
-									label={category.name}
-									checked={category.id == selectedCategoryId}
-									onChange={(e) => {
-										if (e.currentTarget.checked) {
-											setQueryParameters(
-												(oldParameters) => {
-													oldParameters.set(
-														"categoryId",
-														category.id.toString()
-													);
-													return oldParameters;
-												}
+				<Accordion.Body className="catalog-filter__body">
+					{categories?.map((category, index) => {
+						return (
+							<Form.Check
+								key={category.id}
+								name="catalog-filter__category"
+								type="radio"
+								id={`catalog-filter__category-${index}`}
+								className="catalog-filter__radio-control"
+								label={category.name}
+								checked={category.id == selectedCategoryId}
+								onChange={(e) => {
+									if (e.currentTarget.checked) {
+										setQueryParameters((oldParameters) => {
+											oldParameters.set(
+												"categoryId",
+												category.id.toString()
 											);
-										}
-									}}
-								/>
-							);
-						})}
-					</Accordion.Body>
-				</Accordion.Collapse>
+											return oldParameters;
+										});
+									}
+								}}
+							/>
+						);
+					})}
+				</Accordion.Body>
 			</Accordion.Item>
 			<Accordion.Item className="catalog-filter__block" eventKey="1">
 				<Accordion.Header className="catalog-filter__title">

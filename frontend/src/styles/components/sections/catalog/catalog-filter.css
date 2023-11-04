@@ -10,12 +10,23 @@
 
 .catalog-filter__block {
     border: 0 !important;
-    padding-bottom: 20px;
+}
+
+.catalog-filter__body {
+    padding: 0 !important;
+    padding-top: 20px !important;
+    margin: 0;
+    margin-bottom: 20px;
+}
+
+.catalog-filter__radio-control,
+.catalog-filter__radio-control > * {
+    cursor: pointer;
 }
 
 .catalog-filter__radio-control > .form-check-input:checked {
     background-color: var(--primary);
-    border-color: var(--primary);
+    border-color: var(--primary) !important;
 }
 
 .catalog-filter__title > button {
@@ -25,9 +36,13 @@
     line-height: 150%; /* 30px */
     background-color: transparent !important;
     box-shadow: 0 0 0 transparent !important;
-    padding-bottom: 20px;
 }
 
-.catalog-filter__body {
-    padding: 0 !important;
+.accordion-collapse.show .multi-range-slider {
+    opacity: 1;
+}
+
+.accordion-collapse .multi-range-slider {
+    opacity: 0;
+    transition: .1s;
 }
