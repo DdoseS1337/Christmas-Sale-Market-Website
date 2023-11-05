@@ -1,4 +1,5 @@
 import { Col, Container, Row } from "react-bootstrap";
+import Image from "react-bootstrap/Image";
 import {
     Envelope,
     TelephoneOutbound,
@@ -34,8 +35,12 @@ const ContactsPage: React.FC = () => {
                             onMouseEnter={() => handleIconMouseEnter("viber")}
                             onMouseLeave={handleIconMouseLeave}
                         >
-                            <a href="https://www.viber.com/ua/" target="_blank" rel="noreferrer">
-                                <img
+                            <a
+                                href="https://www.viber.com/ua/"
+                                target="_blank"
+                                rel="noreferrer"
+                            >
+                                <Image
                                     src={`/images/icons/viber${
                                         hoveredIcon === "viber" ? "-fill" : ""
                                     }.svg`}
@@ -44,7 +49,7 @@ const ContactsPage: React.FC = () => {
                                 />
                             </a>
                         </div>
-                        <p className="m-0 p-0">Viber</p>
+                        <p className="m-0 p-0 mt-2">Viber</p>
                     </Col>
                     <Col xs={1} className="d-flex justify-content-center">
                         <div className="contact-line"></div>
@@ -57,7 +62,11 @@ const ContactsPage: React.FC = () => {
                             onMouseLeave={handleIconMouseLeave}
                             className="contact-container-icon mx-auto"
                         >
-                            <a href="mailto:example@gmail.com" target="_blank" rel="noreferrer">
+                            <a
+                                href="mailto:example@gmail.com"
+                                target="_blank"
+                                rel="noreferrer"
+                            >
                                 {getIcon(
                                     <Envelope
                                         key="envelope"
@@ -71,7 +80,12 @@ const ContactsPage: React.FC = () => {
                             </a>
                         </div>
 
-                        <p className="m-0 p-0">example@gmail.com</p>
+                        <p
+                            className="m-0 p-0 mt-2"
+                            style={{ overflowWrap: "break-word" }}
+                        >
+                            example@gmail.com
+                        </p>
                     </Col>
                     <Col xs={1} className="d-flex justify-content-center">
                         <div className="contact-line"></div>
@@ -97,7 +111,7 @@ const ContactsPage: React.FC = () => {
                                 )}
                             </a>
                         </div>
-                        <p className="m-0 mt-2 p-0">(063) 555-35-55</p>
+                        <p className="m-0 mt-3 p-0">(063) 555-35-55</p>
                     </Col>
                 </Row>
             </Container>

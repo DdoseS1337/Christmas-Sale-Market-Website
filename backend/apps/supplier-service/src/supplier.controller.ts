@@ -10,7 +10,6 @@ export class SupplierController {
   
   @Get('restore-data')
   async getDataFromButikElok(): Promise<string> {
-    return this.supplierService.getDataElkiShop();
+    return this.supplierService.restoreData();
   }
-
 }

@@ -1,0 +1,85 @@
+.multi-range-slider {
+    margin-top: 10px;
+}
+
+.slider {
+    position: relative;
+    width: 200px;
+    height: 10px;
+    margin-bottom: 10px;
+}
+
+.slider__track,
+.slider__range {
+    position: absolute;
+    border-radius: 3px;
+    height: 5px;
+}
+
+.slider__track {
+    background-color: var(--gray-100);
+    width: 100%;
+    z-index: 1;
+}
+
+.slider__range {
+    background-color: var(--primary);
+    z-index: 2;
+}
+
+/* Removing the default appearance */
+.thumb,
+.thumb::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.thumb {
+    pointer-events: none;
+    position: absolute;
+    height: 0;
+    width: 200px;
+    outline: none;
+}
+
+.thumb--zindex-3 {
+    z-index: 3;
+}
+
+.thumb--zindex-4 {
+    z-index: 4;
+}
+
+.thumb--zindex-5 {
+    z-index: 5;
+}
+
+/* For Chrome browsers */
+.thumb::-webkit-slider-thumb {
+    background-color: var(--secondary);
+    border: none;
+    border-radius: 50%;
+    /* box-shadow: 0 0 1px 3px var(--primary); */
+    border: 4px solid var(--primary);
+    cursor: pointer;
+    height: 16px;
+    width: 16px;
+    margin-top: 4px;
+    pointer-events: all;
+    position: relative;
+}
+
+/* For Firefox browsers */
+.thumb::-moz-range-thumb {
+    background-color: var(--primary);
+    border: none;
+    border-radius: 50%;
+    box-shadow: 0 0 1px 1px var(--primary);
+    cursor: pointer;
+    height: 18px;
+    width: 18px;
+    margin-top: 4px;
+    pointer-events: all;
+    position: relative;
+}
+  

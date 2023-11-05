@@ -1,0 +1,20 @@
+.catalog__title {
+    margin-bottom: 25px;
+}
+
+.catalog__offers {
+    display: inline-flex;
+    flex-wrap: wrap;
+    margin: -20px;
+}
+
+.catalog__product {
+    margin: 20px;
+}
+
+.catalog__not-found {
+    display: block;
+    margin: 20px auto;
+    color: var(--gray-400);
+    font-size: 18px;
+}

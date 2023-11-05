@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import Snowfall from "../ui/Snowfall";
 import { Container } from "react-bootstrap";
 import "../../styles/components/common/section.css";
+import { useMediaQuery } from "react-responsive";
 
 export enum BackgroundType {
 	Transparent,
@@ -10,22 +11,26 @@ export enum BackgroundType {
 
 interface IProps extends React.AnchorHTMLAttributes<HTMLDivElement> {
 	backgroundType?: BackgroundType;
-	isFluid?: boolean;
+	isFluid?: string | boolean;
 	children: ReactNode[] | ReactNode;
-	haveMargin?: boolean;
-	bulge?: number;
+	unPadded?: boolean;
+	width?: string;
 }
 
 export const Section = ({
 	backgroundType,
 	isFluid,
 	children,
-	haveMargin,
-	bulge,
+	unPadded,
+	width,
 	className,
 	...divProps
 }: IProps) => {
 	const isRedWithSnow = backgroundType === BackgroundType.RedWithSnow;
+
+	const isDesktop = useMediaQuery({
+		query: `(min-width: ${width})`,
+	});
 
 	return (
 		<div
@@ -36,23 +41,18 @@ export const Section = ({
 		>
 			{isRedWithSnow && <Snowfall />}
 			<Container
-				fluid={isFluid}
-				className={`position-relative ${
-					haveMargin ? "py-5" : ""
-				}`}
+				fluid={isFluid ?? "xl"}
+				className={`position-relative ${unPadded ? "" : "py-5"}`}
+				style={
+					isDesktop
+						? {
+								maxWidth: width,
+						  }
+						: {}
+				}
 			>
-				<div
-					style={{
-						margin: `0px -${bulge}px`,
-					}}
-				>
-					{children}
-				</div>
+				{children}
 			</Container>
 		</div>
 	);
-};
-
-Section.defaultProps = {
-	haveMargin: true,
 };

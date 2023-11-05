@@ -3,7 +3,8 @@ const localizations: Record<string, string> = {
     catalog: "Каталог товарів",
     contacts: "Контакти",
     basket: "Кошик",
-    order: "Замовлення"
+    order: "Замовлення",
+    information: "Часті запитання",
 };
 
 export default localizations;

@@ -9,7 +9,7 @@ import { BackgroundType, Section } from "../common/Section";
 const Header = () => {
     return (
         <>
-            <Section backgroundType={BackgroundType.RedWithSnow} haveMargin={false} bulge={32}>
+            <Section backgroundType={BackgroundType.RedWithSnow} unPadded width="1380px">
                 <Row className="p-3">
                     <Col>
                         <Logo />
@@ -17,12 +17,12 @@ const Header = () => {
                     <Col xs={6}>
                         <SearchBar />
                     </Col>
-                    <Col>
+                    <Col className="d-flex justify-content-end">
                         <Basket />
                     </Col>
                 </Row>
             </Section>
-            <Section haveMargin={false} bulge={30} className="z-1">
+            <Section unPadded width="1380px" className="z-1">
                 <Row className="p-2 white_theme_black">
                     <Col>
                         <NavBar />

@@ -16,8 +16,8 @@ import { ChristmasTreeOffersModule } from './christmas-tree-offers/christmas-tre
       isGlobal: true,
       validationSchema: Joi.object({
         HTTP_PORT: Joi.number().required(),
-        TCP_PORT: Joi.number().required(),
         MONGODB_URI: Joi.string().required(),
+        RABBITMQ_URI: Joi.string().required(),
       }),
     }),
   ],

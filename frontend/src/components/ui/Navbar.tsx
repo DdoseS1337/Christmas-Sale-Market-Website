@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Col, Row } from "react-bootstrap";
 import { Link, useLocation } from "react-router-dom";
 import { HouseDoor, HouseDoorFill } from "react-bootstrap-icons";
 import localizations from "../../interfaces/NavBarLocalization";
+import christmasTreeApi from "../../services/christmas-tree.api";
 import "../../styles/components/breadcrumb.css";
 import { BackgroundType, Section } from "../common/Section";
 
@@ -10,12 +11,48 @@ const NavBar = () => {
     const location = useLocation();
     const pathnames = location.pathname.split("/").filter((x) => x);
     const [isHovered, setIsHovered] = useState(false);
+    const [apiLocalizations, setApiLocalizations] = useState<{
+        [key: string]: string;
+    }>({});
+
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const categories = await christmasTreeApi.getAllCategories();
+                const offers = await christmasTreeApi.getAllOffers();
+
+                const updatedLocalizations: { [key: string]: string } = {
+                    ...localizations,
+                };
+
+                categories.forEach((category: any) => {
+                    updatedLocalizations[category._id] = category.name;
+                });
+
+                offers.forEach((offer: any) => {
+                    updatedLocalizations[offer.id] = offer.name;
+                });
+
+                setApiLocalizations(updatedLocalizations);
+            } catch (error) {
+                console.error("Помилка отримання даних з API", error);
+            }
+        }
+
+        fetchData();
+    }, [localizations]);
+
+    function getTranslation(pageName: string) {
+        return (
+            apiLocalizations[pageName] || localizations[pageName] || pageName
+        );
+    }
 
     return location.pathname !== "/" ? (
         <Section
             backgroundType={BackgroundType.RedWithSnow}
-            haveMargin={false}
-            bulge={30}
+            unPadded
+            width="1380px"
         >
             <Row className="py-3" style={{ paddingLeft: 16 }}>
                 <Col xs={6} className="justify-content-end">
@@ -53,7 +90,7 @@ const NavBar = () => {
                                     .slice(0, index + 1)
                                     .join("/")}`;
                                 const isLast = index === pathnames.length - 1;
-                                const pageName = localizations[name] || name;
+                                const pageName = getTranslation(name);
 
                                 return isLast ? (
                                     <li

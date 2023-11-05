@@ -1,8 +1,9 @@
-import { AbstactDocument } from '@app/common';
+import { AbstractDocument } from '@app/common';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { OrderStatus } from '@app/common';
 
 @Schema()
-export class UserOrderDocument extends AbstactDocument {
+export class UserOrderDocument extends AbstractDocument {
   @Prop()
   first_name: string;
 
@@ -20,7 +21,9 @@ export class UserOrderDocument extends AbstactDocument {
 
   @Prop({ type: [String] })
   productsIds: string[];
-  
+
+  @Prop({ type: String, enum: OrderStatus, default: OrderStatus.PENDING })
+  status: OrderStatus;
 }
 
 export const UserOrderSchema = SchemaFactory.createForClass(UserOrderDocument);

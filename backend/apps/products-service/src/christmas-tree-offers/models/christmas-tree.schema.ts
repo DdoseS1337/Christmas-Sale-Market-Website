@@ -1,8 +1,8 @@
-import { AbstactDocument } from '@app/common';
+import { AbstractDocument } from '@app/common';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 @Schema({ versionKey: false })
-export class ChristmasTreeDocument extends AbstactDocument {
+export class ChristmasTreeDocument extends AbstractDocument {
   @Prop()
   id: string;
 
@@ -19,10 +19,19 @@ export class ChristmasTreeDocument extends AbstactDocument {
   name: string;
 
   @Prop()
+  supplier_name: string;
+
+  @Prop()
   price: number;
 
   @Prop()
+  newPrice: number;
+
+  @Prop()
   currencyId: string;
+
+  @Prop()
+  categoryId: string;
 
   @Prop({ type: [String] })
   picture: string[];
@@ -41,9 +50,6 @@ export class ChristmasTreeDocument extends AbstactDocument {
 
   @Prop()
   manufacturer_warranty: boolean;
-
-  @Prop()
-  category: number;
 
   @Prop({ type: [String], default: [] })
   vendorCode: string[];

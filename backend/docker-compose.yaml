@@ -32,7 +32,31 @@ services:
     env_file:
       - ./apps/order-service/.env
     ports:
+      - "3002:3002"
+    volumes:
+      - .:/usr/src/app
+  telegram-bot:
+    build:
+      context: .
+      dockerfile: ./apps/telegram-bot/Dockerfile
+      target: development
+    command: npm run start:dev telegram-bot
+    env_file:
+      - ./apps/telegram-bot/.env
+    ports:
       - "3003:3003"
+    volumes:
+      - .:/usr/src/app
+  auth:
+    build:
+      context: .
+      dockerfile: ./apps/auth/Dockerfile
+      target: development
+    command: npm run start:dev auth
+    env_file:
+      - ./apps/auth/.env
+    ports:
+      - "3004:3004"
     volumes:
       - .:/usr/src/app
   rabbitmq:
