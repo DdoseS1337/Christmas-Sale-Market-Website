@@ -6,19 +6,19 @@ phases:
       - aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin 048443535585.dkr.ecr.eu-north-1.amazonaws.com
   build:
     commands:
-      - docker build -t auth -f apps/auth/Dockerfile .
+      - docker build -t auth -f backend/apps/auth/Dockerfile .
       - docker tag auth:latest 048443535585.dkr.ecr.eu-north-1.amazonaws.com/auth:latest
 
-      - docker build -t order-service -f apps/order-service/Dockerfile .
+      - docker build -t order-service -f backend/apps/order-service/Dockerfile .
       - docker tag order-service:latest 048443535585.dkr.ecr.eu-north-1.amazonaws.com/order-service:latest
 
-      - docker build -t products-service -f apps/products-service/Dockerfile .
+      - docker build -t products-service -f backend/apps/products-service/Dockerfile .
       - docker tag products-service:latest 048443535585.dkr.ecr.eu-north-1.amazonaws.com/products-service:latest
 
-      - docker build -t supplier-service -f apps/supplier-service/Dockerfile .
+      - docker build -t supplier-service -f backend/apps/supplier-service/Dockerfile .
       - docker tag supplier-service:latest 048443535585.dkr.ecr.eu-north-1.amazonaws.com/supplier-service:latest
 
-      - docker build -t telegram-bot -f apps/telegram-bot/Dockerfile .
+      - docker build -t telegram-bot -f backend/apps/telegram-bot/Dockerfile .
       - docker tag telegram-bot:latest 048443535585.dkr.ecr.eu-north-1.amazonaws.com/telegram-bot:latest
   post_build:
     commands:
