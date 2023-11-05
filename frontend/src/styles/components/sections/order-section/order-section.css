@@ -1,9 +1,8 @@
-.Biling {
-    color: var(--gray-scale-gray-900, #1A1A1A);
-
-/* Body XXL/Body XXL, 500 */
-font-size: 24px;
-font-style: normal;
-font-weight: 500;
-line-height: 150%; /* 36px */
+#additional-info-textbox {
+  display: flex;
+  width: 872px;
+  height: 200px;
+  padding: 14px 16px 14px 16px;
+  align-items: center;
+  resize: none;
 }
