@@ -3,44 +3,48 @@ import { Col, Row } from "react-bootstrap";
 import { Link, useLocation } from "react-router-dom";
 import { HouseDoor, HouseDoorFill } from "react-bootstrap-icons";
 import localizations from "../../interfaces/NavBarLocalization";
-import christmasTreeApi from "../../services/christmas-tree.api";
-import "../../styles/components/breadcrumb.css";
 import { BackgroundType, Section } from "../common/Section";
+import "../../styles/components/breadcrumb.css";
 
-const NavBar = () => {
+interface IProps {
+    additionalBreadCrumbs?: { id: number; name: string };
+}
+
+const NavBar = ({ additionalBreadCrumbs }: IProps) => {
     const location = useLocation();
-    const pathnames = location.pathname.split("/").filter((x) => x);
+    let pathnames = location.pathname.split("/").filter((x) => x);
+
+    if (pathnames.includes("catalog")) {
+        const searchParams = new URLSearchParams(location.search).get(
+            "categoryId"
+        );
+        searchParams !== null && pathnames.push(searchParams);
+    }
+
     const [isHovered, setIsHovered] = useState(false);
     const [apiLocalizations, setApiLocalizations] = useState<{
         [key: string]: string;
     }>({});
 
     useEffect(() => {
-        async function fetchData() {
-            try {
-                const categories = await christmasTreeApi.getAllCategories();
-                const offers = await christmasTreeApi.getAllOffers();
+        try {
+            const updatedLocalizations: { [key: string]: string } = {
+                ...localizations,
+            };
 
-                const updatedLocalizations: { [key: string]: string } = {
-                    ...localizations,
-                };
-
-                categories.forEach((category: any) => {
-                    updatedLocalizations[category._id] = category.name;
-                });
-
-                offers.forEach((offer: any) => {
-                    updatedLocalizations[offer.id] = offer.name;
-                });
-
-                setApiLocalizations(updatedLocalizations);
-            } catch (error) {
-                console.error("Помилка отримання даних з API", error);
+            if (
+                additionalBreadCrumbs !== undefined &&
+                additionalBreadCrumbs !== null
+            ) {
+                let { id, name } = additionalBreadCrumbs;
+                updatedLocalizations[id] = name;
             }
-        }
 
-        fetchData();
-    }, [localizations]);
+            setApiLocalizations(updatedLocalizations);
+        } catch (error) {
+            console.error("Помилка отримання даних з API", error);
+        }
+    }, [localizations, additionalBreadCrumbs]);
 
     function getTranslation(pageName: string) {
         return (
@@ -55,7 +59,7 @@ const NavBar = () => {
             width="1380px"
         >
             <Row className="py-3" style={{ paddingLeft: 16 }}>
-                <Col xs={6} className="justify-content-end">
+                <Col className="justify-content-end">
                     <nav
                         aria-label="breadcrumb"
                         className="breadcrumb-separator"

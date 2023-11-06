@@ -1,10 +1,11 @@
 import { Col, Row } from "react-bootstrap";
+import { CONTACTS } from "../../common";
 
 const HeaderContactsBar = () => {
     return (
         <Row>
             <Col>
-                <a href="tel:+1234567890" rel="noreferrer">
+                <a href={"tel:" + CONTACTS.telephone} rel="noreferrer">
                     <img
                         src="/images/icons/telephone.png"
                         alt="telephone"
@@ -13,11 +14,7 @@ const HeaderContactsBar = () => {
                 </a>
             </Col>
             <Col>
-                <a
-                    href="https://www.viber.com/ua/"
-                    target="_blank"
-                    rel="noreferrer"
-                >
+                <a href={CONTACTS.viber} target="_blank" rel="noreferrer">
                     <img
                         src="/images/icons/viber.png"
                         alt="telephone"
@@ -27,7 +24,7 @@ const HeaderContactsBar = () => {
             </Col>
             <Col>
                 <a
-                    href="mailto:example@gmail.com"
+                    href={"mailto:" + CONTACTS.email}
                     target="_blank"
                     rel="noreferrer"
                 >
