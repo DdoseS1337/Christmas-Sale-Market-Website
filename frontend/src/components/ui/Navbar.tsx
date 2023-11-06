@@ -4,12 +4,23 @@ import { Link, useLocation } from "react-router-dom";
 import { HouseDoor, HouseDoorFill } from "react-bootstrap-icons";
 import localizations from "../../interfaces/NavBarLocalization";
 import christmasTreeApi from "../../services/christmas-tree.api";
-import "../../styles/components/breadcrumb.css";
 import { BackgroundType, Section } from "../common/Section";
+import "../../styles/components/breadcrumb.css";
 
 const NavBar = () => {
     const location = useLocation();
-    const pathnames = location.pathname.split("/").filter((x) => x);
+    let pathnames = location.pathname.split("/").filter((x) => x);
+
+    if (pathnames.includes("catalog")) {
+        const searchParams = new URLSearchParams(location.search).get(
+            "categoryId"
+        );
+        if (searchParams !== null) {
+            pathnames.push(searchParams);
+            console.log(pathnames);
+        }
+    }
+
     const [isHovered, setIsHovered] = useState(false);
     const [apiLocalizations, setApiLocalizations] = useState<{
         [key: string]: string;
@@ -26,7 +37,7 @@ const NavBar = () => {
                 };
 
                 categories.forEach((category: any) => {
-                    updatedLocalizations[category._id] = category.name;
+                    updatedLocalizations[category.id] = category.name;
                 });
 
                 offers.forEach((offer: any) => {
@@ -55,7 +66,7 @@ const NavBar = () => {
             width="1380px"
         >
             <Row className="py-3" style={{ paddingLeft: 16 }}>
-                <Col xs={6} className="justify-content-end">
+                <Col className="justify-content-end">
                     <nav
                         aria-label="breadcrumb"
                         className="breadcrumb-separator"

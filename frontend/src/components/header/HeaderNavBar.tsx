@@ -2,9 +2,13 @@ import { Nav, NavDropdown, Navbar } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { ReactElement, useEffect, useState } from "react";
 import christmasTreeApi from "../../services/christmas-tree.api";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const HeaderNavBar = () => {
     const [categories, setCategories] = useState([]);
+    const navigate = useNavigate();
+    const location = useLocation();
+
     useEffect(() => {
         christmasTreeApi
             .getAllCategories()
@@ -19,6 +23,14 @@ const HeaderNavBar = () => {
             })
             .catch((error) => console.log(error));
     }, []);
+
+    const handleCategoryClick = (categoryId?: any) => {
+        navigate(
+            `/catalog?${
+                categoryId ? `categoryId=${categoryId}&` : ""
+            }priceMin=0&priceMax=20000`
+        );
+    };
 
     return (
         <Navbar expand="md" className="p-0">
@@ -36,12 +48,14 @@ const HeaderNavBar = () => {
                         {categories.map<ReactElement>((el: any, index) => {
                             return (
                                 <div key={index}>
-                                    <LinkContainer to={`/catalog/${el._id}`}>
-                                        <NavDropdown.Item>
-                                            {el.name}
-                                        </NavDropdown.Item>
-                                    </LinkContainer>
-                                    {categories.length - 1 == index ? (
+                                    <NavDropdown.Item
+                                        onClick={() =>
+                                            handleCategoryClick(el.id)
+                                        }
+                                    >
+                                        {el.name}
+                                    </NavDropdown.Item>
+                                    {categories.length - 1 === index ? (
                                         ""
                                     ) : (
                                         <NavDropdown.Divider />
@@ -55,9 +69,9 @@ const HeaderNavBar = () => {
                             <NavDropdown.Item>Головна</NavDropdown.Item>
                         </LinkContainer>
                         <NavDropdown.Divider />
-                        <LinkContainer to="/catalog">
-                            <NavDropdown.Item>Каталог</NavDropdown.Item>
-                        </LinkContainer>
+                        <NavDropdown.Item onClick={() => handleCategoryClick()}>
+                            Каталог
+                        </NavDropdown.Item>
                         <NavDropdown.Divider />
                         <LinkContainer to="/basket">
                             <NavDropdown.Item>Кошик</NavDropdown.Item>
