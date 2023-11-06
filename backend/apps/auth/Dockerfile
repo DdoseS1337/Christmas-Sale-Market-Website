@@ -11,7 +11,7 @@ RUN npm install
 COPY backend/apps/auth apps/auth
 COPY backend/libs libs
 
-RUN cd backend/apps/auth && npm install 
+RUN cd apps/auth && npm install 
 
 RUN npm run build auth
 
