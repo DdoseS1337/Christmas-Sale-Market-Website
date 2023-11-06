@@ -2,7 +2,7 @@
 FROM node:alpine As development
 
 
-WORKDIR /usr/src/app
+WORKDIR /usr/src/app/backend
 
 
 COPY package.json ./
@@ -23,7 +23,7 @@ FROM node:alpine As production
 ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}
 
-WORKDIR /usr/src/app
+WORKDIR /usr/src/app/backend
 
 COPY package.json ./
 
