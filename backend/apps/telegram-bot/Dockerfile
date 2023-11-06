@@ -1,20 +1,17 @@
-
 FROM node:alpine As development
-
 
 WORKDIR /usr/src/app/backend
 
+COPY backend/package.json ./
+COPY backend/tsconfig.json  tsconfig.json
+COPY backend/nest-cli.json nest-cli.json
 
-COPY package.json ./
-COPY tsconfig.json  tsconfig.json
-COPY nest-cli.json nest-cli.json
+RUN npm install 
 
+COPY backend/apps/telegram-bot apps/telegram-bot
+COPY backend/libs libs
 
-COPY apps/telegram-bot apps/telegram-bot
-COPY libs libs
-
-
-RUN npm install -r
+RUN cd apps/telegram-bot && npm install 
 
 RUN npm run build telegram-bot
 
@@ -25,10 +22,10 @@ ENV NODE_ENV=${NODE_ENV}
 
 WORKDIR /usr/src/app/backend
 
-COPY package.json ./
+COPY backend/package.json ./
 
 RUN npm install --prod
 
-COPY --from=development /usr/src/app/backenddist ./dist
+COPY --from=development /usr/src/app/backend/dist ./dist
 
 CMD ["node", "dist/apps/telegram-bot/main"]
