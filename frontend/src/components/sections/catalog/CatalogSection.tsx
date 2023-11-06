@@ -38,7 +38,7 @@ export const CatalogSection = () => {
 	});
 
 	return (
-		<Section width="1600px" style={{ marginTop: "-3rem" }}>
+		<Section width="1550px" style={{ marginTop: "-3rem" }}>
 			<div className="mx-auto">
 				<div className="d-flex align-items-start">
 					{filterData && (
