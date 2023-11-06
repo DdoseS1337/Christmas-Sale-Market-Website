@@ -6,6 +6,7 @@ import { useFetchData } from "../../../hooks/FetchDataHook";
 import christmasTreeApi from "../../../services/christmas-tree.api";
 import { MultiRange } from "../../../interfaces/MultiRange";
 import { IFilterPageData } from "../../../interfaces/FilterPage";
+import { Pagination } from "react-bootstrap";
 
 export const CatalogSection = () => {
 	const [queryParameters, setQueryParameters] = useSearchParams();
@@ -41,14 +42,17 @@ export const CatalogSection = () => {
 					{filterData && (
 						<CatalogFilter
 							setQueryParameters={setQueryParameters}
-							categories={filterData.generalCategories}
+							categories={filterData.categoriesForFilter}
 							selectedCategoryId={categoryId}
 							priceRange={filterData.priceRange}
+							pagination={filterData?.pagination}
 						/>
 					)}
 					<CatalogOffersPresenter
+						setQueryParameters={setQueryParameters}
 						categoryName={filterData?.selectedCategory?.name}
 						offers={filterData?.offers}
+						pagination={filterData?.pagination}
 					/>
 				</div>
 			</div>

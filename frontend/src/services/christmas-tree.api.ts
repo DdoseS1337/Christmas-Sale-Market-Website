@@ -63,14 +63,14 @@ class ChristmasTreeApi extends HttpService {
     async getCategoryWithOffersForFilterPage(page: number, categoryId?: number, available?: boolean, priceRange?: MultiRange) {
         if (page < 1)
             page = 1;
-
+    
         const allCategories = await this.getAllCategories();
-        const selectedCategory = categoryId 
+        const selectedCategory = categoryId != null 
             ? allCategories.find(category => category.id == categoryId) 
             : undefined;
-        const generalCategories = allCategories.filter((category) => category.parentId == null);
+        const categoriesForFilter = allCategories.filter((category) => category.parentId == null);
         const categoriesToFindOffers = selectedCategory 
-            ? allCategories.filter((category) => category.parentId === selectedCategory?.id) 
+            ? allCategories.filter((category) => category.parentId == selectedCategory?.id) 
             : allCategories;
 
         const allOffers = await this.getAllOffers();
@@ -85,7 +85,7 @@ class ChristmasTreeApi extends HttpService {
         if (priceRange != null)
             filteredOffersByPage = filteredOffersByPage.filter(offer => offer.newPrice >= priceRange!.min && offer.newPrice <= priceRange!.max);
 
-        const totalNumberOfPages = allOffers.length / FILTER_CONST.PAGE_SIZE;
+        const totalNumberOfPages = Math.ceil(filteredOffersByPage.length / FILTER_CONST.PAGE_SIZE);
         if (page > totalNumberOfPages)
             page = totalNumberOfPages;
 
@@ -94,17 +94,19 @@ class ChristmasTreeApi extends HttpService {
 
         return {
             selectedCategory,
-            generalCategories,
+            categoriesForFilter,
             subCategories: categoriesToFindOffers,
             offers: offersByPage,
             priceRange: {
                 min: Math.min(...allOffers.map(o => o.newPrice)),
                 max: Math.max(...allOffers.map(o => o.newPrice))
             },
-            page: page,
-            totalNumberOfPages: totalNumberOfPages,
-            totalNumberOfOffers: allOffers.length,
-            numberOfOffersPerPage: offersByPage.length
+            pagination: {
+                page: page,
+                numberOfPages: totalNumberOfPages,
+                numberOfOffers: filteredOffersByPage.length,
+                numberOfOffersPerPage: offersByPage.length
+            }
         } as IFilterPageData;
     }
 }

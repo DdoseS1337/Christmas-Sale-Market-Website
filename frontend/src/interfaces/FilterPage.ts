@@ -4,12 +4,16 @@ import { IOffer } from "./Offer";
 
 export interface IFilterPageData {
     selectedCategory: ICategory;
-    generalCategories: Array<ICategory>;
+    categoriesForFilter: Array<ICategory>;
     subCategories: Array<ICategory>;
     offers: Array<IOffer>;
     priceRange: MultiRange;
+    pagination: IFilterPagination;
+}
+
+export interface IFilterPagination {
     page: number;
-    totalNumberOfPages: number;
+    numberOfPages: number;
     numberOfOffersPerPage: number;
-    totalNumberOfOffers: number;
+    numberOfOffers: number;
 }

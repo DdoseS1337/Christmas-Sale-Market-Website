@@ -4,12 +4,15 @@ import MultiRangeSlider from "../../common/MultiRangeSlider";
 import { SetURLSearchParams } from "react-router-dom";
 import { ICategory } from "../../../interfaces/Category";
 import { MultiRange } from "../../../interfaces/MultiRange";
+import { CatalogPagination } from "./CatalogPagination";
+import { IFilterPagination } from "../../../interfaces/FilterPage";
 
 interface IProps {
 	setQueryParameters: SetURLSearchParams;
 	categories: Array<ICategory>;
 	selectedCategoryId?: number;
 	priceRange: MultiRange;
+	pagination?: IFilterPagination;
 }
 
 export const CatalogFilter = ({
@@ -17,6 +20,7 @@ export const CatalogFilter = ({
 	categories,
 	selectedCategoryId,
 	priceRange,
+	pagination,
 }: IProps) => {
 	return (
 		<Accordion
@@ -46,6 +50,7 @@ export const CatalogFilter = ({
 												"categoryId",
 												category.id.toString()
 											);
+											oldParameters.set("page", "1");
 											return oldParameters;
 										});
 									}
@@ -129,6 +134,17 @@ export const CatalogFilter = ({
 								});
 							}
 						}}
+					/>
+				</Accordion.Body>
+			</Accordion.Item>
+			<Accordion.Item className="catalog-filter__block" eventKey="3">
+				<Accordion.Header className="catalog-filter__title">
+					Пагінація
+				</Accordion.Header>
+				<Accordion.Body className="catalog-filter__body">
+					<CatalogPagination
+						setQueryParameters={setQueryParameters}
+						pagination={pagination}
 					/>
 				</Accordion.Body>
 			</Accordion.Item>
