@@ -29,6 +29,6 @@ COPY package.json ./
 
 RUN npm install --prod
 
-COPY --from=development /usr/src/app/dist ./dist
+COPY --from=development /usr/src/app/backenddist ./dist
 
 CMD ["node", "dist/apps/telegram-bot/main"]
