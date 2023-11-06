@@ -7,6 +7,7 @@ import {
     TelephoneOutboundFill,
 } from "react-bootstrap-icons";
 import { useState } from "react";
+import { CONTACTS } from "../common";
 import "animate.css";
 import "../styles/components/contacts.css";
 
@@ -36,7 +37,7 @@ const ContactsPage: React.FC = () => {
                             onMouseLeave={handleIconMouseLeave}
                         >
                             <a
-                                href="https://www.viber.com/ua/"
+                                href={CONTACTS.viber}
                                 target="_blank"
                                 rel="noreferrer"
                             >
@@ -63,7 +64,7 @@ const ContactsPage: React.FC = () => {
                             className="contact-container-icon mx-auto"
                         >
                             <a
-                                href="mailto:example@gmail.com"
+                                href={"mailto:" + CONTACTS.email}
                                 target="_blank"
                                 rel="noreferrer"
                             >
@@ -84,7 +85,7 @@ const ContactsPage: React.FC = () => {
                             className="m-0 p-0 mt-2"
                             style={{ overflowWrap: "break-word" }}
                         >
-                            example@gmail.com
+                            {CONTACTS.email}
                         </p>
                     </Col>
                     <Col xs={1} className="d-flex justify-content-center">
@@ -98,7 +99,10 @@ const ContactsPage: React.FC = () => {
                             onMouseLeave={handleIconMouseLeave}
                             className="contact-container-icon mx-auto"
                         >
-                            <a href="tel:+1234567890" rel="noreferrer">
+                            <a
+                                href={"tel:" + CONTACTS.telephone}
+                                rel="noreferrer"
+                            >
                                 {getIcon(
                                     <TelephoneOutbound
                                         key="telephone"
@@ -111,7 +115,7 @@ const ContactsPage: React.FC = () => {
                                 )}
                             </a>
                         </div>
-                        <p className="m-0 mt-3 p-0">(063) 555-35-55</p>
+                        <p className="m-0 mt-3 p-0">{CONTACTS.telephone}</p>
                     </Col>
                 </Row>
             </Container>

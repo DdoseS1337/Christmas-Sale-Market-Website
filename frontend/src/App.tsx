@@ -11,27 +11,32 @@ import MainContainer from "./components/ui/MainContainer";
 import NavBar from "./components/ui/Navbar";
 import NotFoundPage from "./pages/NotFoundPage";
 import InfoPage from "./pages/InfoPage";
+import PolicyPage from "./pages/PolicyPage";
+import { useState } from "react";
 
 const App = () => {
-	return (
-		<Router>
-			<Header />
-			<NavBar />
-			<MainContainer>
-				<Routes>
-					<Route path="/" element={<MainPage />} />
-					<Route path="/information" element={<InfoPage />} />
-					<Route path="/catalog" element={<CatalogPage />} />
-					<Route path="/catalog/:id" element={<ProductPage />} />
-					<Route path="/contacts" element={<ContactsPage />} />
-					<Route path="/basket" element={<BasketPage />} />
-					<Route path="/basket/order" element={<OrderPage />} />
-					<Route path="*" element={<NotFoundPage />} />
-				</Routes>
-			</MainContainer>
-			<Footer />
-		</Router>
-	);
+    const [additionalBreadCrumbs, setAdditionalBreadCrumbs] = useState<any>();
+
+    return (
+        <Router>
+            <Header />
+            <NavBar additionalBreadCrumbs={additionalBreadCrumbs} />
+            <MainContainer>
+                <Routes>
+                    <Route path="/" element={<MainPage />} />
+                    <Route path="/information" element={<InfoPage />} />
+                    <Route path="/catalog" element={<CatalogPage setAdditionalBreadCrumbs={setAdditionalBreadCrumbs}/>} />
+                    <Route path="/catalog/:id" element={<ProductPage setAdditionalBreadCrumbs={setAdditionalBreadCrumbs}/>} />
+                    <Route path="/contacts" element={<ContactsPage />} />
+                    <Route path="/basket" element={<BasketPage />} />
+                    <Route path="/basket/order" element={<OrderPage />} />
+                    <Route path="/policy" element={<PolicyPage />} />
+                    <Route path="*" element={<NotFoundPage />} />
+                </Routes>
+            </MainContainer>
+            <Footer />
+        </Router>
+    );
 };
 
 export default App;
