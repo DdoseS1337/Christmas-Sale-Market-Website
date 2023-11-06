@@ -1,16 +1,14 @@
-import { SetURLSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { IFilterPagination } from "../../../interfaces/FilterPage";
 import RoundedButton from "../../common/RoundedButton";
 
 interface IProps {
-	setQueryParameters: SetURLSearchParams;
 	pagination?: IFilterPagination;
 }
 
-export const CatalogPagination = ({
-	setQueryParameters,
-	pagination,
-}: IProps) => {
+export const CatalogPagination = ({ pagination }: IProps) => {
+	const [, setQueryParameters] = useSearchParams();
+
 	const changePage = (page: number) => {
 		setQueryParameters((oldParameters) => {
 			oldParameters.set("page", page.toString());

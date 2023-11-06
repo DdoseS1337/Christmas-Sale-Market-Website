@@ -2,22 +2,21 @@ import "../../../styles/components/sections/catalog/catalog.css";
 import { IOffer } from "../../../interfaces/Offer";
 import { ProductCard } from "../../common/ProductCard";
 import { IFilterPagination } from "../../../interfaces/FilterPage";
-import { SetURLSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { CatalogPagination } from "./CatalogPagination";
 
 interface IProps {
-	setQueryParameters: SetURLSearchParams;
 	categoryName?: string;
 	offers?: Array<IOffer>;
 	pagination?: IFilterPagination;
 }
 
 export const CatalogOffersPresenter = ({
-	setQueryParameters,
 	categoryName,
 	offers,
 	pagination,
 }: IProps) => {
+	const [, setQueryParameters] = useSearchParams();
 	const offersIsEmpty = offers?.length === 0;
 
 	return (
@@ -42,10 +41,7 @@ export const CatalogOffersPresenter = ({
 							);
 						})}
 					</div>
-					<CatalogPagination
-						setQueryParameters={setQueryParameters}
-						pagination={pagination}
-					/>
+					<CatalogPagination pagination={pagination} />
 				</>
 			)}
 		</div>

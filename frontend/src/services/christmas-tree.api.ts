@@ -60,7 +60,7 @@ class ChristmasTreeApi extends HttpService {
         });
     }
 
-    async getCategoryWithOffersForFilterPage(page: number, categoryId?: number, available?: boolean, priceRange?: MultiRange) {
+    async getCategoryWithOffersForFilterPage(page: number, categoryId?: number, available?: boolean, priceRange?: MultiRange, sorting?: boolean) {
         if (page < 1)
             page = 1;
     
@@ -84,6 +84,12 @@ class ChristmasTreeApi extends HttpService {
 
         if (priceRange != null)
             filteredOffersByPage = filteredOffersByPage.filter(offer => offer.newPrice >= priceRange!.min && offer.newPrice <= priceRange!.max);
+
+        console.log(sorting)
+        if (sorting != null && sorting === true)
+            filteredOffersByPage = filteredOffersByPage.sort((o1, o2) => o1.newPrice - o2.newPrice);
+        else if (sorting != null && sorting === false)
+            filteredOffersByPage = filteredOffersByPage.sort((o1, o2) => o2.newPrice - o1.newPrice);
 
         const totalNumberOfPages = Math.ceil(filteredOffersByPage.length / FILTER_CONST.PAGE_SIZE);
         if (page > totalNumberOfPages)

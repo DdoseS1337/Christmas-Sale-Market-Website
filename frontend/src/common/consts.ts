@@ -18,5 +18,17 @@ export const CACHING_CONST = {
 }
 
 export const FILTER_CONST = {
-  PAGE_SIZE: 16
+  PAGE_SIZE: 16,
+  QUERY_PARAMETERS: {
+    AVAILABLE: "available",
+    CATEGORY_ID: "categoryId",
+    PAGE: "page",
+    PRICE_MIN: "priceMin",
+    PRICE_MAX: "priceMax",
+    SORTING: "sorting",
+  },
+  SORTING_VALUES: {
+    ABC: "ABC",
+    DESC: "DESC",
+  }
 }
