@@ -1,13 +1,17 @@
+
 FROM node:alpine As development
+
 
 WORKDIR /usr/src/app
 
-COPY backend/package.json ./
-COPY backend/tsconfig.json  tsconfig.json
-COPY backend/nest-cli.json nest-cli.json
 
-COPY backend/apps/auth apps/auth
-COPY backend/libs libs
+COPY package.json ./
+COPY tsconfig.json  tsconfig.json
+COPY nest-cli.json nest-cli.json
+
+
+COPY apps/auth apps/auth
+COPY libs libs
 
 RUN npm install -r
 
@@ -20,7 +24,7 @@ ENV NODE_ENV=${NODE_ENV}
 
 WORKDIR /usr/src/app
 
-COPY backend/package.json ./
+COPY package.json ./
 
 RUN npm install --prod
 
