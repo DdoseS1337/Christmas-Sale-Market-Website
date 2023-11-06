@@ -18,3 +18,23 @@ export const CONTACTS = {
     email: "example@gmail.com",
     viber: "https://www.viber.com/ua/",
 };
+
+export const CACHING_CONST = {
+  CACHING_PERIOD_IN_SECONDS: 60
+}
+
+export const FILTER_CONST = {
+  PAGE_SIZE: 16,
+  QUERY_PARAMETERS: {
+    AVAILABLE: "available",
+    CATEGORY_ID: "categoryId",
+    PAGE: "page",
+    PRICE_MIN: "priceMin",
+    PRICE_MAX: "priceMax",
+    SORTING: "sorting",
+  },
+  SORTING_VALUES: {
+    ABC: "ABC",
+    DESC: "DESC",
+  }
+}

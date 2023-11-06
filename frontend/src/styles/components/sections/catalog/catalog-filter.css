@@ -4,8 +4,7 @@
     max-width: 312px;
     margin-right: 35px;
     position: sticky;
-    top: 0;
-    left: 0;
+    top: 20px;
 }
 
 .catalog-filter__block {

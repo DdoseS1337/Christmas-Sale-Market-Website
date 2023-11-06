@@ -19,9 +19,7 @@ const MainContainer = (prop: Props) => {
 					style={{ width: "14rem", pointerEvents: "none" }}
 				/>
 			</MediaQuery>
-			<div className="w-100 overflow-hidden pt-5 pb-5">
-				{prop.children}
-			</div>
+			<div className="w-100 pt-5 pb-5">{prop.children}</div>
 		</Container>
 	);
 };

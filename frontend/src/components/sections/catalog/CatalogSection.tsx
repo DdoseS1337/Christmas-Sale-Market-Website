@@ -1,53 +1,104 @@
 import { useSearchParams } from "react-router-dom";
 import { Section } from "../../common/Section";
-import { Catalog } from "./Catalog";
+import { CatalogOffersPresenter } from "./CatalogOffersPresenter";
 import { CatalogFilter } from "./CatalogFilter";
 import { useFetchData } from "../../../hooks/FetchDataHook";
 import christmasTreeApi from "../../../services/christmas-tree.api";
 import { MultiRange } from "../../../interfaces/MultiRange";
 import { IFilterPageData } from "../../../interfaces/FilterPage";
+import { FILTER_CONST } from "../../../common";
 
 export const CatalogSection = () => {
-	const [queryParameters, setQueryParameters] = useSearchParams();
+	const [queryParameters] = useSearchParams();
 
-	const categoryId = Number(queryParameters.get("categoryId"));
-	const available =
-		queryParameters.has("available") === false
-			? undefined
-			: queryParameters.get("available") === "true";
-	const priceRange: MultiRange = {
-		min: Number(queryParameters.get("priceMin")),
-		max: Number(queryParameters.get("priceMax")),
-	};
+	const {
+		page,
+		categoryId,
+		available,
+		priceRange,
+		sorting,
+	}: {
+		page: number;
+		categoryId: number | undefined;
+		available: boolean | undefined;
+		priceRange: MultiRange;
+		sorting: boolean | undefined;
+	} = getParametersFromURL();
 
 	const { items: filterData } = useFetchData<IFilterPageData>({
 		callApi: () =>
 			christmasTreeApi.getCategoryWithOffersForFilterPage(
+				page,
 				categoryId,
 				available,
-				priceRange
+				priceRange,
+				sorting
 			),
 		dependencies: [queryParameters],
 	});
 
 	return (
-		<Section width="1600px" style={{ marginTop: "-3rem" }}>
+		<Section width="1550px" style={{ marginTop: "-3rem" }}>
 			<div className="mx-auto">
 				<div className="d-flex align-items-start">
 					{filterData && (
 						<CatalogFilter
-							setQueryParameters={setQueryParameters}
-							categories={filterData.generalCategories}
+							categories={filterData.categoriesForFilter}
 							selectedCategoryId={categoryId}
 							priceRange={filterData.priceRange}
+							pagination={filterData?.pagination}
 						/>
 					)}
-					<Catalog
+					<CatalogOffersPresenter
 						categoryName={filterData?.selectedCategory?.name}
 						offers={filterData?.offers}
+						pagination={filterData?.pagination}
 					/>
 				</div>
 			</div>
 		</Section>
 	);
+
+	function getParametersFromURL() {
+		// Prettier cracked down on line breaks :)
+
+		const categoryId = queryParameters.has(
+			FILTER_CONST.QUERY_PARAMETERS.CATEGORY_ID
+		)
+			? Number(
+					queryParameters.get(
+						FILTER_CONST.QUERY_PARAMETERS.CATEGORY_ID
+					)
+			  )
+			: undefined;
+
+		const available =
+			queryParameters.has(FILTER_CONST.QUERY_PARAMETERS.AVAILABLE) ===
+			false
+				? undefined
+				: queryParameters.get(
+						FILTER_CONST.QUERY_PARAMETERS.AVAILABLE
+				  ) === "true";
+
+		const priceRange: MultiRange = {
+			min: Number(
+				queryParameters.get(FILTER_CONST.QUERY_PARAMETERS.PRICE_MIN)
+			),
+			max: Number(
+				queryParameters.get(FILTER_CONST.QUERY_PARAMETERS.PRICE_MAX)
+			),
+		};
+
+		const page = Number(
+			queryParameters.get(FILTER_CONST.QUERY_PARAMETERS.PAGE)
+		);
+
+		const sorting =
+			queryParameters.has(FILTER_CONST.QUERY_PARAMETERS.SORTING) === false
+				? undefined
+				: queryParameters.get(FILTER_CONST.QUERY_PARAMETERS.SORTING) ===
+				  FILTER_CONST.SORTING_VALUES.ABC;
+
+		return { page, categoryId, available, priceRange, sorting };
+	}
 };

@@ -18,3 +18,13 @@
     color: var(--gray-400);
     font-size: 18px;
 }
+
+.catalog__pagination {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.catalog__pagination > * {
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
