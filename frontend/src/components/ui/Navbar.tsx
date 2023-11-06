@@ -7,7 +7,11 @@ import christmasTreeApi from "../../services/christmas-tree.api";
 import { BackgroundType, Section } from "../common/Section";
 import "../../styles/components/breadcrumb.css";
 
-const NavBar = () => {
+interface IProps {
+    additionalBreadCrumbs?: { id: number; name: string };
+}
+
+const NavBar = ({ additionalBreadCrumbs }: IProps) => {
     const location = useLocation();
     let pathnames = location.pathname.split("/").filter((x) => x);
 
@@ -17,7 +21,6 @@ const NavBar = () => {
         );
         if (searchParams !== null) {
             pathnames.push(searchParams);
-            console.log(pathnames);
         }
     }
 
@@ -27,31 +30,24 @@ const NavBar = () => {
     }>({});
 
     useEffect(() => {
-        async function fetchData() {
-            try {
-                const categories = await christmasTreeApi.getAllCategories();
-                const offers = await christmasTreeApi.getAllOffers();
+        try {
+            const updatedLocalizations: { [key: string]: string } = {
+                ...localizations,
+            };
 
-                const updatedLocalizations: { [key: string]: string } = {
-                    ...localizations,
-                };
-
-                categories.forEach((category: any) => {
-                    updatedLocalizations[category.id] = category.name;
-                });
-
-                offers.forEach((offer: any) => {
-                    updatedLocalizations[offer.id] = offer.name;
-                });
-
-                setApiLocalizations(updatedLocalizations);
-            } catch (error) {
-                console.error("Помилка отримання даних з API", error);
+            if (
+                additionalBreadCrumbs !== undefined &&
+                additionalBreadCrumbs !== null
+            ) {
+                let { id, name } = additionalBreadCrumbs;
+                updatedLocalizations[id] = name;
             }
-        }
 
-        fetchData();
-    }, [localizations]);
+            setApiLocalizations(updatedLocalizations);
+        } catch (error) {
+            console.error("Помилка отримання даних з API", error);
+        }
+    }, [localizations, additionalBreadCrumbs]);
 
     function getTranslation(pageName: string) {
         return (
