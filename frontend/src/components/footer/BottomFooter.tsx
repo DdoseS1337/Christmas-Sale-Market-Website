@@ -5,6 +5,7 @@ import Col from "react-bootstrap/Col";
 import FooterList from "./FooterList";
 import HeaderLogo from "../header/HeaderLogo";
 import { LinkWithIcon } from "../common/LinkWithIcon";
+import { CONTACTS } from "../../common";
 import Snowfall from "../ui/Snowfall";
 
 const BottomFooter = () => {
@@ -20,21 +21,21 @@ const BottomFooter = () => {
                         </p>
                         <div className="d-flex mb-1">
                             <LinkWithIcon
-                                to="#"
+                                to={CONTACTS.viber}
                                 src="/images/icons/viber.png"
                                 text="viber"
                                 className="me-3"
                             />
                             <LinkWithIcon
-                                to="tel:+1234567890"
+                                to={"tel:" + CONTACTS.telephone}
                                 src="/images/icons/telephone.png"
-                                text="(063) 555-01-14"
+                                text={CONTACTS.telephone}
                             />
                         </div>
                         <LinkWithIcon
-                            to="mailto:example@gmail.com"
+                            to={"mailto:" + CONTACTS.email}
                             src="/images/icons/gmail.png"
-                            text="example@gmail.com"
+                            text={CONTACTS.email}
                         />
                     </Col>
                     <Col>
