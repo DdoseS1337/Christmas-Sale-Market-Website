@@ -6,10 +6,12 @@ COPY backend/package.json ./
 COPY backend/tsconfig.json  tsconfig.json
 COPY backend/nest-cli.json nest-cli.json
 
+RUN npm install 
+
 COPY backend/apps/auth apps/auth
 COPY backend/libs libs
 
-RUN npm install -r
+RUN cd backend/apps/auth && npm install 
 
 RUN npm run build auth
 
