@@ -1,6 +1,6 @@
 import { useSearchParams } from "react-router-dom";
 import { Section } from "../../common/Section";
-import { Catalog } from "./Catalog";
+import { CatalogOffersPresenter } from "./CatelogOffersPresenter";
 import { CatalogFilter } from "./CatalogFilter";
 import { useFetchData } from "../../../hooks/FetchDataHook";
 import christmasTreeApi from "../../../services/christmas-tree.api";
@@ -10,7 +10,9 @@ import { IFilterPageData } from "../../../interfaces/FilterPage";
 export const CatalogSection = () => {
 	const [queryParameters, setQueryParameters] = useSearchParams();
 
-	const categoryId = Number(queryParameters.get("categoryId"));
+	const categoryId = queryParameters.has("categoryId")
+		? Number(queryParameters.get("categoryId"))
+		: undefined;
 	const available =
 		queryParameters.has("available") === false
 			? undefined
@@ -19,10 +21,12 @@ export const CatalogSection = () => {
 		min: Number(queryParameters.get("priceMin")),
 		max: Number(queryParameters.get("priceMax")),
 	};
+	const page = Number(queryParameters.get("page"));
 
 	const { items: filterData } = useFetchData<IFilterPageData>({
 		callApi: () =>
 			christmasTreeApi.getCategoryWithOffersForFilterPage(
+				page,
 				categoryId,
 				available,
 				priceRange
@@ -42,7 +46,7 @@ export const CatalogSection = () => {
 							priceRange={filterData.priceRange}
 						/>
 					)}
-					<Catalog
+					<CatalogOffersPresenter
 						categoryName={filterData?.selectedCategory?.name}
 						offers={filterData?.offers}
 					/>

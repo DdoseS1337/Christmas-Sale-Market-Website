@@ -12,3 +12,11 @@ export const STORAGE_KEYS = {
   TOKEN: "TOKEN",
   ACCESSTOKEN: "accessToken",
 };
+
+export const CACHING_CONST = {
+  CACHING_PERIOD_IN_SECONDS: 60
+}
+
+export const FILTER_CONST = {
+  PAGE_SIZE: 16
+}

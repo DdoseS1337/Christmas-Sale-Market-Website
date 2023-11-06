@@ -8,7 +8,7 @@ import { MultiRange } from "../../../interfaces/MultiRange";
 interface IProps {
 	setQueryParameters: SetURLSearchParams;
 	categories: Array<ICategory>;
-	selectedCategoryId: number;
+	selectedCategoryId?: number;
 	priceRange: MultiRange;
 }
 

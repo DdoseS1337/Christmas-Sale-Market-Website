@@ -8,4 +8,8 @@ export interface IFilterPageData {
     subCategories: Array<ICategory>;
     offers: Array<IOffer>;
     priceRange: MultiRange;
+    page: number;
+    totalNumberOfPages: number;
+    numberOfOffersPerPage: number;
+    totalNumberOfOffers: number;
 }

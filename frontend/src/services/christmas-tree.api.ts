@@ -1,5 +1,5 @@
 import HttpService from "./HttpService";
-import { BACKEND_KEYS } from "../common/consts";
+import { BACKEND_KEYS, FILTER_CONST } from "../common/consts";
 import { MultiRange } from "../interfaces/MultiRange";
 import { IOffer } from "../interfaces/Offer";
 import { ICategory } from "../interfaces/Category";
@@ -10,14 +10,14 @@ class ChristmasTreeApi extends HttpService {
         super(BACKEND_KEYS.PRODUCTS_SERVER_URL);
     }
 
-    async getAllCategories() {
-        return this.get<any>({
+    async getAllCategories(): Promise<Array<ICategory>> {
+        return this.getWithCaching<Array<ICategory>>({
             url: BACKEND_KEYS.CHRISTMAS_TREE_CATEGORIES,
         });
     }
 
     async getCategoryById(id: string) {
-        return this.get<any>({
+        return this.get<ICategory>({
             url: `${BACKEND_KEYS.CHRISTMAS_TREE_CATEGORIES}/${id}`,
         });
     }
@@ -60,32 +60,51 @@ class ChristmasTreeApi extends HttpService {
         });
     }
 
-    async getCategoryWithOffersForFilterPage(categoryId: number, available?: boolean, priceRange?: MultiRange) {
-        const allCategories = (await this.getAllCategories()) as Array<ICategory>;
-        const selectedCategory = categoryId ? allCategories.find(category => category.id == categoryId) : allCategories.find(c => true);
-        const generalCategories = allCategories?.filter((category) => category.parentId == null);
-        const subCategories = allCategories?.filter((category) => category.parentId === selectedCategory?.id);
-        const offers = await Promise.all(
-            [selectedCategory!, ...subCategories!]
-                .filter((category) => category != null)
-                .map((category) =>
-                    christmasTreeApi.getOffersByCategoryId(
-                        category.id,
-                        available,
-                        priceRange
-                    )
-                )
-            ).then((values) => values.flatMap((value) => value));
+    async getCategoryWithOffersForFilterPage(page: number, categoryId?: number, available?: boolean, priceRange?: MultiRange) {
+        if (page < 1)
+            page = 1;
+
+        const allCategories = await this.getAllCategories();
+        const selectedCategory = categoryId 
+            ? allCategories.find(category => category.id == categoryId) 
+            : undefined;
+        const generalCategories = allCategories.filter((category) => category.parentId == null);
+        const categoriesToFindOffers = selectedCategory 
+            ? allCategories.filter((category) => category.parentId === selectedCategory?.id) 
+            : allCategories;
+
+        const allOffers = await this.getAllOffers();
+        let filteredOffersByPage = allOffers;
+
+        if (categoryId != null)
+            filteredOffersByPage = filteredOffersByPage.filter(offer => offer.categoryId == categoryId || categoriesToFindOffers.map(c => c.id).includes(offer.categoryId));
+            
+        if (available != null)
+            filteredOffersByPage = filteredOffersByPage.filter(offer => offer.available == available);
+
+        if (priceRange != null)
+            filteredOffersByPage = filteredOffersByPage.filter(offer => offer.newPrice >= priceRange!.min && offer.newPrice <= priceRange!.max);
+
+        const totalNumberOfPages = allOffers.length / FILTER_CONST.PAGE_SIZE;
+        if (page > totalNumberOfPages)
+            page = totalNumberOfPages;
+
+        const startIndex = (page - 1) * FILTER_CONST.PAGE_SIZE;
+        const offersByPage = filteredOffersByPage.slice(startIndex, startIndex + FILTER_CONST.PAGE_SIZE);
 
         return {
             selectedCategory,
             generalCategories,
-            subCategories,
-            offers,
+            subCategories: categoriesToFindOffers,
+            offers: offersByPage,
             priceRange: {
-                min: 0,
-                max: 20000
-            }
+                min: Math.min(...allOffers.map(o => o.newPrice)),
+                max: Math.max(...allOffers.map(o => o.newPrice))
+            },
+            page: page,
+            totalNumberOfPages: totalNumberOfPages,
+            totalNumberOfOffers: allOffers.length,
+            numberOfOffersPerPage: offersByPage.length
         } as IFilterPageData;
     }
 }

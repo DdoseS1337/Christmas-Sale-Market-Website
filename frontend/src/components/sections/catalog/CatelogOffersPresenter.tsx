@@ -7,7 +7,7 @@ interface IProps {
 	offers?: Array<IOffer>;
 }
 
-export const Catalog = ({ categoryName, offers }: IProps) => {
+export const CatalogOffersPresenter = ({ categoryName, offers }: IProps) => {
 	const offersIsEmpty = offers?.length === 0;
 
 	return (
@@ -16,28 +16,22 @@ export const Catalog = ({ categoryName, offers }: IProps) => {
 			{offersIsEmpty ? (
 				<span className="catalog__not-found">Товарів не знайдено</span>
 			) : (
-				<OffersPresenter offers={offers} />
+				<div className="catalog__offers">
+					{offers?.map((offer) => {
+						return (
+							<ProductCard
+								key={offer.id}
+								className="catalog__product"
+								id={offer.id}
+								name={offer.name}
+								newPrice={offer.newPrice}
+								price={offer.price}
+								picture={offer.picture[0]}
+							/>
+						);
+					})}
+				</div>
 			)}
-		</div>
-	);
-};
-
-const OffersPresenter = ({ offers }: { offers?: Array<IOffer> }) => {
-	return (
-		<div className="catalog__offers">
-			{offers?.map((offer) => {
-				return (
-					<ProductCard
-						key={offer.id}
-						className="catalog__product"
-						id={offer.id}
-						name={offer.name}
-						newPrice={offer.newPrice}
-						price={offer.price}
-						picture={offer.picture[0]}
-					/>
-				);
-			})}
 		</div>
 	);
 };
