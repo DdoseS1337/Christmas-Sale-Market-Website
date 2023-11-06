@@ -1,17 +1,17 @@
 FROM node:alpine As development
 
+WORKDIR /usr/src/app/backend
 
-WORKDIR /usr/src/app
+COPY backend/package.json ./
+COPY backend/tsconfig.json  tsconfig.json
+COPY backend/nest-cli.json nest-cli.json
 
+RUN npm install 
 
-COPY package.json ./
-COPY tsconfig.json  tsconfig.json
-COPY nest-cli.json nest-cli.json
+COPY backend/apps/products-service apps/products-service
+COPY backend/libs libs
 
-COPY apps/products-service apps/products-service
-COPY libs libs
-
-RUN npm install -r
+RUN cd apps/products-service && npm install 
 
 RUN npm run build products-service
 
@@ -20,12 +20,12 @@ FROM node:alpine As production
 ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}
 
-WORKDIR /usr/src/app
+WORKDIR /usr/src/app/backend
 
-COPY package.json ./
+COPY backend/package.json ./
 
 RUN npm install --prod
 
-COPY --from=development /usr/src/app/dist ./dist
+COPY --from=development /usr/src/app/backend/dist ./dist
 
 CMD ["node", "dist/apps/products-service/main"]
