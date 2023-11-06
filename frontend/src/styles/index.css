@@ -23,11 +23,6 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-#root {
-    /* TODO: need will to remove the overflow */
-    overflow: hidden;
-}
-
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
         monospace;
