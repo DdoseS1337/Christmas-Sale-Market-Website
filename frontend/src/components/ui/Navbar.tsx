@@ -3,7 +3,6 @@ import { Col, Row } from "react-bootstrap";
 import { Link, useLocation } from "react-router-dom";
 import { HouseDoor, HouseDoorFill } from "react-bootstrap-icons";
 import localizations from "../../interfaces/NavBarLocalization";
-import christmasTreeApi from "../../services/christmas-tree.api";
 import { BackgroundType, Section } from "../common/Section";
 import "../../styles/components/breadcrumb.css";
 
@@ -19,9 +18,7 @@ const NavBar = ({ additionalBreadCrumbs }: IProps) => {
         const searchParams = new URLSearchParams(location.search).get(
             "categoryId"
         );
-        if (searchParams !== null) {
-            pathnames.push(searchParams);
-        }
+        searchParams !== null && pathnames.push(searchParams);
     }
 
     const [isHovered, setIsHovered] = useState(false);

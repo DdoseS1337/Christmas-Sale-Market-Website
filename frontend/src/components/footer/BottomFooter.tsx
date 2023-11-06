@@ -43,7 +43,7 @@ const BottomFooter = () => {
                             list={[
                                 { text: "My Account", link: "" },
                                 { text: "Order History", link: "" },
-                                { text: "Shoping Cart", link: "" },
+                                { text: "Shopping Cart", link: "" },
                                 { text: "Wishlist", link: "" },
                             ]}
                         />
@@ -57,8 +57,10 @@ const BottomFooter = () => {
                                     text: "Часті запитання",
                                     link: "/information",
                                 },
-                                { text: "Terms & Condition", link: "" },
-                                { text: "Privacy Policy", link: "" },
+                                {
+                                    text: "Угода користувача",
+                                    link: "/policy",
+                                },
                             ]}
                         />
                     </Col>
@@ -73,6 +75,10 @@ const BottomFooter = () => {
                                 {
                                     text: "Часті запитання",
                                     link: "/information",
+                                },
+                                {
+                                    text: "Угода користувача",
+                                    link: "/policy",
                                 },
                             ]}
                         />
@@ -90,7 +96,8 @@ const BottomFooter = () => {
                 </Row>
                 <Row className="bottom-footer__bottom-row">
                     <p className="m-0 ps-2">
-                        Christmas Market © 2023. Всі права захищені
+                        Christmas Market © {new Date().getFullYear()}. Всі права
+                        захищені
                     </p>
                 </Row>
             </Container>

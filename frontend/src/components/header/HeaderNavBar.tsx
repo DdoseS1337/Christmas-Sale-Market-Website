@@ -84,10 +84,14 @@ const HeaderNavBar = () => {
                         <LinkContainer to="/information">
                             <NavDropdown.Item>Часті запитання</NavDropdown.Item>
                         </LinkContainer>
+                        <NavDropdown.Divider />
+                        <LinkContainer to="/policy">
+                            <NavDropdown.Item>Угода користувача</NavDropdown.Item>
+                        </LinkContainer>
                     </NavDropdown>
                     <LinkContainer to="/contacts">
                         <Nav.Link>Контакти</Nav.Link>
-                    </LinkContainer>
+                    </LinkContainer>                
                 </Nav>
             </Navbar.Collapse>
         </Navbar>
