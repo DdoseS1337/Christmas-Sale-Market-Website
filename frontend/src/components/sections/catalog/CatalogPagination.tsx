@@ -1,6 +1,7 @@
 import { useSearchParams } from "react-router-dom";
 import { IFilterPagination } from "../../../interfaces/FilterPage";
 import RoundedButton from "../../common/RoundedButton";
+import { ArrowLeft, ArrowRight } from "react-bootstrap-icons";
 
 interface IProps {
 	pagination?: IFilterPagination;
@@ -29,22 +30,26 @@ export const CatalogPagination = ({ pagination }: IProps) => {
 			)}
 			{pagination?.page != null && pagination?.page > 1 && (
 				<RoundedButton
+					isCircle
 					backgroundIsGray
 					onClick={() => changePage(pagination?.page - 1)}
 				>
-					Попередня
+					<ArrowLeft />
 				</RoundedButton>
 			)}
 
-			<RoundedButton isCircle>{pagination?.page}</RoundedButton>
+			<RoundedButton isCircle inactive>
+				{pagination?.page}
+			</RoundedButton>
 
 			{pagination?.page != null &&
 				pagination?.page < pagination?.numberOfPages && (
 					<RoundedButton
+						isCircle
 						backgroundIsGray
 						onClick={() => changePage(pagination?.page + 1)}
 					>
-						Наступна
+						<ArrowRight />
 					</RoundedButton>
 				)}
 			{pagination?.page != null &&

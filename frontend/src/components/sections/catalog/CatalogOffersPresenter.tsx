@@ -20,7 +20,7 @@ export const CatalogOffersPresenter = ({
 	const offersIsEmpty = offers?.length === 0;
 
 	return (
-		<div className="catalog">
+		<div className="catalog__content">
 			<h1 className="catalog__title">{categoryName}</h1>
 			{offersIsEmpty ? (
 				<span className="catalog__not-found">Товарів не знайдено</span>

@@ -24,7 +24,7 @@ export const CACHING_CONST = {
 }
 
 export const FILTER_CONST = {
-  PAGE_SIZE: 16,
+  PAGE_SIZE: 12,
   QUERY_PARAMETERS: {
     AVAILABLE: "available",
     CATEGORY_ID: "categoryId",

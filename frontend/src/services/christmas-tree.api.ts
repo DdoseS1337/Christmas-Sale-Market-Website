@@ -22,8 +22,8 @@ class ChristmasTreeApi extends HttpService {
         });
     }
 
-    async getAllOffers() {
-        return this.get<Array<IOffer>>({
+    async getAllOffers(): Promise<Array<IOffer>> {
+        return this.getWithCaching<Array<IOffer>>({
             url: BACKEND_KEYS.CHRISTMAS_TREE_OFFERS,
         });
     }
@@ -73,7 +73,7 @@ class ChristmasTreeApi extends HttpService {
             ? allCategories.filter((category) => category.parentId == selectedCategory?.id) 
             : allCategories;
 
-        const allOffers = await this.getAllOffers();
+        const allOffers = (await this.getAllOffers()).filter(offer => offer.newPrice != 0);
         let filteredOffersByPage = allOffers;
 
         if (categoryId != null)
