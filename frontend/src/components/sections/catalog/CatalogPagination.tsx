@@ -32,7 +32,7 @@ export const CatalogPagination = ({ pagination }: IProps) => {
 					backgroundIsGray
 					onClick={() => changePage(pagination?.page - 1)}
 				>
-					prev
+					Попередня
 				</RoundedButton>
 			)}
 
@@ -44,7 +44,7 @@ export const CatalogPagination = ({ pagination }: IProps) => {
 						backgroundIsGray
 						onClick={() => changePage(pagination?.page + 1)}
 					>
-						next
+						Наступна
 					</RoundedButton>
 				)}
 			{pagination?.page != null &&
