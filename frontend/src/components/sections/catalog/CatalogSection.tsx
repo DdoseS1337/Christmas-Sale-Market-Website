@@ -7,6 +7,8 @@ import christmasTreeApi from "../../../services/christmas-tree.api";
 import { MultiRange } from "../../../interfaces/MultiRange";
 import { IFilterPageData } from "../../../interfaces/FilterPage";
 import { FILTER_CONST } from "../../../common";
+import { Spinner } from "react-bootstrap";
+import "animate.css";
 
 export const CatalogSection = () => {
 	const [queryParameters] = useSearchParams();
@@ -39,23 +41,27 @@ export const CatalogSection = () => {
 
 	return (
 		<Section width="1550px" style={{ marginTop: "-3rem" }}>
-			<div className="mx-auto">
-				<div className="d-flex align-items-start">
-					{filterData && (
+			{filterData ? (
+				<div className="mx-auto catalog animate__animated animate__fadeIn">
+					<div className="d-flex align-items-start">
 						<CatalogFilter
 							categories={filterData.categoriesForFilter}
 							selectedCategoryId={categoryId}
 							priceRange={filterData.priceRange}
 							pagination={filterData?.pagination}
 						/>
-					)}
-					<CatalogOffersPresenter
-						categoryName={filterData?.selectedCategory?.name}
-						offers={filterData?.offers}
-						pagination={filterData?.pagination}
-					/>
+						<CatalogOffersPresenter
+							categoryName={filterData?.selectedCategory?.name}
+							offers={filterData?.offers}
+							pagination={filterData?.pagination}
+						/>
+					</div>
 				</div>
-			</div>
+			) : (
+				<div className="catalog__spinner-wrapper animate__animated animate__animated">
+					<Spinner className="catalog__spinner" />
+				</div>
+			)}
 		</Section>
 	);
 

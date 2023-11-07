@@ -36,3 +36,7 @@
     background-color: var(--primary);
     color: var(--primary-text);
 }
+
+.rounded-button--inactive {
+    cursor: default;
+}
