@@ -28,7 +28,7 @@ spec:
             - name: RABBITMQ_URI
               valueFrom:
                 secretKeyRef:
-                  name: rabbitmq
-                  key: rabbitmqURI
+                  name: rabbitmquri
+                  key: connectionLink
           ports:
             - containerPort: 3001

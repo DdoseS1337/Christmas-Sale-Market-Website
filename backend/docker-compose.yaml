@@ -43,6 +43,8 @@ services:
     command: npm run start:dev telegram-bot
     env_file:
       - ./apps/telegram-bot/.env
+    ports:
+      - "3003:3003"
     volumes:
       - .:/usr/src/app
   auth:

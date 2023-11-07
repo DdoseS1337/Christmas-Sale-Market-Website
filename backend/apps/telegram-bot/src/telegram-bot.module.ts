@@ -12,6 +12,7 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
     ConfigModule.forRoot({
       isGlobal: true,
       validationSchema: Joi.object({
+        PORT:Joi.number().required(),
         TELEGRAM_BOT_TOKEN: Joi.string().required(),
         RABBITMQ_URI: Joi.string().required()
       }),
