@@ -21,6 +21,7 @@
 
 .catalog__pagination {
     display: flex;
+    justify-content: center;
     flex-wrap: wrap;
 }
 

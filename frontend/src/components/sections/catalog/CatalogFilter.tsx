@@ -81,7 +81,7 @@ export const CatalogFilter = ({
 				</Accordion.Header>
 				<Accordion.Body className="catalog-filter__body">
 					<MultiRangeSlider
-						name="Price"
+						name="Вартість"
 						min={priceRange.min}
 						max={priceRange.max}
 						onChange={(range) => {
