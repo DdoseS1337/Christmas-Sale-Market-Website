@@ -23,8 +23,8 @@ spec:
             - name: RABBITMQ_URI
               valueFrom:
                 secretKeyRef:
-                  name: rabbitmq
-                  key: rabbitmqURI
+                  name: rabbitmquri
+                  key: connectionLink
             - name: ELKI_URL
               valueFrom:
                 secretKeyRef:

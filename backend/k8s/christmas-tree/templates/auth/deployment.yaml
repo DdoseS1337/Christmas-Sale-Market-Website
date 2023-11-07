@@ -30,8 +30,8 @@ spec:
             - name: RABBITMQ_URI
               valueFrom:
                 secretKeyRef:
-                  name: rabbitmq
-                  key: rabbitmqURI
+                  name: rabbitmquri
+                  key: connectionLink
             - name: MONGODB_URI
               valueFrom:
                 secretKeyRef:

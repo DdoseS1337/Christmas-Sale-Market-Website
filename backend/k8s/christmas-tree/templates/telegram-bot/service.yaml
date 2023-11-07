@@ -2,14 +2,14 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: auth
-  name: auth
+    app: telegram-bot
+  name: telegram-bot
 spec:
   ports:
     - name: 'http'
-      port: 3004
+      port: 3003
       protocol: TCP
-      targetPort: 3004
+      targetPort: 3003
   selector:
-    app: auth
+    app: telegram-bot
   type: NodePort
