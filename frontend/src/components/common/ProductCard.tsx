@@ -19,8 +19,9 @@ export const ProductCard = ({
 	name: title,
 	newPrice: actualPrice,
 	price: oldPrice,
-	picture: image,
+	picture,
 	className,
+	available,
 }: IProps) => {
 	const linkRef = useRef<HTMLAnchorElement>(null);
 
@@ -49,16 +50,21 @@ export const ProductCard = ({
 				clickedOnBasked = false;
 			}}
 		>
-			{discount ? (
-				<Card.Header>
-					<div className="product-card__sale">
+			<Card.Header>
+				{discount ? (
+					<div className="product-card__header-item product-card__sale">
 						Знижка {discount.toFixed(0)}%
 					</div>
-				</Card.Header>
-			) : undefined}
+				) : undefined}
+				{!available ? (
+					<div className="product-card__header-item product-card__not-available">
+						Не в наявності
+					</div>
+				) : undefined}
+			</Card.Header>
 			<Card.Img
 				className="product-card__image"
-				src={image}
+				src={picture}
 				alt="product image"
 			/>
 			<Card.Footer>
@@ -79,18 +85,20 @@ export const ProductCard = ({
 						)}
 					</div>
 				</div>
-				<RoundedButton
-					isCircle
-					backgroundIsGray
-					className="product-card__button z-1"
-					onClick={() => {
-						clickedOnBasked = true;
-						actualBasketButtonCallback &&
-							actualBasketButtonCallback();
-					}}
-				>
-					{iconOnBasketButton}
-				</RoundedButton>
+				{available ? (
+					<RoundedButton
+						isCircle
+						backgroundIsGray
+						className="product-card__button z-1"
+						onClick={() => {
+							clickedOnBasked = true;
+							actualBasketButtonCallback &&
+								actualBasketButtonCallback();
+						}}
+					>
+						{iconOnBasketButton}
+					</RoundedButton>
+				) : undefined}
 			</Card.Footer>
 		</Card>
 	);
@@ -101,7 +109,7 @@ export const ProductCard = ({
 			id: String(id),
 			name: title,
 			newPrice: actualPrice,
-			picture: [image],
+			picture: [picture],
 			amount: 1,
 		});
 

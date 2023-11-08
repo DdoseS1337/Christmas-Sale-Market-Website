@@ -32,10 +32,11 @@ export const CatalogOffersPresenter = ({
 								<ProductCard
 									key={offer.id}
 									className="catalog__product"
-									id={offer.id}
-									name={offer.name}
-									newPrice={offer.newPrice}
-									price={offer.price}
+									// id={offer.id}
+									// name={offer.name}
+									// newPrice={offer.newPrice}
+									// price={offer.price}
+									{...offer}
 									picture={offer.picture[0]}
 								/>
 							);
