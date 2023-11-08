@@ -140,7 +140,7 @@ export class SupplierService {
         newPrice: Math.floor(
           Number(offer.price) * this.randomFromInterval(1.35, 2),
         ),
-        price: (
+        price: Math.floor(
           Number(offer.price) * this.randomFromInterval(2.1, 4)
         ),
       };
