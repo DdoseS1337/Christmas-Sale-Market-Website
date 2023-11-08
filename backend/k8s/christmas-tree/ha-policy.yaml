@@ -1,0 +1,17 @@
+apiVersion: rabbitmq.com/v1beta1
+kind: Policy
+metadata:
+  name: ha-policy
+  namespace: default
+spec:
+  name: transient 
+  vhost: "/" 
+  pattern: "" 
+  applyTo: "all" 
+  definition:
+    ha-mode:
+     all
+    ha-sync-mode:
+     automatic
+  rabbitmqClusterReference:
+    name: rabbitmqcluster-prod 
