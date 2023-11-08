@@ -1,31 +1,31 @@
+
 FROM node:alpine As development
 
-WORKDIR /usr/src/app/backend
 
-COPY backend/package.json ./
-COPY backend/tsconfig.json  tsconfig.json
-COPY backend/nest-cli.json nest-cli.json
+WORKDIR /usr/src/app
 
-RUN npm install 
 
-COPY backend/apps/auth apps/auth
-COPY backend/libs libs
+COPY package.json ./
 
-RUN cd apps/auth && npm install 
 
-RUN npm run build auth
+RUN npm install
+
+
+COPY . .
+
+RUN npm run build
 
 FROM node:alpine As production
 
 ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}
 
-WORKDIR /usr/src/app/backend
+WORKDIR /usr/src/app
 
-COPY backend/package.json ./
+COPY package.json ./
 
 RUN npm install --prod
 
-COPY --from=development /usr/src/app/backend/dist ./dist
+COPY --from=development /usr/src/app/dist ./dist
 
 CMD ["node", "dist/apps/auth/main"]
