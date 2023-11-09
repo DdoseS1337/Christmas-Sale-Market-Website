@@ -2,7 +2,7 @@ import HttpService from "./HttpService";
 import { BACKEND_KEYS, FILTER_CONST } from "../common/consts";
 import { MultiRange } from "../interfaces/MultiRange";
 import { IOffer } from "../interfaces/Offer";
-import { ICategory } from "../interfaces/Category";
+import { ICategory, ICategoryWithOffers } from "../interfaces/Category";
 import { IFilterPageData } from "../interfaces/FilterPage";
 
 class ChristmasTreeApi extends HttpService {
@@ -22,10 +22,10 @@ class ChristmasTreeApi extends HttpService {
         });
     }
 
-    async getAllOffers(): Promise<Array<IOffer>> {
+    async getAllOffers() {
         return this.getWithCaching<Array<IOffer>>({
             url: BACKEND_KEYS.CHRISTMAS_TREE_OFFERS,
-        });
+        }).then(offers => offers.filter(offer => offer.newPrice != 0));
     }
 
     async getOfferById(id: string) {
@@ -34,30 +34,45 @@ class ChristmasTreeApi extends HttpService {
         });
     }
 
-    async getOffersByCategoryId(categoryId: number, available?: boolean, priceRange?: MultiRange) {
-        let params: any = {
-            categoryId,
-        };
+    async getOffersByCategoryId(categoryId: number) {
+        const selectedCategory = await this.getCategoryById(categoryId.toString());
+        if (selectedCategory === null || selectedCategory === undefined)
+            throw new Error("Id is invalid");
 
-        if (available !== undefined) {
-            params = {
-                ...params,
-                available
-            } 
+        if (selectedCategory.parentId != null) {
+            return await this.getWithCaching<Array<IOffer>>({
+                url: `${BACKEND_KEYS.CHRISTMAS_TREE_OFFERS}`,
+                params: {
+                    categoryId,
+                    available: true
+                }
+            });
         }
 
-        if (priceRange !== undefined) {
-            params = {
-                ...params,
-                pricemin: priceRange?.min,
-                pricemax: priceRange?.max,
-            } 
-        }
+        const allCategories = await this.getAllCategories();
+        const categoriesToFindOffers = allCategories.filter((category) => category.parentId == selectedCategory?.id);
+        const allOffers = await this.getAllOffers();
+        return allOffers.filter(offer => 
+            offer.categoryId === selectedCategory.id 
+            || categoriesToFindOffers.map(c => c.id).includes(offer.categoryId));
+    }
+
+    async getCategoriesWithOffers(categoriesCount: number, offersCount: number): Promise<Array<ICategoryWithOffers>> {
+        const allCategories = await this.getAllCategories();
+        const generalCategories = allCategories
+            .filter((category) => category.parentId == null);
         
-        return this.get<Array<IOffer>>({
-            url: `${BACKEND_KEYS.CHRISTMAS_TREE_OFFERS}`,
-            params: params
-        });
+        var result = await Promise.all(generalCategories.map(async category => {
+            return {
+                category: category,
+                offers: (await this.getOffersByCategoryId(category.id))
+                    .slice(0, offersCount)
+            }
+        }));
+
+        return result
+            .filter(c => c.offers.length != 0)
+            .slice(0, categoriesCount);
     }
 
     async getCategoryWithOffersForFilterPage(page: number, categoryId?: number, available?: boolean, priceRange?: MultiRange, sorting?: boolean) {
@@ -73,7 +88,7 @@ class ChristmasTreeApi extends HttpService {
             ? allCategories.filter((category) => category.parentId == selectedCategory?.id) 
             : allCategories;
 
-        const allOffers = (await this.getAllOffers()).filter(offer => offer.newPrice != 0);
+        const allOffers = await this.getAllOffers();
         let filteredOffersByPage = allOffers;
 
         if (categoryId != null)
