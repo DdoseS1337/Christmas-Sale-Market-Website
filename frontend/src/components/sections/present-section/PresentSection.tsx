@@ -18,10 +18,20 @@ import { IBannerInfo } from "./BannerBig";
 import { Featured } from "./Featured";
 import Confetti from "react-confetti";
 import "../../../styles/components/sections/present-section/present-section.css";
+import { useMediaQuery } from "react-responsive";
+import { BREAKPOINTS } from "../../../common";
 
 export const PresentSection = () => {
-    const [activeIndex, setActiveIndex] = useState(0);
-    const [showConfetti, setShowConfetti] = useState(false);
+	const isTabletLeftMenu = useMediaQuery({
+		minWidth: BREAKPOINTS.TABLET.PRESENT_SECTION.LEFT_BANNER_MENU,
+	});
+
+	const isTabletImages = useMediaQuery({
+		minWidth: BREAKPOINTS.TABLET.PRESENT_SECTION.IMAGES,
+	});
+
+	const [activeIndex, setActiveIndex] = useState(0);
+	const [showConfetti, setShowConfetti] = useState(false);
 
     const items: (IBannerInfo | ILeftMenuItem)[] = [
         {
@@ -115,44 +125,46 @@ export const PresentSection = () => {
         },
     ];
 
-    return (
-        <>
-            {showConfetti && (
-                <Confetti
-                    width={window.innerWidth}
-                    height={window.innerHeight}
-                    numberOfPieces={400}
-                    tweenDuration={10000}
-                />
-            )}
-            <Section
-                style={{ marginBottom: 50, marginTop: "-3rem" }}
-                backgroundType={BackgroundType.RedWithSnow}
-            >
-                <Row style={{ margin: "0 -12px" }}>
-                    <Col xs={3}>
-                        <LeftMenu
-                            intervalInSeconds={4}
-                            onSelectItem={(index: number) => {
-                                setActiveIndex(index);
-                            }}
-                            items={items as ILeftMenuItem[]}
-                        />
-                    </Col>
-                    <Col>
-                        <BannerBigCarousel
-                            activeIndex={activeIndex}
-                            items={items as IBannerInfo[]}
-                        />
-                    </Col>
-                </Row>
-                <Featured />
-                <img
-                    className="present-tree"
-                    src="/images/pictures/decorated-christmas-tree.png"
-                    alt="decorated-christmas-tree"
-                />
-            </Section>
-        </>
-    );
+	return (
+		<>
+			{showConfetti && (
+				<Confetti
+					width={window.innerWidth}
+					height={window.innerHeight}
+					numberOfPieces={400}
+					tweenDuration={10000}
+				/>
+			)}
+			<Section
+				style={{ marginBottom: 50, marginTop: "-3rem" }}
+				backgroundType={BackgroundType.RedWithSnow}
+			>
+				<Row style={{ margin: "0 -12px" }}>
+					<Col xs={3} className={isTabletLeftMenu ? "" : "d-none"}>
+						<LeftMenu
+							intervalInSeconds={4}
+							onSelectItem={(index: number) => {
+								setActiveIndex(index);
+							}}
+							items={items as ILeftMenuItem[]}
+						/>
+					</Col>
+					<Col>
+						<BannerBigCarousel
+							activeIndex={activeIndex}
+							items={items as IBannerInfo[]}
+						/>
+					</Col>
+				</Row>
+				<Featured />
+				{isTabletImages && (
+					<img
+						className="present-tree"
+						src="/images/pictures/decorated-christmas-tree.png"
+						alt="decorated-christmas-tree"
+					/>
+				)}
+			</Section>
+		</>
+	);
 };

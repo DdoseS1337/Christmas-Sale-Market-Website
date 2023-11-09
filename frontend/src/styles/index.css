@@ -45,8 +45,10 @@ code {
 .logo-icon {
     background-image: url("../../public/images/pictures/header-logo.png");
     width: 3rem;
+    height: 3rem;
     background-size: contain;
     background-repeat: no-repeat;
+    margin-top: -3px;
 }
 
 .christmas-text {

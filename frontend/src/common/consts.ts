@@ -42,3 +42,22 @@ export const FILTER_CONST = {
 export const SIMILAR_PRODUCTS = {
   ROW_LENGTH: 10
 }
+
+export const BREAKPOINTS = {
+  TABLET: {
+    HEADER: {
+      LOGO: 500,
+      SEARCHBAR: 1100,
+      BASKET: 1100
+    },
+    PRESENT_SECTION: {
+      LEFT_BANNER_MENU: 1100,
+      IMAGES: 1700
+    }
+  },
+  PHONE: {
+    HEADER: {
+      SECOND_ROW: 780
+    }
+  }
+}
