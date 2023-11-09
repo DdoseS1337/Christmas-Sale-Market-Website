@@ -1,15 +1,21 @@
 import { ArrowRight } from "react-bootstrap-icons";
-import { ProductCard } from "../../common/ProductCard";
-import { IOffer } from "../../../interfaces/Offer";
+import { ProductCard } from "./ProductCard";
+import { IOffer } from "../../interfaces/Offer";
 import { useNavigate } from "react-router-dom";
-import { ICategory } from "../../../interfaces/Category";
+import { ICategory } from "../../interfaces/Category";
+import "animate.css";
 
 interface IProps {
+	customTitle?: string;
 	category: ICategory;
 	offers: Array<IOffer>;
 }
 
-export const RowProductPresenter = ({ category, offers }: IProps) => {
+export const RowProductPresenter = ({
+	customTitle,
+	category,
+	offers,
+}: IProps) => {
 	const navigate = useNavigate();
 
 	const handleCategoryClick = (categoryId: any) => {
@@ -17,9 +23,11 @@ export const RowProductPresenter = ({ category, offers }: IProps) => {
 	};
 
 	return (
-		<div className="products-of-category">
+		<div className="products-of-category animate__animated animate__fadeIn">
 			<div className="products-of-category__header">
-				<h2 className="products-of-category__title">{category.name}</h2>
+				<h2 className="products-of-category__title">
+					{customTitle ?? category.name}
+				</h2>
 				<div
 					className="products-of-category__view-all"
 					onClick={() => handleCategoryClick(category.id)}

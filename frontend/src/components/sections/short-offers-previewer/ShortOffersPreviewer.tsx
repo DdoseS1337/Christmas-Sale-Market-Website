@@ -1,5 +1,5 @@
 import { Section } from "../../common/Section";
-import { RowProductPresenter } from "./ProductsRow";
+import { RowProductPresenter } from "../../common/ProductsRowPresenter";
 import "../../../styles/components/sections/hot-product/hot-product.css";
 import { useFetchData } from "../../../hooks/FetchDataHook";
 import christmasTreeApi from "../../../services/christmas-tree.api";
