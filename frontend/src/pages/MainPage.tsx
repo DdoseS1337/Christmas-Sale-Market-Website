@@ -1,13 +1,13 @@
-import { HotProductSection } from "../components/sections/hot-product/HotProductSection";
+import { ShortOffersPreviewer } from "../components/sections/short-offers-previewer/ShortOffersPreviewer";
 import { PresentSection } from "../components/sections/present-section/PresentSection";
 
 const MainPage = () => {
-  return (
-    <>
-      <PresentSection />
-      <HotProductSection />
-    </>
-  );
+	return (
+		<>
+			<PresentSection />
+			<ShortOffersPreviewer />
+		</>
+	);
 };
 
 export default MainPage;
