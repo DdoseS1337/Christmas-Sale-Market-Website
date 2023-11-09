@@ -38,3 +38,7 @@ export const FILTER_CONST = {
     DESC: "DESC",
   }
 }
+
+export const SIMILAR_PRODUCTS = {
+  ROW_LENGTH: 10
+}
