@@ -27,7 +27,7 @@ export const LeftMenu = ({
 	className,
 	...ulProps
 }: IProps) => {
-	if (items.length === 0) throw new Error("items lenght is zero");
+	if (items.length === 0) throw new Error("items length is zero");
 	if (intervalInSeconds <= 0)
 		throw new Error("intervalInSeconds equal ot or less than 0");
 

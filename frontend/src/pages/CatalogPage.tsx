@@ -15,6 +15,12 @@ const CatalogPage = ({ setAdditionalBreadCrumbs }: IProps) => {
         if (categoryId !== null) {
             christmasTreeApi.getCategoryById(categoryId).then((category) => {
                 setAdditionalBreadCrumbs(category);
+            })
+            .catch((error) => {
+                setAdditionalBreadCrumbs({ id: categoryId, name: "Категорію не знайдено" });
+                console.error(
+                    "Product with current id not found. " + error
+                );
             });
         }
     }, [queryParameters]);

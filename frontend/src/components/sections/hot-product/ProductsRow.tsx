@@ -10,7 +10,7 @@ interface IProps extends Omit<ICategory, "parentId"> {}
 
 export const ProductsRow = ({ id: categoryId, name: categoryName }: IProps) => {
 	const { items: offers } = useFetchData<IOffer[]>({
-		callApi: () => christmasTreeApi.getOffersByCategoryId(categoryId, true),
+		callApi: () => christmasTreeApi.getOffersByCategoryId(categoryId),
 		count: 5,
 	});
 
