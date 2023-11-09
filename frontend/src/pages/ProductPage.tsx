@@ -20,6 +20,7 @@ import { ICategory } from "../interfaces/Category";
 import { Dash, Plus } from "react-bootstrap-icons";
 import "../styles/components/product.css";
 import { CartService } from "../services/basketService";
+import { SimilarProducts } from "../components/sections/similar-products/SimilarProducts";
 
 interface IProps {
     setAdditionalBreadCrumbs: Dispatch<SetStateAction<any>>;
@@ -107,77 +108,84 @@ const ProductPage = ({ setAdditionalBreadCrumbs }: IProps) => {
     }
 
     return (
-        <Container>
-            <Row>
-                <Col lg={4} className="d-flex justify-content-center">
-                    <Galleria
-                        value={product !== null ? product.picture : []}
-                        numVisible={3}
-                        item={GalleriaMainPhoto}
-                        thumbnailsPosition={"left"}
-                        thumbnail={GalleriaCarousel}
-                        showItemNavigators
-                        showItemNavigatorsOnHover
-                        circular
-                    />
-                </Col>
-                <Col className="p-0 m-0 ms-3">
-                    <Container className="d-flex p-0 align-items-start">
-                        <h2>{product?.name}</h2>
-                        <InStockBlock available={product?.available} />
-                    </Container>
-                    <Container className="p-0">
-                        <span className="text-decoration-line-through text-secondary fs-5">
-                            {product?.price}₴
-                        </span>
-                        <span className="ms-2 fs-5 fw-semibold">
-                            {product?.newPrice}₴
-                        </span>
-                        <DiscountBadge
-                            oldPrice={product?.price}
-                            price={product?.newPrice}
+        <>
+            <Container>
+                <Row>
+                    <Col lg={4} className="d-flex justify-content-center">
+                        <Galleria
+                            value={product !== null ? product.picture : []}
+                            numVisible={3}
+                            item={GalleriaMainPhoto}
+                            thumbnailsPosition={"left"}
+                            thumbnail={GalleriaCarousel}
+                            showItemNavigators
+                            showItemNavigatorsOnHover
+                            circular
                         />
-                    </Container>
-                    <GreyLine />
-                    <Container className="p-0 d-flex align-items-center">
-                        <h6 className="m-0">Склад: </h6>
-                        <div className="product-storage-badge">1</div>
-                    </Container>
-                    <Container className="p-0 mt-4 d-flex align-items-center">
-                        <h6 className="m-0">
-                            Категорія:
-                            <span
-                                className="text-secondary ms-2"
-                                style={{ cursor: "pointer" }}
-                                onClick={() =>
-                                    handleCategoryClick(category?.id)
-                                }
-                            >
-                                {category?.name}
+                    </Col>
+                    <Col className="p-0 m-0 ms-3">
+                        <Container className="d-flex p-0 align-items-start">
+                            <h2>{product?.name}</h2>
+                            <InStockBlock available={product?.available} />
+                        </Container>
+                        <Container className="p-0">
+                            <span className="text-decoration-line-through text-secondary fs-5">
+                                {product?.price}₴
                             </span>
-                        </h6>
-                    </Container>
-                    <GreyLine />
-                    <Container className="p-0">
-                        <div
-                            className="btn-red-theme d-inline-flex px-5 py-2 rounded-5"
-                            onClick={() => {
-                                isInCard ? removeFromBasket() : addToBasket();
-                            }}
-                        >
-                            {isInCard ? removeFromBasketIcon : addToBasketIcon}
-                        </div>
-                    </Container>
-                    <GreyLine />
-                </Col>
-            </Row>
-            <Row className="mt-5">
-                <h5 className="product-h6-title" style={{ width: "12rem" }}>
-                    Характеристики
-                </h5>
-                <div className="border-bottom" />
-            </Row>
-        </Container>
+                            <span className="ms-2 fs-5 fw-semibold">
+                                {product?.newPrice}₴
+                            </span>
+                            <DiscountBadge
+                                oldPrice={product?.price}
+                                price={product?.newPrice}
+                            />
+                        </Container>
+                        <GreyLine />
+                        <Container className="p-0 d-flex align-items-center">
+                            <h6 className="m-0">Склад: </h6>
+                            <div className="product-storage-badge">1</div>
+                        </Container>
+                        <Container className="p-0 mt-4 d-flex align-items-center">
+                            <h6 className="m-0">
+                                Категорія:
+                                <span
+                                    className="text-secondary ms-2"
+                                    style={{ cursor: "pointer" }}
+                                    onClick={() =>
+                                        handleCategoryClick(category?.id)
+                                    }
+                                >
+                                    {category?.name}
+                                </span>
+                            </h6>
+                        </Container>
+                        <GreyLine />
+                        <Container className="p-0">
+                            <div
+                                className="btn-red-theme d-inline-flex px-5 py-2 rounded-5"
+                                onClick={() => {
+                                    isInCard
+                                        ? removeFromBasket()
+                                        : addToBasket();
+                                }}
+                            >
+                                {isInCard
+                                    ? removeFromBasketIcon
+                                    : addToBasketIcon}
+                            </div>
+                        </Container>
+                        <GreyLine />
+                    </Col>
+                </Row>
+                <Row className="mt-5">
+                    <h5 className="product-h6-title" style={{ width: "12rem" }}>
+                        Характеристики
+                    </h5>
+                    <div className="border-bottom" />
+                </Row>
+            </Container>
+            {product && <SimilarProducts categoryId={product?.categoryId} />}
+        </>
     );
 };
 
