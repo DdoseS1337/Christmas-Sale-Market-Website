@@ -6,3 +6,59 @@
   align-items: center;
   resize: none;
 }
+
+.order-summary {
+  margin-left: 3rem;
+  border-radius: 8px;
+  border: 1px solid var(--Light-red, #c93f4f);
+  background: var(--gray-scale-white, #fff);
+  /* width: 415.833px; */
+  padding: 2rem 2rem 3.5rem;
+  flex-direction: column;
+  align-items: flex-start;
+  height: auto;
+}
+
+.order-sum,
+.order-pay {
+  margin-top: 0;
+}
+
+.product-basket {
+  list-style-type: none;
+  padding: 0;
+}
+
+.product-listing {
+  display: flex;
+  margin: 5px 0;
+  display: flex;
+  width: 376px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.total {
+  display: flex;
+  padding-top: 10px;
+  width: 376px;
+  padding-top: 12px;
+  justify-content: space-between;
+  align-items: center;
+}
+.subtotal {
+  display: flex;
+  width: 376px;
+  padding: 12px 0px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.payment-method label {
+  display: block;
+  margin: 10px 0;
+}
+
+.divide {
+  background: var(--gray-100);
+}
