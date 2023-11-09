@@ -16,7 +16,6 @@ export const CatalogOffersPresenter = ({
 	offers,
 	pagination,
 }: IProps) => {
-	const [, setQueryParameters] = useSearchParams();
 	const offersIsEmpty = offers?.length === 0;
 
 	return (

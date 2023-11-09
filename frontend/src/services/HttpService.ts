@@ -28,7 +28,7 @@ export default class HttpService {
 		return response.data;
 	}
 
-	async getWithCaching<T>(config: GetRequestConfig) {
+	async getWithCaching<T>(config: GetRequestConfig): Promise<T> {
 		if (this.cachedDataIsActual() == false)
 			this.clearCachedData();
 
