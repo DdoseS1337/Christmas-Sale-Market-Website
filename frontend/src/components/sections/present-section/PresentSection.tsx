@@ -18,8 +18,18 @@ import { IBannerInfo } from "./BannerBig";
 import { Featured } from "./Featured";
 import Confetti from "react-confetti";
 import "../../../styles/components/sections/present-section/present-section.css";
+import { useMediaQuery } from "react-responsive";
+import { BREAKPOINTS } from "../../../common";
 
 export const PresentSection = () => {
+	const isTabletLeftMenu = useMediaQuery({
+		minWidth: BREAKPOINTS.TABLET.PRESENT_SECTION.LEFT_BANNER_MENU,
+	});
+
+	const isTabletImages = useMediaQuery({
+		minWidth: BREAKPOINTS.TABLET.PRESENT_SECTION.IMAGES,
+	});
+
 	const [activeIndex, setActiveIndex] = useState(0);
 	const [showConfetti, setShowConfetti] = useState(false);
 
@@ -130,7 +140,7 @@ export const PresentSection = () => {
 				backgroundType={BackgroundType.RedWithSnow}
 			>
 				<Row style={{ margin: "0 -12px" }}>
-					<Col xs={3}>
+					<Col xs={3} className={isTabletLeftMenu ? "" : "d-none"}>
 						<LeftMenu
 							intervalInSeconds={4}
 							onSelectItem={(index: number) => {
@@ -147,11 +157,13 @@ export const PresentSection = () => {
 					</Col>
 				</Row>
 				<Featured />
-				<img
-					className="present-tree"
-					src="/images/pictures/decorated-christmas-tree.png"
-					alt="decorated-christmas-tree"
-				/>
+				{isTabletImages && (
+					<img
+						className="present-tree"
+						src="/images/pictures/decorated-christmas-tree.png"
+						alt="decorated-christmas-tree"
+					/>
+				)}
 			</Section>
 		</>
 	);
