@@ -15,7 +15,9 @@
 
 .circle-button {
     min-width: 52px;
+    max-width: 52px !important;
     min-height: 52px;
+    max-height: 52px;
     display: flex;
     justify-content: center;
     align-items: center;
