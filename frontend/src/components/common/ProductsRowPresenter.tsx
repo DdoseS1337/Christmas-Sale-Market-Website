@@ -4,6 +4,7 @@ import { IOffer } from "../../interfaces/Offer";
 import { useNavigate } from "react-router-dom";
 import { ICategory } from "../../interfaces/Category";
 import "animate.css";
+import React from "react";
 
 interface IProps {
 	customTitle?: string;
