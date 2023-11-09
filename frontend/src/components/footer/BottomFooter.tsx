@@ -5,6 +5,7 @@ import Col from "react-bootstrap/Col";
 import FooterList from "./FooterList";
 import HeaderLogo from "../header/HeaderLogo";
 import { LinkWithIcon } from "../common/LinkWithIcon";
+import { CONTACTS } from "../../common";
 import Snowfall from "../ui/Snowfall";
 
 const BottomFooter = () => {
@@ -20,21 +21,21 @@ const BottomFooter = () => {
                         </p>
                         <div className="d-flex mb-1">
                             <LinkWithIcon
-                                to="#"
+                                to={CONTACTS.viber}
                                 src="/images/icons/viber.png"
                                 text="viber"
                                 className="me-3"
                             />
                             <LinkWithIcon
-                                to="tel:+1234567890"
+                                to={"tel:" + CONTACTS.telephone}
                                 src="/images/icons/telephone.png"
-                                text="(063) 555-01-14"
+                                text={CONTACTS.telephone}
                             />
                         </div>
                         <LinkWithIcon
-                            to="mailto:example@gmail.com"
+                            to={"mailto:" + CONTACTS.email}
                             src="/images/icons/gmail.png"
-                            text="example@gmail.com"
+                            text={CONTACTS.email}
                         />
                     </Col>
                     <Col>
@@ -43,7 +44,7 @@ const BottomFooter = () => {
                             list={[
                                 { text: "My Account", link: "" },
                                 { text: "Order History", link: "" },
-                                { text: "Shoping Cart", link: "" },
+                                { text: "Shopping Cart", link: "" },
                                 { text: "Wishlist", link: "" },
                             ]}
                         />
@@ -57,8 +58,10 @@ const BottomFooter = () => {
                                     text: "Часті запитання",
                                     link: "/information",
                                 },
-                                { text: "Terms & Condition", link: "" },
-                                { text: "Privacy Policy", link: "" },
+                                {
+                                    text: "Угода користувача",
+                                    link: "/policy",
+                                },
                             ]}
                         />
                     </Col>
@@ -73,6 +76,10 @@ const BottomFooter = () => {
                                 {
                                     text: "Часті запитання",
                                     link: "/information",
+                                },
+                                {
+                                    text: "Угода користувача",
+                                    link: "/policy",
                                 },
                             ]}
                         />
@@ -90,7 +97,8 @@ const BottomFooter = () => {
                 </Row>
                 <Row className="bottom-footer__bottom-row">
                     <p className="m-0 ps-2">
-                        Christmas Market © 2023. Всі права захищені
+                        Christmas Market © {new Date().getFullYear()}. Всі права
+                        захищені
                     </p>
                 </Row>
             </Container>

@@ -1,9 +1,10 @@
 .scroll-up-button {
-    display: none;
     position: sticky;
+    top: calc(100% - 50px - 2rem);
+    right: 2rem;
+    margin-bottom: 2rem;
+    display: none;
     float: right;
-    right: 1.5rem;
-    top: calc(100% - 100px);
     z-index: 3;
     cursor: pointer;
     border-radius: 50%;

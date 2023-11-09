@@ -19,6 +19,7 @@
     align-items: center;
     color: var(--primary);
     text-decoration: none;
+    cursor: pointer;
 }
 
 .products-of-category__cards {

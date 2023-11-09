@@ -1,5 +1,4 @@
 @import url("./components/header.css");
-@import url("./components/main.css");
 @import url("./components/snowfall.css");
 
 @font-face {
@@ -21,11 +20,6 @@ body {
         "Helvetica Neue", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-}
-
-#root {
-    /* TODO: need will to remove the overflow */
-    overflow: hidden;
 }
 
 code {
