@@ -2,12 +2,12 @@ import { HotProductSection } from "../components/sections/hot-product/HotProduct
 import { PresentSection } from "../components/sections/present-section/PresentSection";
 
 const MainPage = () => {
-	return (
-		<>
-			<PresentSection />
-			<HotProductSection />
-		</>
-	);
+  return (
+    <>
+      <PresentSection />
+      <HotProductSection />
+    </>
+  );
 };
 
 export default MainPage;
