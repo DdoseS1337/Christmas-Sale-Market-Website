@@ -6,6 +6,7 @@ const localizations: Record<string, string> = {
     order: "Замовлення",
     information: "Часті запитання",
     policy: "Угода користувача",
+    404: "Сторінку не знайдено",
 };
 
 export default localizations;
