@@ -21,6 +21,8 @@ import { Dash, Plus } from "react-bootstrap-icons";
 import "../styles/components/product.css";
 import { CartService } from "../services/basketService";
 import { SimilarProducts } from "../components/sections/similar-products/SimilarProducts";
+import { useMediaQuery } from "react-responsive";
+import { BREAKPOINTS } from "../common";
 
 interface IProps {
     setAdditionalBreadCrumbs: Dispatch<SetStateAction<any>>;
@@ -123,7 +125,10 @@ const ProductPage = ({ setAdditionalBreadCrumbs }: IProps) => {
                             circular
                         />
                     </Col>
-                    <Col className="p-0 m-0 ms-3">
+                    <Col
+                        className="p-0 m-0 ms-3"
+                        id="product-description-block"
+                    >
                         <Container className="d-flex p-0 align-items-start">
                             <h2>{product?.name}</h2>
                             <InStockBlock available={product?.available} />
@@ -183,6 +188,19 @@ const ProductPage = ({ setAdditionalBreadCrumbs }: IProps) => {
                     </h5>
                     <div className="border-bottom" />
                 </Row>
+                <Container className="m-0 p-0 mt-4 d-flex flex-wrap justify-content-between">
+                    {product?.param.map((item: any, index) => (
+                        <div
+                            key={index}
+                            className="border-bottom mb-3 pb-3 d-flex justify-content-between"
+                            style={{ width: "48%" }}
+                            id="product-characteristics"
+                        >
+                            <h6 className="m-0">{item.name}:</h6>
+                            <span>{item.description}</span>
+                        </div>
+                    ))}
+                </Container>
             </Container>
             {product && <SimilarProducts categoryId={product?.categoryId} />}
         </>

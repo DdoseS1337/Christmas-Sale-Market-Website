@@ -44,3 +44,15 @@ button:disabled svg {
     margin: 0;
     border-bottom: var(--primary) solid 2px;
 }
+
+@media (max-width: 992px) {
+    #product-description-block {
+        margin-top: 2rem !important;
+    }
+}
+
+@media (max-width: 771px) {
+    #product-characteristics {
+        width: 100% !important;
+    }
+}
