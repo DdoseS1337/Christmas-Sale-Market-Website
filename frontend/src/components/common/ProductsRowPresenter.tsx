@@ -4,7 +4,6 @@ import { IOffer } from "../../interfaces/Offer";
 import { useNavigate } from "react-router-dom";
 import { ICategory } from "../../interfaces/Category";
 import "animate.css";
-import React from "react";
 
 interface IProps {
 	customTitle?: string;
@@ -30,10 +29,10 @@ export const RowProductPresenter = ({
 					{customTitle ?? category.name}
 				</h2>
 				<div
-					className="products-of-category__view-all"
+					className="products-of-category__view-all fw-bold"
 					onClick={() => handleCategoryClick(category.id)}
 				>
-					View All <ArrowRight className="ms-1" />
+					Переглянути всі <ArrowRight className="ms-1" />
 				</div>
 			</div>
 			<div className="products-of-category__cards hot-product__scroll-container">
