@@ -17,12 +17,19 @@ import DiscountBadge from "../components/sections/product/DiscountBadge";
 import InStockBlock from "../components/sections/product/InStockBlock";
 import GreyLine from "../components/sections/product/GreyLine";
 import { ICategory } from "../interfaces/Category";
-import { Dash, Plus } from "react-bootstrap-icons";
+import {
+    Dash,
+    DashCircle,
+    DashCircleFill,
+    Plus,
+    PlusCircle,
+    PlusCircleFill,
+} from "react-bootstrap-icons";
 import "../styles/components/product.css";
 import { CartService } from "../services/basketService";
 import { SimilarProducts } from "../components/sections/similar-products/SimilarProducts";
-import { useMediaQuery } from "react-responsive";
-import { BREAKPOINTS } from "../common";
+import useHoverStates from "../components/sections/basket/AmountChangeHooks";
+import "../styles/components/basket.css";
 
 interface IProps {
     setAdditionalBreadCrumbs: Dispatch<SetStateAction<any>>;
@@ -40,6 +47,15 @@ const ProductPage = ({ setAdditionalBreadCrumbs }: IProps) => {
         .map((item) => item.id)
         .includes(product?.id.toString() ?? "");
     const [, setRefresh] = useState<boolean>(false);
+    const [amount, setAmount] = useState(1);
+    const {
+        isMinusHovered,
+        isPlusHovered,
+        handleMinusMouseEnter,
+        handleMinusMouseLeave,
+        handlePlusMouseEnter,
+        handlePlusMouseLeave,
+    } = useHoverStates();
 
     const addToBasketIcon = (
         <>
@@ -88,6 +104,18 @@ const ProductPage = ({ setAdditionalBreadCrumbs }: IProps) => {
         );
     };
 
+    const amountChange = (operation: string) => {
+        if (operation === "+") {
+            const newAmount = amount + 1;
+            setAmount(newAmount);
+        } else if (operation === "-") {
+            const newAmount = amount - 1;
+            if (newAmount >= 1) {
+                setAmount(newAmount);
+            }
+        }
+    };
+
     const addToBasket = () => {
         CartService.loadCart();
         CartService.addToCart({
@@ -95,7 +123,7 @@ const ProductPage = ({ setAdditionalBreadCrumbs }: IProps) => {
             name: product!.name,
             newPrice: product!.newPrice,
             picture: product!.picture,
-            amount: 1,
+            amount: amount,
         });
         setRefresh((oldValue) => !oldValue);
     };
@@ -165,9 +193,41 @@ const ProductPage = ({ setAdditionalBreadCrumbs }: IProps) => {
                             </h6>
                         </Container>
                         <GreyLine />
-                        <Container className="p-0">
+                        <Container className="p-0 d-flex">
                             <div
-                                className="btn-red-theme d-inline-flex px-5 py-2 rounded-5"
+                                className="d-flex justify-content-between p-2 border rounded-pill align-items-center"
+                                style={{ minWidth: "80px", width: "7rem" }}
+                            >
+                                {isMinusHovered ? (
+                                    <DashCircleFill
+                                        className="basket-btn-quantity"
+                                        onMouseLeave={handleMinusMouseLeave}
+                                        onClick={() => amountChange("-")}
+                                    />
+                                ) : (
+                                    <DashCircle
+                                        className="basket-btn-quantity"
+                                        onMouseEnter={handleMinusMouseEnter}
+                                    />
+                                )}
+                                <span>{amount}</span>
+                                {isPlusHovered ? (
+                                    <PlusCircleFill
+                                        className="basket-btn-quantity"
+                                        onMouseLeave={handlePlusMouseLeave}
+                                        onClick={() => amountChange("+")}
+                                    />
+                                ) : (
+                                    <PlusCircle
+                                        className="basket-btn-quantity"
+                                        onMouseEnter={handlePlusMouseEnter}
+                                    />
+                                )}
+                            </div>
+                            <div
+                                className={`btn-red-theme d-inline-flex px-5 py-2 ms-4 rounded-5 ${
+                                    product?.available ? "" : "btn disabled"
+                                }`}
                                 onClick={() => {
                                     isInCard
                                         ? removeFromBasket()
@@ -196,7 +256,7 @@ const ProductPage = ({ setAdditionalBreadCrumbs }: IProps) => {
                             style={{ width: "48%" }}
                             id="product-characteristics"
                         >
-                            <h6 className="m-0">{item.name}:</h6>
+                            <h6 className="m-0 fw-bold">{item.name}:</h6>
                             <span>{item.description}</span>
                         </div>
                     ))}

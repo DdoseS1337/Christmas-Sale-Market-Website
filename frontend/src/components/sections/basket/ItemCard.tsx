@@ -9,6 +9,7 @@ import {
 } from "react-bootstrap-icons";
 import Image from "react-bootstrap/Image";
 import { CartItem, CartService } from "../../../services/basketService";
+import useHoverStates from "./AmountChangeHooks";
 
 interface ItemCardProps {
     item: CartItem;
@@ -17,25 +18,15 @@ interface ItemCardProps {
 }
 
 const ItemCard = ({ item, onItemRemoved, onAmountChanged }: ItemCardProps) => {
-    const [isMinusHovered, setIsMinusHovered] = useState(false);
-    const [isPlusHovered, setIsPlusHovered] = useState(false);
     const [amount, setAmount] = useState(item.amount);
-
-    const handleMinusMouseEnter = () => {
-        setIsMinusHovered(true);
-    };
-
-    const handleMinusMouseLeave = () => {
-        setIsMinusHovered(false);
-    };
-
-    const handlePlusMouseEnter = () => {
-        setIsPlusHovered(true);
-    };
-
-    const handlePlusMouseLeave = () => {
-        setIsPlusHovered(false);
-    };
+    const {
+        isMinusHovered,
+        isPlusHovered,
+        handleMinusMouseEnter,
+        handleMinusMouseLeave,
+        handlePlusMouseEnter,
+        handlePlusMouseLeave,
+    } = useHoverStates();
 
     const amountChange = (operation: string) => {
         if (operation === "+") {

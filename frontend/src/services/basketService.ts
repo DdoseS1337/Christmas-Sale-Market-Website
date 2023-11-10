@@ -38,12 +38,14 @@ export class CartService {
         const existingItem = this.cart.find(
             (cartItem) => cartItem.id === item.id
         );
+        
         if (existingItem) {
             existingItem.amount += 1;
         } else {
-            item.amount = 1;
+            item.amount ? (item.amount = item.amount) : (item.amount = 1);
             this.cart.push(item);
         }
+
         this.saveCart();
     }
 
