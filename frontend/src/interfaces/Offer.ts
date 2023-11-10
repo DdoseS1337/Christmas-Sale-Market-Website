@@ -4,6 +4,7 @@ export interface IShortOffer {
 	newPrice: number;
 	price?: number;
 	picture: string;
+	available: boolean;
 }
 
 export interface IOffer extends Omit<IShortOffer, "picture"> {

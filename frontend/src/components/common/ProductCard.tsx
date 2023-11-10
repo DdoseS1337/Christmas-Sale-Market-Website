@@ -1,11 +1,14 @@
 import { Card } from "react-bootstrap";
-import { BagDash, Dash } from "react-bootstrap-icons";
 import "../../styles/components/common/product-card.css";
 import RoundedButton from "./RoundedButton";
 import { Link } from "react-router-dom";
 import { useRef, useState } from "react";
 import { IShortOffer } from "../../interfaces/Offer";
 import { CartService } from "../../services/basketService";
+import { BagDash, Dash } from "react-bootstrap-icons";
+
+const addToBasketIcon = <BagDash style={{ width: 20, height: 20 }} />;
+const removeFromBasketIcon = <Dash style={{ width: 20, height: 20 }} />;
 
 interface IProps extends IShortOffer {
 	className?: string;
@@ -16,40 +19,24 @@ export const ProductCard = ({
 	name: title,
 	newPrice: actualPrice,
 	price: oldPrice,
-	picture: image,
+	picture,
 	className,
+	available,
 }: IProps) => {
 	const linkRef = useRef<HTMLAnchorElement>(null);
 
-	const addToBasketIcon = <BagDash style={{ width: 20, height: 20 }} />;
-	const removeFromBasketIcon = <Dash style={{ width: 20, height: 20 }} />;
+	const isInCart = CartService.getCart()
+		.map((item) => item.id)
+		.includes(id.toString());
+
+	const initialButtonIcon = isInCart ? removeFromBasketIcon : addToBasketIcon;
+	const initialButtonCallback = isInCart ? removeFromBasket : addToBasket;
 
 	const [iconOnBasketButton, setIconOnBasketButton] =
-		useState(addToBasketIcon);
-
-	const addToBasket = () => {
-		CartService.loadCart();
-		CartService.addToCart({
-			id: String(id),
-			name: title,
-			newPrice: actualPrice,
-			picture: [image],
-			amount: 1,
-		});
-
-		setIconOnBasketButton(removeFromBasketIcon);
-		setActualBasketButtonCallback(() => removeFromBasket);
-	};
-
-	const removeFromBasket = () => {
-		CartService.removeFromCart(String(id));
-
-		setIconOnBasketButton(addToBasketIcon);
-		setActualBasketButtonCallback(() => addToBasket);
-	};
+		useState(initialButtonIcon);
 
 	const [actualBasketButtonCallback, setActualBasketButtonCallback] =
-		useState<() => void>(() => addToBasket);
+		useState<() => void>(() => initialButtonCallback);
 
 	let clickedOnBasked = false;
 	let discount = oldPrice && (100 * (oldPrice - actualPrice)) / oldPrice;
@@ -63,16 +50,21 @@ export const ProductCard = ({
 				clickedOnBasked = false;
 			}}
 		>
-			{discount ? (
-				<Card.Header>
-					<div className="product-card__sale">
+			<Card.Header>
+				{discount ? (
+					<div className="product-card__header-item product-card__sale">
 						Знижка {discount.toFixed(0)}%
 					</div>
-				</Card.Header>
-			) : undefined}
+				) : undefined}
+				{!available ? (
+					<div className="product-card__header-item product-card__not-available">
+						Не в наявності
+					</div>
+				) : undefined}
+			</Card.Header>
 			<Card.Img
 				className="product-card__image"
-				src={image}
+				src={picture}
 				alt="product image"
 			/>
 			<Card.Footer>
@@ -93,19 +85,42 @@ export const ProductCard = ({
 						)}
 					</div>
 				</div>
-				<RoundedButton
-					isCircle
-					backgroundIsGray
-					className="product-card__button z-1"
-					onClick={() => {
-						clickedOnBasked = true;
-						actualBasketButtonCallback &&
-							actualBasketButtonCallback();
-					}}
-				>
-					{iconOnBasketButton}
-				</RoundedButton>
+				{available ? (
+					<RoundedButton
+						isCircle
+						backgroundIsGray
+						className="product-card__button z-1"
+						onClick={() => {
+							clickedOnBasked = true;
+							actualBasketButtonCallback &&
+								actualBasketButtonCallback();
+						}}
+					>
+						{iconOnBasketButton}
+					</RoundedButton>
+				) : undefined}
 			</Card.Footer>
 		</Card>
 	);
+
+	function addToBasket() {
+		CartService.loadCart();
+		CartService.addToCart({
+			id: String(id),
+			name: title,
+			newPrice: actualPrice,
+			picture: [picture],
+			amount: 1,
+		});
+
+		setIconOnBasketButton(removeFromBasketIcon);
+		setActualBasketButtonCallback(() => removeFromBasket);
+	}
+
+	function removeFromBasket() {
+		CartService.removeFromCart(String(id));
+
+		setIconOnBasketButton(addToBasketIcon);
+		setActualBasketButtonCallback(() => addToBasket);
+	}
 };

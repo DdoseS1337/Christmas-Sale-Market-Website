@@ -18,17 +18,29 @@
     background-color: var(--light);
     border: 0;
     padding: 0;
+    background: transparent;
 }
 
 .product-card .card-header {
     position: absolute;
+    flex-wrap: wrap;
+}
+
+.product-card__header-item {
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin-right: 4px;
+    margin-bottom: 2px;
 }
 
 .product-card__sale {
     background-color: var(--gray-900);
     color: var(--light);
-    padding: 3px 8px;
-    border-radius: 4px;
+}
+
+.product-card__not-available {
+    background-color: var(--gray-200);
+    color: var(--dark-gray-text);
 }
 
 .product-card__image {
