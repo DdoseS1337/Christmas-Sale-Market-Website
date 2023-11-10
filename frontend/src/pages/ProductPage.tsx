@@ -195,7 +195,7 @@ const ProductPage = ({ setAdditionalBreadCrumbs }: IProps) => {
                         <GreyLine />
                         <Container className="p-0 d-flex">
                             <div
-                                className="d-flex justify-content-between p-2 border rounded-pill align-items-center"
+                                className="d-flex justify-content-between p-2 border rounded-pill align-items-center h-25"
                                 style={{ minWidth: "80px", width: "7rem" }}
                             >
                                 {isMinusHovered ? (
@@ -225,7 +225,7 @@ const ProductPage = ({ setAdditionalBreadCrumbs }: IProps) => {
                                 )}
                             </div>
                             <div
-                                className={`btn-red-theme d-inline-flex px-5 py-2 ms-4 rounded-5 ${
+                                className={`btn-red-theme d-inline-flex px-5 py-2 ms-4 rounded-5 align-items-center ${
                                     product?.available ? "" : "btn disabled"
                                 }`}
                                 onClick={() => {
@@ -233,6 +233,7 @@ const ProductPage = ({ setAdditionalBreadCrumbs }: IProps) => {
                                         ? removeFromBasket()
                                         : addToBasket();
                                 }}
+                                id="product-btn-basket"
                             >
                                 {isInCard
                                     ? removeFromBasketIcon

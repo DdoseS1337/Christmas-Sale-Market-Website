@@ -9,6 +9,7 @@ import {
 } from "react-bootstrap-icons";
 import Image from "react-bootstrap/Image";
 import { CartItem, CartService } from "../../../services/basketService";
+import { Link } from "react-router-dom";
 import useHoverStates from "./AmountChangeHooks";
 
 interface ItemCardProps {
@@ -52,12 +53,17 @@ const ItemCard = ({ item, onItemRemoved, onAmountChanged }: ItemCardProps) => {
         <>
             <Row className="text-center align-items-center">
                 <Col xs={4} className="d-flex align-items-center">
-                    <Image
-                        src={item.picture[0]}
-                        alt={item.name}
-                        className="basket-product-image"
-                    />
-                    <span className="ms-4">{item.name}</span>
+                    <Link
+                        to={`/catalog/${item.id}`}
+                        className="text-decoration-none  text-black"
+                    >
+                        <Image
+                            src={item.picture[0]}
+                            alt={item.name}
+                            className="basket-product-image"
+                        />
+                        <span className="ms-4">{item.name}</span>
+                    </Link>
                 </Col>
                 <Col
                     xs={2}
