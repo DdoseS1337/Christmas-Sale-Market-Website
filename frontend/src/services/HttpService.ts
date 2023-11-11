@@ -15,7 +15,6 @@ interface ICachingArray {
 
 export default class HttpService {
 	fetchingService: Axios;
-	cachedDataActualTo: Date | undefined = undefined;
 	cachedData: ICachingArray = {};
 
 	constructor(baseURL: string) {
