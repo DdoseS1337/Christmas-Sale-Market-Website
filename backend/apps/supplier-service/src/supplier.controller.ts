@@ -1,4 +1,5 @@
-import { Controller, Get, UseInterceptors } from '@nestjs/common';
+import { Controller, Get, UseInterceptors, UseGuards } from '@nestjs/common';
+import { JwtAuthGuard, Roles } from '@app/common';
 import { SupplierService } from './supplier.service';
 import { FormatResponseInterceptor } from '@app/common';
 
@@ -7,8 +8,9 @@ import { FormatResponseInterceptor } from '@app/common';
 export class SupplierController {
   constructor(private readonly supplierService: SupplierService) {}
 
-  
   @Get('restore-data')
+  @UseGuards(JwtAuthGuard)
+  @Roles('Admin', 'Owner')
   async getDataFromButikElok(): Promise<string> {
     return this.supplierService.restoreData();
   }

@@ -8,7 +8,6 @@ import { AuthModule } from './auth.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AuthModule);
-  app.enableCors();
   const configService = app.get(ConfigService);
   app.connectMicroservice({
     transport: Transport.RMQ,
@@ -17,6 +16,7 @@ async function bootstrap() {
       queue: 'auth',
     },
   });
+  app.enableCors();
   app.use(cookieParser());
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
   app.useLogger(app.get(Logger));

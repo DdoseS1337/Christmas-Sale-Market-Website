@@ -125,24 +125,29 @@ export class SupplierService {
     return transformCategories;
   }
 
-  randomFromInterval(min: number, max: number) {
-    return Math.random() * (max - min) + min;
+
+  randomFromIntervalInt(min: number, max: number) {
+    return Math.floor(Math.random() * (max - min) + min);
   }
+
   async getElkiShopOffers(offers: Offer[]) {
     const transformOffers = offers.map((offer) => {
       const modifiedParams = offer.param.map((item) => {
         return { name: item.name, description: item._ };
       });
+
+      const priceX = this.randomFromIntervalInt(3, 4);
+      const oldPrice = Number(offer.price) * priceX;
+      const discount = this.randomFromIntervalInt(4, 13) * 5;
+
+      const newPrice = oldPrice - oldPrice * discount * 0.01;
+
       return {
         ...offer,
         param: modifiedParams,
         supplier_name: this.getDataElkiShop.name,
-        newPrice: Math.floor(
-          Number(offer.price) * this.randomFromInterval(1.35, 2),
-        ),
-        price: Math.floor(
-          Number(offer.price) * this.randomFromInterval(2.1, 4)
-        ),
+        newPrice: Math.floor(newPrice),
+        price: Math.floor(oldPrice),
       };
     });
     return transformOffers;

@@ -1,0 +1,16 @@
+.link-with-icon {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.link-with-icon__icon {
+    width: 19px;
+    height: 19px;
+    margin-right: 7px;
+}
+
+.link-with-icon__text {
+    color: var(--light);
+    font-size: 16px;
+}

@@ -8,7 +8,6 @@ import * as cookieParser from 'cookie-parser';
 
 async function bootstrap() {
   const app = await NestFactory.create(ProductsServiceModule);
-  app.enableCors();
   const configService = app.get(ConfigService);
   app.connectMicroservice({
     transport: Transport.RMQ,
@@ -17,9 +16,10 @@ async function bootstrap() {
       queue: 'products',
     },
   });
+  app.enableCors();
   app.useLogger(app.get(Logger));
   app.use(cookieParser());
-  app.useGlobalPipes(new ValidationPipe({ whitelist: true , transform: true}));
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
   await app.startAllMicroservices();
   await app.listen(configService.get('HTTP_PORT'));
 }
