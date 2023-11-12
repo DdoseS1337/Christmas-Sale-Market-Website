@@ -8,15 +8,11 @@ import {
     PlusCircleFill,
 } from "react-bootstrap-icons";
 import Image from "react-bootstrap/Image";
-import { CartItem, CartService } from "../../../services/basketService";
+import { CartService } from "../../../services/basketService";
 import { Link } from "react-router-dom";
+import ItemCardProps from "../../../interfaces/ItemCardProps";
 import useHoverStates from "./AmountChangeHooks";
-
-interface ItemCardProps {
-    item: CartItem;
-    onItemRemoved: (itemId: string) => void;
-    onAmountChanged: (newAmount: number) => void;
-}
+import ConfirmRemoveFromBasketModal from "../../common/ConfirmRemoveFromBasketModal";
 
 const ItemCard = ({ item, onItemRemoved, onAmountChanged }: ItemCardProps) => {
     const [amount, setAmount] = useState(item.amount);
@@ -28,6 +24,7 @@ const ItemCard = ({ item, onItemRemoved, onAmountChanged }: ItemCardProps) => {
         handlePlusMouseEnter,
         handlePlusMouseLeave,
     } = useHoverStates();
+    const [modalShow, setModalShow] = useState(false);
 
     const amountChange = (operation: string) => {
         if (operation === "+") {
@@ -41,6 +38,8 @@ const ItemCard = ({ item, onItemRemoved, onAmountChanged }: ItemCardProps) => {
                 setAmount(newAmount);
                 CartService.updateCartItem(item.id, { amount: newAmount });
                 onAmountChanged(CartService.getTotalPrice());
+            } else {
+                setModalShow(true);
             }
         }
     };
@@ -51,11 +50,16 @@ const ItemCard = ({ item, onItemRemoved, onAmountChanged }: ItemCardProps) => {
 
     return (
         <>
+            <ConfirmRemoveFromBasketModal
+                show={modalShow}
+                onHide={() => setModalShow(false)}
+                onRemove={() => onItemRemoved(item.id)}
+            />
             <Row className="text-center align-items-center">
-                <Col xs={4} className="d-flex align-items-center">
+                <Col xs={5}>
                     <Link
                         to={`/catalog/${item.id}`}
-                        className="text-decoration-none  text-black"
+                        className="text-decoration-none text-black d-flex align-items-center"
                     >
                         <Image
                             src={item.picture[0]}
@@ -66,7 +70,7 @@ const ItemCard = ({ item, onItemRemoved, onAmountChanged }: ItemCardProps) => {
                     </Link>
                 </Col>
                 <Col
-                    xs={2}
+                    xs={1}
                     className="white_theme d-flex justify-content-center"
                 >
                     <div className="basket-storage">1</div>

@@ -6,121 +6,133 @@ import { useRef, useState } from "react";
 import { IShortOffer } from "../../interfaces/Offer";
 import { CartService } from "../../services/basketService";
 import { BagDash, Dash } from "react-bootstrap-icons";
+import ConfirmRemoveFromBasketModal from "./ConfirmRemoveFromBasketModal";
 
 const addToBasketIcon = <BagDash style={{ width: 20, height: 20 }} />;
 const removeFromBasketIcon = <Dash style={{ width: 20, height: 20 }} />;
 
 interface IProps extends IShortOffer {
-	className?: string;
+    className?: string;
 }
 
 export const ProductCard = ({
-	id,
-	name: title,
-	newPrice: actualPrice,
-	price: oldPrice,
-	picture,
-	className,
-	available,
+    id,
+    name: title,
+    newPrice: actualPrice,
+    price: oldPrice,
+    picture,
+    className,
+    available,
 }: IProps) => {
-	const linkRef = useRef<HTMLAnchorElement>(null);
+    const linkRef = useRef<HTMLAnchorElement>(null);
 
-	const isInCart = CartService.getCart()
-		.map((item) => item.id)
-		.includes(id.toString());
+    const isInCart = CartService.getCart()
+        .map((item) => item.id)
+        .includes(id.toString());
 
-	const initialButtonIcon = isInCart ? removeFromBasketIcon : addToBasketIcon;
-	const initialButtonCallback = isInCart ? removeFromBasket : addToBasket;
+    const [modalShow, setModalShow] = useState(false);
 
-	const [iconOnBasketButton, setIconOnBasketButton] =
-		useState(initialButtonIcon);
+    const initialButtonIcon = isInCart ? removeFromBasketIcon : addToBasketIcon;
+    const initialButtonCallback = isInCart ? removeFromBasket : addToBasket;
 
-	const [actualBasketButtonCallback, setActualBasketButtonCallback] =
-		useState<() => void>(() => initialButtonCallback);
+    const [iconOnBasketButton, setIconOnBasketButton] =
+        useState(initialButtonIcon);
 
-	let clickedOnBasked = false;
-	let discount = oldPrice && (100 * (oldPrice - actualPrice)) / oldPrice;
+    const [actualBasketButtonCallback, setActualBasketButtonCallback] =
+        useState<() => void>(() => initialButtonCallback);
 
-	return (
-		<Card
-			body
-			className={"product-card " + className}
-			onClick={() => {
-				!clickedOnBasked && linkRef.current?.click();
-				clickedOnBasked = false;
-			}}
-		>
-			<Card.Header>
-				{discount ? (
-					<div className="product-card__header-item product-card__sale">
-						Знижка {discount.toFixed(0)}%
-					</div>
-				) : undefined}
-				{!available ? (
-					<div className="product-card__header-item product-card__not-available">
-						Не в наявності
-					</div>
-				) : undefined}
-			</Card.Header>
-			<Card.Img
-				className="product-card__image"
-				src={picture}
-				alt="product image"
-			/>
-			<Card.Footer>
-				<div>
-					<Card.Title className="product-card__title">
-						<Link to={`/catalog/${id}`} ref={linkRef}>
-							{title}
-						</Link>
-					</Card.Title>
-					<div className="product-card__price">
-						<div className="product-card__price-actual me-2">
-							{actualPrice} грн
-						</div>
-						{oldPrice && (
-							<div className="product-card__price-old">
-								{oldPrice} грн
-							</div>
-						)}
-					</div>
-				</div>
-				{available ? (
-					<RoundedButton
-						isCircle
-						backgroundIsGray
-						className="product-card__button z-1"
-						onClick={() => {
-							clickedOnBasked = true;
-							actualBasketButtonCallback &&
-								actualBasketButtonCallback();
-						}}
-					>
-						{iconOnBasketButton}
-					</RoundedButton>
-				) : undefined}
-			</Card.Footer>
-		</Card>
-	);
+    let clickedOnBasked = false;
+    let discount = oldPrice && (100 * (oldPrice - actualPrice)) / oldPrice;
 
-	function addToBasket() {
-		CartService.loadCart();
-		CartService.addToCart({
-			id: String(id),
-			name: title,
-			newPrice: actualPrice,
-			picture: [picture],
-			amount: 1,
-		});
+    return (
+        <>
+            <Card
+                body
+                className={"product-card " + className}
+                onClick={() => {
+                    !clickedOnBasked && linkRef.current?.click();
+                    clickedOnBasked = false;
+                }}
+            >
+                <Card.Header>
+                    {discount ? (
+                        <div className="product-card__header-item product-card__sale">
+                            Знижка {discount.toFixed(0)}%
+                        </div>
+                    ) : undefined}
+                    {!available ? (
+                        <div className="product-card__header-item product-card__not-available">
+                            Не в наявності
+                        </div>
+                    ) : undefined}
+                </Card.Header>
+                <Card.Img
+                    className="product-card__image"
+                    src={picture}
+                    alt="product image"
+                />
+                <Card.Footer>
+                    <div>
+                        <Card.Title className="product-card__title">
+                            <Link to={`/catalog/${id}`} ref={linkRef}>
+                                {title}
+                            </Link>
+                        </Card.Title>
+                        <div className="product-card__price">
+                            <div className="product-card__price-actual me-2">
+                                {actualPrice} грн
+                            </div>
+                            {oldPrice && (
+                                <div className="product-card__price-old">
+                                    {oldPrice} грн
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                    {available ? (
+                        <RoundedButton
+                            isCircle
+                            backgroundIsGray
+                            className="product-card__button z-1"
+                            onClick={() => {
+                                clickedOnBasked = true;
+                                actualBasketButtonCallback &&
+                                    actualBasketButtonCallback();
+                            }}
+                        >
+                            {iconOnBasketButton}
+                        </RoundedButton>
+                    ) : undefined}
+                </Card.Footer>
+            </Card>
+            <ConfirmRemoveFromBasketModal
+                show={modalShow}
+                onHide={() => setModalShow(false)}
+                onRemove={() => {
+                    CartService.removeFromCart(String(id));
+                    setIconOnBasketButton(addToBasketIcon);
+                    setActualBasketButtonCallback(() => addToBasket);
+                    setModalShow(false);
+                }}
+            />
+        </>
+    );
 
-		setIconOnBasketButton(removeFromBasketIcon);
-		setActualBasketButtonCallback(() => removeFromBasket);
-	}
+    function addToBasket() {
+        CartService.loadCart();
+        CartService.addToCart({
+            id: String(id),
+            name: title,
+            newPrice: actualPrice,
+            picture: [picture],
+            amount: 1,
+        });
 
-	function removeFromBasket() {
-		CartService.removeFromCart(String(id));
+        setIconOnBasketButton(removeFromBasketIcon);
+        setActualBasketButtonCallback(() => removeFromBasket);
+    }
 
-		setIconOnBasketButton(addToBasketIcon);
-		setActualBasketButtonCallback(() => addToBasket);
-	}
+    function removeFromBasket() {
+        setModalShow(true);
+    }
 };
