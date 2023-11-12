@@ -1,8 +1,12 @@
+
+const SERVER_URL = "http://k8s-default-christma-d8102c8be9-1626215440.eu-north-1.elb.amazonaws.com";
 export const BACKEND_KEYS = {
-    PRODUCTS_SERVER_URL: "http://localhost:3001",
-    ORDER_SERVER_URL: "http://localhost:3003",
+    SERVER_URL: SERVER_URL,
+    PRODUCTS_SERVER_URL: SERVER_URL,
+    ORDER_SERVER_URL: SERVER_URL,
     CHRISTMAS_TREE_CATEGORIES: "christmas-tree-categories",
     CHRISTMAS_TREE_OFFERS: "christmas-tree-offers",
+    SEND_ORDER: "user-order"
 };
 
 export const STORAGE_KEYS = {
