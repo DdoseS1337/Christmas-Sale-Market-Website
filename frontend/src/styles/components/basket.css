@@ -1,0 +1,133 @@
+.basket-logo {
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 2.4rem;
+    color: #c93f4f;
+}
+
+.arrow-button {
+    display: flex;
+    color: #4d4d4d;
+    background-color: #f2f2f2;
+    padding: 0.875rem 1rem;
+    border-radius: 2.6875rem;
+    border: 0;
+    transition: all 0.3s ease;
+    justify-content: center;
+    cursor: pointer;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.arrow-button > .arrow {
+    width: 6px;
+    height: 6px;
+    border-left: 2px solid #4d4d4d;
+    border-bottom: 2px solid #4d4d4d;
+    position: relative;
+    transform: rotate(45deg);
+    margin: 0 6px;
+    transition: all 0.3s ease;
+}
+
+.arrow-button > .arrow::before {
+    display: block;
+    background-color: currentColor;
+    width: 3px;
+    transform-origin: bottom left;
+    height: 2px;
+    position: absolute;
+    opacity: 0;
+    transform: rotate(-45deg);
+    transition: all 0.3s ease;
+    content: "";
+    top: 3.5px;
+}
+
+.arrow-button:hover > .arrow {
+    transform: rotate(45deg) translate(-4px, 4px);
+    border-color: text-hover-color;
+}
+
+.arrow-button:hover > .arrow::before {
+    opacity: 1;
+    width: 8px;
+}
+
+.arrow-button:hover {
+    background-color: #d1d1d1;
+}
+
+.basket-close-btn {
+    color: #636363;
+    width: 1.5rem;
+    height: 1.5rem;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.basket-close-btn:hover {
+    color: #c93f4f;
+}
+
+.arrow-button-red-theme {
+    border: 2px solid #c93f4f;
+    color: white;
+    background-color: #c93f4f;
+    border-radius: 10px;
+    font-size: medium;
+    font-weight: normal;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+.arrow-button-red-theme > .arrow {
+    border-color: white;
+}
+
+.arrow-button-red-theme:hover > .arrow {
+    border-color: #c93f4f;
+}
+
+.arrow-button-red-theme:hover {
+    background-color: white;
+    color: #c93f4f;
+}
+
+.arrow-button-red-theme > .arrow::before {
+    background-color: #c93f4f;
+}
+
+.basket-delimiter {
+    border: 1px solid #e6e6e6;
+    width: 98%;
+    margin-top: 0.3rem;
+    margin-bottom: 0.3rem;
+}
+
+.basket-product-image {
+    width: 6.25rem;
+    height: 6.25rem;
+}
+
+.basket-btn-quantity {
+    color: #c93f4f;
+    width: 1.5rem;
+    height: 1.5rem;
+    cursor: pointer;
+}
+
+.basket-storage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #c93f4f;
+    border-radius: 50%;
+    width: 1rem;
+    height: 1rem;
+    padding: 0.8rem;
+    font-weight: bold;
+}

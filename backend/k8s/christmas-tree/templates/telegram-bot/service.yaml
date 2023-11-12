@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: telegram-bot
+  name: telegram-bot
+spec:
+  ports:
+    - name: 'http'
+      port: 3003
+      protocol: TCP
+      targetPort: 3003
+  selector:
+    app: telegram-bot
+  type: NodePort

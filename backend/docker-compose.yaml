@@ -1,0 +1,65 @@
+services:
+  supplier-service:
+    build:
+      context: .
+      dockerfile: ./apps/supplier-service/Dockerfile
+      target: development
+    command: npm run start:dev supplier-service
+    env_file:
+      - ./apps/supplier-service/.env
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/usr/src/app
+  products-service:
+    build:
+      context: .
+      dockerfile: ./apps/products-service/Dockerfile
+      target: development
+    command: npm run start:dev products-service
+    env_file:
+      - ./apps/products-service/.env
+    ports:
+      - "3001:3001"
+    volumes:
+      - .:/usr/src/app
+  order-service:
+    build:
+      context: .
+      dockerfile: ./apps/order-service/Dockerfile
+      target: development
+    command: npm run start:dev order-service
+    env_file:
+      - ./apps/order-service/.env
+    ports:
+      - "3002:3002"
+    volumes:
+      - .:/usr/src/app
+  telegram-bot:
+    build:
+      context: .
+      dockerfile: ./apps/telegram-bot/Dockerfile
+      target: development
+    command: npm run start:dev telegram-bot
+    env_file:
+      - ./apps/telegram-bot/.env
+    ports:
+      - "3003:3003"
+    volumes:
+      - .:/usr/src/app
+  auth:
+    build:
+      context: .
+      dockerfile: ./apps/auth/Dockerfile
+      target: development
+    command: npm run start:dev auth
+    env_file:
+      - ./apps/auth/.env
+    ports:
+      - "3004:3004"
+    volumes:
+      - .:/usr/src/app
+  rabbitmq:
+    image: rabbitmq
+    ports:
+      - "5672:5672"

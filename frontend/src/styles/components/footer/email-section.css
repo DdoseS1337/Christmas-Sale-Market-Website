@@ -1,0 +1,17 @@
+.footer-email-section {
+    background-color: var(--gray-50);
+    padding-top: 40px;
+    padding-bottom: 40px;
+    overflow: hidden;
+}
+
+.footer-email-section .container {
+    position: relative;
+}
+
+.footer-email-section__tree-icon {
+    position: absolute;
+    bottom: -41px;
+    left: calc(100% + 10px);
+    width: 220px;
+}

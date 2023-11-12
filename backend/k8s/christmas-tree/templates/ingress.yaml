@@ -1,0 +1,74 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: christmas-tree-shop
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    kubernetes.io/ingress.class: alb
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /christmas-tree-categories/*
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: products-service
+                port:
+                  number: 3001
+          - path: /christmas-tree-categories
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: products-service
+                port:
+                  number: 3001
+          - path: /christmas-tree-offers/*
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: products-service
+                port:
+                  number: 3001
+          - path: /christmas-tree-offers
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: products-service
+                port:
+                  number: 3001
+          - path: /user-order/*
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: order-service
+                port:
+                  number: 3002
+          - path: /user-order
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: order-service
+                port:
+                  number: 3002
+          - path: /supply-data/*
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: supplier-service
+                port:
+                  number: 3000
+          - path: /auth/*
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: auth
+                port:
+                  number: 3004
+          - path: /users
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: auth
+                port:
+                  number: 3004

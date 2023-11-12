@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: telegram-bot
+  name: telegram-bot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: telegram-bot
+  template:
+    metadata:
+      labels:
+        app: telegram-bot
+    spec:
+      containers:
+        - image: 048443535585.dkr.ecr.eu-north-1.amazonaws.com/telegram-bot:latest
+          name: telegram-bot
+          env:
+            - name: PORT
+              value: '3003'
+            - name: RABBITMQ_URI
+              valueFrom:
+                secretKeyRef:
+                  name: rabbitmquri
+                  key: connectionLink
+            - name: ELKI_URL
+              valueFrom:
+                secretKeyRef:
+                  name: market
+                  key: marketUrl
+            - name: TELEGRAM_BOT_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: telegram-bot
+                  key: tokenURI
+          ports:
+            - containerPort: 3003
