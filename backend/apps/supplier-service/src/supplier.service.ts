@@ -5,6 +5,11 @@ import { PRODUCT_SERVICE } from '@app/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { ConfigService } from '@nestjs/config';
 import { Cron } from '@nestjs/schedule';
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> c80221e0aa25a8ef224c831bb7138e087ed436a8
 import { YmlCatalog, Offer, Category } from './interfaces';
 @Injectable()
 export class SupplierService {

@@ -29,6 +29,7 @@ import { ScheduleModule } from '@nestjs/schedule';
         }),
         inject: [ConfigService],
       },
+<<<<<<< HEAD
       {
         name: AUTH_SERVICE,
         useFactory: (configService: ConfigService) => ({
@@ -41,6 +42,9 @@ import { ScheduleModule } from '@nestjs/schedule';
         inject: [ConfigService],
       },
     ]),
+=======
+    ])
+>>>>>>> c80221e0aa25a8ef224c831bb7138e087ed436a8
   ],
   controllers: [SupplierController],
   providers: [SupplierService],
