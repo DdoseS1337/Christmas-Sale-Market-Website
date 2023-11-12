@@ -56,10 +56,10 @@ const ItemCard = ({ item, onItemRemoved, onAmountChanged }: ItemCardProps) => {
                 onRemove={() => onItemRemoved(item.id)}
             />
             <Row className="text-center align-items-center">
-                <Col xs={4} className="d-flex align-items-center">
+                <Col xs={5}>
                     <Link
                         to={`/catalog/${item.id}`}
-                        className="text-decoration-none  text-black"
+                        className="text-decoration-none text-black d-flex align-items-center"
                     >
                         <Image
                             src={item.picture[0]}
@@ -70,7 +70,7 @@ const ItemCard = ({ item, onItemRemoved, onAmountChanged }: ItemCardProps) => {
                     </Link>
                 </Col>
                 <Col
-                    xs={2}
+                    xs={1}
                     className="white_theme d-flex justify-content-center"
                 >
                     <div className="basket-storage">1</div>

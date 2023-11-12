@@ -33,65 +33,60 @@ const BasketItems = () => {
         });
     };
 
-    return (
+    return isEmpty ? (
+        <AnimatedEmptyPage
+            link="/catalog"
+            title="Ваш кошик порожній"
+            description="Але це ніколи не пізно виправити!"
+            buttonTitle="Повернутись до каталогу"
+        />
+    ) : (
         <>
-            {isEmpty ? (
-                <AnimatedEmptyPage
-                    link="/catalog"
-                    title="Ваш кошик порожній"
-                    description="Але це ніколи не пізно виправити!"
-                    buttonTitle="Повернутись до каталогу"
-                />
-            ) : (
-                <>
-                    <h1 className="text-center basket-logo">Кошик</h1>
-                    <Container className="border rounded py-3 mt-4">
-                        <Row className="text-center">
-                            <Col xs={4}>Продукт</Col>
-                            <Col xs={2}>Склад</Col>
-                            <Col xs={3}>Кількість</Col>
-                            <Col xs={2}>Всього</Col>
-                            <Col></Col>
-                        </Row>
-                        <div className="basket-delimiter" />
+            <h1 className="text-center basket-logo">Кошик</h1>
+            <Container className="border rounded py-3 mt-4">
+                <Row className="text-center">
+                    <Col xs={5}>Товар</Col>
+                    <Col xs={1}>Склад</Col>
+                    <Col xs={3}>Кількість</Col>
+                    <Col xs={2}>Всього</Col>
+                    <Col></Col>
+                </Row>
+                <div className="basket-delimiter" />
 
-                        {cartItems.map((item) => (
-                            <ItemCard
-                                key={item.id}
-                                item={item}
-                                onItemRemoved={removeItemFromCart}
-                                onAmountChanged={handleAmountChanged}
-                            />
-                        ))}
+                {cartItems.map((item) => (
+                    <ItemCard
+                        key={item.id}
+                        item={item}
+                        onItemRemoved={removeItemFromCart}
+                        onAmountChanged={handleAmountChanged}
+                    />
+                ))}
 
-                        <Container
-                            fluid
-                            className="d-flex justify-content-between p-0 mt-4 align-items-center"
+                <Container
+                    fluid
+                    className="d-flex justify-content-between p-0 mt-4 align-items-center"
+                >
+                    <Link
+                        to="/catalog"
+                        className="arrow-button"
+                        style={{ width: "16rem" }}
+                    >
+                        <span className="arrow"></span>Повернутись до каталогу
+                    </Link>
+                    <Container
+                        className="px-3 py-2 m-0 d-flex justify-content-between align-items-center"
+                        style={{ width: "22rem" }}
+                    >
+                        <h3 className="p-0 m-0">{totalCartPrice} ₴</h3>
+                        <Link
+                            to="/basket/order"
+                            className="btn-red-theme link-settings p-2"
                         >
-                            <Link
-                                to="/catalog"
-                                className="arrow-button"
-                                style={{ width: "16rem" }}
-                            >
-                                <span className="arrow"></span>Повернутись до
-                                каталогу
-                            </Link>
-                            <Container
-                                className="px-3 py-2 m-0 d-flex justify-content-between align-items-center"
-                                style={{ width: "22rem" }}
-                            >
-                                <h3 className="p-0 m-0">{totalCartPrice} ₴</h3>
-                                <Link
-                                    to="/basket/order"
-                                    className="btn-red-theme link-settings p-2"
-                                >
-                                    <span>Оформити замовлення</span>
-                                </Link>
-                            </Container>
-                        </Container>
+                            <span>Оформити замовлення</span>
+                        </Link>
                     </Container>
-                </>
-            )}
+                </Container>
+            </Container>
         </>
     );
 };
