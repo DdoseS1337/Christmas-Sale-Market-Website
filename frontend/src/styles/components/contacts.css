@@ -25,29 +25,3 @@
     display: inline-flex;
     justify-content: center;
 }
-
-@media (max-width: 1203px) {
-    .contacts-container .row {
-        display: flex;
-        flex-direction: column;
-    }
-    .contact-line {
-        height: 2px;
-        width: 100%;
-    }
-    .contacts-container .row .col {
-        margin: 2rem 0;
-    }
-    .contacts-container .row .col-1 {
-        width: 100%;
-    }
-    .contacts-container {
-        max-width: 300px !important;
-    }
-}
-
-@media (max-width: 500px) {
-    #contacts-container{
-        width: 95% !important;
-    }
-}

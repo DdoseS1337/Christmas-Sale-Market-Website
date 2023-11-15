@@ -1,0 +1,89 @@
+@media (max-width: 768px) {
+    #basket-description-columns {
+        display: none !important;
+    }
+    #basket-first-delimiter {
+        display: none;
+    }
+    #basket-item-name {
+        width: 100% !important;
+    }
+    #basket-hidden-adaptivity {
+        display: flex !important;
+    }
+    #basket-row {
+        display: block !important;
+    }
+    #basket-row .col-1 {
+        align-items: center;
+        padding: 1rem 0;
+        width: 100% !important;
+        justify-content: start !important;
+        padding-left: 1rem;
+    }
+
+    #basket-row .col-1 {
+        display: none !important;
+    }
+
+    #basket-row .col-3 {
+        width: 100% !important;
+        justify-content: start !important;
+        align-items: center;
+        margin: 1rem 0 0.5rem 0;
+    }
+    #basket-row .col-3 .container {
+        margin: 0 1rem !important;
+    }
+
+    #basket-row .col-2 {
+        width: 100% !important;
+        display: flex;
+        justify-content: space-between;
+        padding-right: 1.5rem;
+    }
+
+    #basket-visible-adaptivity {
+        display: none !important;
+    }
+
+    #basket-row .col-2 h5 {
+        margin-left: 1rem !important;
+    }
+    .basket-close-btn {
+        display: none !important;
+    }
+    #basket-submit-container {
+        padding: 0 !important;
+        padding-left: 1rem !important;
+        justify-content: end !important;
+    }
+
+    #basket-submit-container a {
+        margin-left: 1rem;
+        padding: 0.6rem 1.5rem !important;
+        justify-content: center;
+    }
+    .basket-delimiter {
+        margin: 2rem 0;
+    }
+}
+
+/* @media (max-width: 904px) {
+    .scroll-up-button {
+        display: none !important;
+    }
+} */
+
+@media (max-width: 394px) {
+    #basket-back-to-catalog-btn {
+        display: none !important;
+    }
+    #basket-submit-container {
+        justify-content: space-between !important;
+        padding-left: 0 !important;
+    }
+    #basket-total-price-span-adaptivity {
+        display: inline !important;
+    }
+}

@@ -1,0 +1,17 @@
+@media (max-width: 992px) {
+    #product-description-block {
+        margin-top: 2.5rem !important;
+    }
+}
+
+@media (max-width: 771px) {
+    #product-characteristics {
+        width: 100% !important;
+    }
+}
+
+@media (max-width: 433px) {
+    #product-btn-basket {
+        padding: 0rem 1rem !important;
+    }
+}
