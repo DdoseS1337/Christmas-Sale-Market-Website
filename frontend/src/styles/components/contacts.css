@@ -45,3 +45,9 @@
         max-width: 300px !important;
     }
 }
+
+@media (max-width: 500px) {
+    #contacts-container{
+        width: 95% !important;
+    }
+}

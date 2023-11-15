@@ -27,7 +27,7 @@ const ContactsPage: React.FC = () => {
     };
 
     return (
-        <Container className="contacts-container w-50 animate__animated animate__slideInLeft">
+        <Container className="contacts-container w-50 animate__animated animate__slideInLeft" id='contacts-container'>
             <Container>
                 <Row className="align-items-center text-center">
                     <Col>
