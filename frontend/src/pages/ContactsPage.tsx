@@ -10,6 +10,7 @@ import { useState } from "react";
 import { CONTACTS } from "../common";
 import "animate.css";
 import "../styles/components/contacts.css";
+import "../styles/components/adaptivity/contacts-adaptivity.css"
 
 const ContactsPage: React.FC = () => {
     const [hoveredIcon, setHoveredIcon] = useState<string | null>(null);
@@ -27,7 +28,7 @@ const ContactsPage: React.FC = () => {
     };
 
     return (
-        <Container className="contacts-container w-50 animate__animated animate__slideInLeft">
+        <Container className="contacts-container w-50 animate__animated animate__slideInLeft" id='contacts-container'>
             <Container>
                 <Row className="align-items-center text-center">
                     <Col>

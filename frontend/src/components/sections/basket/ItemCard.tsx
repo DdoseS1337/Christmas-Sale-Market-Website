@@ -13,6 +13,8 @@ import { Link } from "react-router-dom";
 import ItemCardProps from "../../../interfaces/ItemCardProps";
 import useHoverStates from "./AmountChangeHooks";
 import ConfirmRemoveFromBasketModal from "../../common/ConfirmRemoveFromBasketModal";
+import "../../../styles/components/basket.css";
+import '../../../styles/components/adaptivity/basket-adaptivity.css'
 
 const ItemCard = ({ item, onItemRemoved, onAmountChanged }: ItemCardProps) => {
     const [amount, setAmount] = useState(item.amount);
@@ -55,11 +57,12 @@ const ItemCard = ({ item, onItemRemoved, onAmountChanged }: ItemCardProps) => {
                 onHide={() => setModalShow(false)}
                 onRemove={() => onItemRemoved(item.id)}
             />
-            <Row className="text-center align-items-center">
-                <Col xs={5}>
+            <Row className="text-center align-items-center" id="basket-row">
+                <Col xs={5} id="basket-item-name">
                     <Link
                         to={`/catalog/${item.id}`}
                         className="text-decoration-none text-black d-flex align-items-center"
+                        onClick={() => window.scroll(0, 0)}
                     >
                         <Image
                             src={item.picture[0]}
@@ -76,6 +79,9 @@ const ItemCard = ({ item, onItemRemoved, onAmountChanged }: ItemCardProps) => {
                     <div className="basket-storage">1</div>
                 </Col>
                 <Col xs={3} className="d-flex justify-content-center">
+                    <span hidden id="basket-hidden-adaptivity">
+                        Кількість:
+                    </span>
                     <Container
                         className="d-flex justify-content-between p-2 border rounded-pill align-items-center"
                         style={{ minWidth: "80px", width: "7rem" }}
@@ -107,8 +113,31 @@ const ItemCard = ({ item, onItemRemoved, onAmountChanged }: ItemCardProps) => {
                         )}
                     </Container>
                 </Col>
+                <div
+                    hidden
+                    id="basket-hidden-adaptivity"
+                    className="white_theme mb-2"
+                >
+                    <span className="text-black">Склад:</span>
+                    <div className="basket-storage ms-3">1</div>
+                </div>
                 <Col xs={2}>
-                    <h5>{item.newPrice * amount} ₴</h5>
+                    <div className="d-flex p-0 m-0 justify-content-center align-items-center">
+                        <span hidden id="basket-hidden-adaptivity">
+                            Всього:
+                        </span>
+                        <h5 className="m-0">{item.newPrice * amount} ₴</h5>
+                    </div>
+
+                    <span
+                        onClick={()=>{setModalShow(true)}}
+                        className="text-secondary"
+                        style={{ borderBottom: "dashed grey 1px", paddingTop:'7px' }}
+                        id="basket-hidden-adaptivity"
+                        hidden
+                    >
+                        Видалити товар
+                    </span>
                 </Col>
                 <Col className="d-flex justify-content-center">
                     <XCircle

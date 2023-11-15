@@ -30,6 +30,7 @@ import { CartService } from "../services/basketService";
 import { SimilarProducts } from "../components/sections/similar-products/SimilarProducts";
 import useHoverStates from "../components/sections/basket/AmountChangeHooks";
 import "../styles/components/basket.css";
+import '../styles/components/adaptivity/product-adaptivity.css'
 
 interface IProps {
     setAdditionalBreadCrumbs: Dispatch<SetStateAction<any>>;

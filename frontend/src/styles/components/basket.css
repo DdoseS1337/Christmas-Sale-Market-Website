@@ -104,8 +104,7 @@
 .basket-delimiter {
     border: 1px solid #e6e6e6;
     width: 98%;
-    margin-top: 0.3rem;
-    margin-bottom: 0.3rem;
+    margin: 0.3rem 0;
 }
 
 .basket-product-image {
