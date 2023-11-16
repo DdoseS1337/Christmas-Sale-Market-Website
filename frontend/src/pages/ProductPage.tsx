@@ -7,12 +7,8 @@ import {
     useSearchParams,
 } from "react-router-dom";
 import { IOffer } from "../interfaces/Offer";
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Row, Image } from "react-bootstrap";
 import { Galleria } from "primereact/galleria";
-import {
-    GalleriaCarousel,
-    GalleriaMainPhoto,
-} from "../components/sections/product/GalleriaCarousel";
 import DiscountBadge from "../components/sections/product/DiscountBadge";
 import InStockBlock from "../components/sections/product/InStockBlock";
 import GreyLine from "../components/sections/product/GreyLine";
@@ -30,7 +26,7 @@ import { CartService } from "../services/basketService";
 import { SimilarProducts } from "../components/sections/similar-products/SimilarProducts";
 import useHoverStates from "../components/sections/basket/AmountChangeHooks";
 import "../styles/components/basket.css";
-import '../styles/components/adaptivity/product-adaptivity.css'
+import "../styles/components/adaptivity/product-adaptivity.css";
 
 interface IProps {
     setAdditionalBreadCrumbs: Dispatch<SetStateAction<any>>;
@@ -134,6 +130,28 @@ const ProductPage = ({ setAdditionalBreadCrumbs }: IProps) => {
         setRefresh((oldValue) => !oldValue);
     };
 
+    const GalleriaCarousel = (imageLink: any) => {
+        return (
+            <Image
+                src={imageLink}
+                alt="Product Image"
+                style={{ width: "3.5rem" }}
+            />
+        );
+    };
+
+    const GalleriaMainPhoto = (img: any) => {
+        return (
+            <Image
+                fluid
+                src={img}
+                alt="Product Image"
+                className="rounded"
+                style={{ width: "16rem" }}
+            />
+        );
+    };
+
     if (notFound) {
         return <Navigate to="/404" />;
     }
@@ -152,6 +170,20 @@ const ProductPage = ({ setAdditionalBreadCrumbs }: IProps) => {
                             showItemNavigators
                             showItemNavigatorsOnHover
                             circular
+                            pt={{
+                                nextThumbnailButton: {
+                                    style: { color: "#c93f4f" },
+                                },
+                                previousThumbnailButton: {
+                                    style: { color: "#c93f4f" },
+                                },
+                                thumbnailItemContent: {
+                                    style: { border: "#c93f4f solid 1px" },
+                                },
+                                item: {
+                                    style: { height: "23rem" },
+                                },
+                            }}
                         />
                     </Col>
                     <Col

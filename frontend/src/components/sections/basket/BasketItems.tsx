@@ -3,7 +3,7 @@ import { Col, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import ItemCard from "./ItemCard";
 import { CartService, CartItem } from "../../../services/basketService";
-import AnimatedEmptyPage from "../../ui/AnimatedEmptyPage";
+import AnimatedEmptyPage from "./AnimatedEmptyPage";
 
 const BasketItems = () => {
     const [cartItems, setCartItems] = useState(CartService.getCart());

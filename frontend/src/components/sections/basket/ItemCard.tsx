@@ -14,7 +14,7 @@ import ItemCardProps from "../../../interfaces/ItemCardProps";
 import useHoverStates from "./AmountChangeHooks";
 import ConfirmRemoveFromBasketModal from "../../common/ConfirmRemoveFromBasketModal";
 import "../../../styles/components/basket.css";
-import '../../../styles/components/adaptivity/basket-adaptivity.css'
+import "../../../styles/components/adaptivity/basket-adaptivity.css";
 
 const ItemCard = ({ item, onItemRemoved, onAmountChanged }: ItemCardProps) => {
     const [amount, setAmount] = useState(item.amount);
@@ -58,7 +58,11 @@ const ItemCard = ({ item, onItemRemoved, onAmountChanged }: ItemCardProps) => {
                 onRemove={() => onItemRemoved(item.id)}
             />
             <Row className="text-center align-items-center" id="basket-row">
-                <Col xs={5} id="basket-item-name">
+                <Col
+                    xs={5}
+                    id="basket-item-name"
+                    className="d-flex justify-content-start"
+                >
                     <Link
                         to={`/catalog/${item.id}`}
                         className="text-decoration-none text-black d-flex align-items-center"
@@ -130,9 +134,14 @@ const ItemCard = ({ item, onItemRemoved, onAmountChanged }: ItemCardProps) => {
                     </div>
 
                     <span
-                        onClick={()=>{setModalShow(true)}}
+                        onClick={() => {
+                            setModalShow(true);
+                        }}
                         className="text-secondary"
-                        style={{ borderBottom: "dashed grey 1px", paddingTop:'7px' }}
+                        style={{
+                            borderBottom: "dashed grey 1px",
+                            paddingTop: "7px",
+                        }}
                         id="basket-hidden-adaptivity"
                         hidden
                     >
