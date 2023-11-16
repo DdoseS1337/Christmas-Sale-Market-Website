@@ -6,6 +6,7 @@ export interface IFetchDataParameters<T> {
     count?: number;
     defaultValue?: T;
     dependencies?: React.DependencyList;
+    executeIf?: () => boolean;
 }
 
 export const useFetchData = <T>(fetchDataParameters: IFetchDataParameters<T>) => {
@@ -14,6 +15,9 @@ export const useFetchData = <T>(fetchDataParameters: IFetchDataParameters<T>) =>
 
     const refresh = useCallback(async (refreshDataParameters?: IFetchDataParameters<T>) => {
         const { callApi, filter, count } = refreshDataParameters ?? fetchDataParameters;
+
+        if (fetchDataParameters.executeIf && fetchDataParameters.executeIf() === false)
+            return;
 
         let result: any = await callApi().catch(e => {
             setError(e);

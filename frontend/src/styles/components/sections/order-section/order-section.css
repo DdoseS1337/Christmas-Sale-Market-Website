@@ -36,6 +36,28 @@
   width: 376px;
   justify-content: space-between;
   align-items: center;
+  white-space: nowrap;
+}
+
+.product-listing__image {
+  width: 50px;
+  min-width: 50px;
+  height: 50px;
+  max-height: 50px;
+  object-fit: cover;
+  padding-right: 5px;
+}
+
+.product-listing__name {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  text-decoration: none;
+  color: var(--secondary-text);
+}
+
+.product-listing__amount {
+  padding-left: 5px;
+  padding-right: 20px;
 }
 
 .total {

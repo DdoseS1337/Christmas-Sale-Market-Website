@@ -1,6 +1,7 @@
 import { ReactNode, MouseEvent, RefObject } from "react";
 import "../../styles/components/footer/rounded-button.css";
 import { Link, LinkProps, To } from "react-router-dom";
+import { classNames } from "primereact/utils";
 
 interface IProps extends Omit<LinkProps, "onClick" | "to" | "ref"> {
 	children: ReactNode[] | ReactNode;
@@ -21,14 +22,21 @@ const RoundedButton = ({
 	inactive,
 	...linkProps
 }: IProps) => {
-	const className = isCircle ? "circle-button" : "rounded-button";
-	linkProps.className =
-		className +
-		(backgroundIsGray
-			? " rounded-button--background-gray "
-			: " rounded-button--background-red ") +
-		(linkProps.className ? ` ${linkProps.className}` : ``) +
-		(inactive ? "rounded-button--inactive" : "");
+	linkProps.className = classNames(
+		{
+			"circle-button": isCircle,
+			"rounded-button": !isCircle,
+		},
+		{
+			"rounded-button--background-gray": backgroundIsGray,
+			"rounded-button--background-red": !backgroundIsGray,
+		},
+		{
+			"rounded-button--inactive": inactive,
+		},
+		"p-ripple",
+		linkProps.className
+	);
 
 	return (
 		<Link

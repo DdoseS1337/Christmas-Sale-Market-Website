@@ -2,9 +2,9 @@ import { BACKEND_KEYS } from "../common";
 import { IOrder } from "../interfaces/Order";
 import HttpService from "./HttpService";
 
-export class OrderService extends HttpService {
+class OrderService extends HttpService {
     constructor() {
-        super(BACKEND_KEYS.SERVER_URL);
+        super(BACKEND_KEYS.ORDER_SERVER_URL);
     }
 
     async sendOrder(order: IOrder) {
@@ -17,8 +17,12 @@ export class OrderService extends HttpService {
                 phone_number: order.customerInformation.phoneNumber,
                 additional_info: order.customerInformation.additionalInformation,
                 branch_nova_poshta: order.customerInformation.branchOfNovaPoshta,
+                city: order.customerInformation.city,
                 productsIds: order.offers.map(o => o.offerId)
             }
         });
     }
 }
+
+const orderService = new OrderService();
+export default orderService;

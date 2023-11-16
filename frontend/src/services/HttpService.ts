@@ -31,7 +31,7 @@ export default class HttpService {
 
 	async post<T>(config: PostRequestConfig) {
 		const response = await this.fetchingService
-			.post<T>(config.url, config);
+			.post<T>(config.url, config.data);
 		return response.data;
 	}
 
