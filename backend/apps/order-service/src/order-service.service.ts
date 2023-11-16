@@ -1,10 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { UserOrderRepository } from './order-service.repository';
-import { CreateUserOrderDto, PRODUCT_SERVICE } from '@app/common';
+import { CreateUserOrderDto, PRODUCT_SERVICE, Product } from '@app/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { TELEGRAM_BOT } from '@app/common';
 import { catchError, forkJoin, of } from 'rxjs';
 import { UpdateUserOrderDto } from './dto';
+import axios from 'axios';
 
 @Injectable()
 export class OrderServiceService {
@@ -26,42 +27,45 @@ export class OrderServiceService {
 
     return this.updateOrderList(
       createUserOrderDto.phone_number,
-      createUserOrderDto.productsIds,
+      createUserOrderDto.products,
     );
   }
 
   async getProductsData(createUserOrderDto: CreateUserOrderDto) {
-    const productsIdsArray = createUserOrderDto.productsIds;
-    const productsPromises = productsIdsArray.map((id) =>
-      this.productService.send('get-tree-offer', id).pipe(
-        catchError((error) => {
-          console.log(`Error in productService for id ${id}:`, error);
-          return of(null);
+    const productsIdsArray = createUserOrderDto.products;
+    const productsPromises = productsIdsArray.map((product) =>
+      axios
+        .get(`http://localhost:3001/dev/christmas-tree-offers/${product.id}`)
+        .then((response) => {
+          return response.data;
+        })
+        .catch((error) => {
+          console.error(`Помилка для продукту з ID ${product.id}:`, error);
+          throw error;
         }),
-      ),
     );
+    Promise.all(productsPromises)
+      .then((responses) => {
+        const productsDataArray = responses
+          .filter((response) => response !== null)
+          .map((response) => {
+            const product = response;
+            return {
+              id: product.id,
+              name: product.name,
+              price: product.price,
+            };
+          });
 
-    return forkJoin(productsPromises).subscribe((responses) => {
-      const productsDataArray = responses
-        .filter((response) => response !== null)
-        .map((response) => {
-          const product = response.data[0];
-          return {
-            id: product.id,
-            name: product.name,
-            price: product.price,
-          };
+        axios.post('http://localhost:4001/dev/tg-bot/notify_bot', {
+          ...createUserOrderDto,
+          products: productsDataArray,
+          
         });
-
-      if (productsDataArray.length !== productsIdsArray.length) {
-        return;
-      }
-
-      this.telegramBotService.emit('notify_bot', {
-        ...createUserOrderDto,
-        products: productsDataArray,
+      })
+      .catch((error) => {
+        console.error('Помилка у викликах Get:', error);
       });
-    });
   }
 
   async findAll() {
@@ -72,7 +76,7 @@ export class OrderServiceService {
     return this.userOrderRepository.findOne({ _id });
   }
 
-  async updateOrderList(phone_number: string, productsIds: string[]) {
+  async updateOrderList(phone_number: string, productsIds: Product[]) {
     return this.userOrderRepository.findOneAndUpdate(
       { phone_number },
       { $push: { productsIds: { $each: productsIds } } },

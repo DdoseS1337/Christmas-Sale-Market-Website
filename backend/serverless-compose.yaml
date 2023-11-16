@@ -1,0 +1,11 @@
+services:
+  auth:
+    path: apps/auth
+  order-service:
+    path: apps/order-service
+  products-service:
+    path: apps/products-service
+  supplier-service:
+    path: apps/supplier-service
+  telegram-bot:
+    path: apps/telegram-bot

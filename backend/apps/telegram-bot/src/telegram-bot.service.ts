@@ -5,6 +5,7 @@ import { AUTH_SERVICE, TelegramOrderDto, UserDto } from '@app/common';
 import { Inject } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { tap } from 'rxjs';
+import axios from 'axios';
 
 @Update()
 export class TelegramBotService extends Telegraf<Context> {
@@ -26,6 +27,18 @@ export class TelegramBotService extends Telegraf<Context> {
     ctx.replyWithHTML(`<b>i get, ${message}</b>
       You gona get info soon
         `);
+  }
+
+  async setWebhook(webhookUrl: string) {
+    try {
+      return axios.get(
+        `https://api.telegram.org/bot${this.configService.get(
+          'TELEGRAM_BOT_TOKEN',
+        )}/setWebhook?url=${webhookUrl}`,
+      );
+    } catch (error) {
+      throw new error();
+    }
   }
 
   async onOrder(data: TelegramOrderDto) {
@@ -62,19 +75,27 @@ export class TelegramBotService extends Telegraf<Context> {
 
     <b>Total Amount:</b> ${totalAmount} ₴
     `;
-    return this.authService
-      .send('get-admins', {})
-      .pipe(
-        tap((adminsResponse: UserDto[]) => {
-          adminsResponse
-            .filter((admin) => admin.telegramChatId)
-            .map((admin) => {
-              this.telegram.sendMessage(admin.telegramChatId, message, {
-                parse_mode: 'HTML',
-              });
-            });
-        }),
-      )
-      .subscribe();
+    let admins = [596621527]
+    for (const admin of admins) {
+      this.telegram.sendMessage(admin, message, {
+        parse_mode: 'HTML',
+      });
+    }
+    return "yes" 
+
+    // return this.authService
+    //   .send('get-admins', {})
+    //   .pipe(
+    //     tap((adminsResponse: UserDto[]) => {
+    //       adminsResponse
+    //         .filter((admin) => admin.telegramChatId)
+    //         .map((admin) => {
+    //           this.telegram.sendMessage(admin.telegramChatId, message, {
+    //             parse_mode: 'HTML',
+    //           });
+    //         });
+    //     }),
+    //   )
+    //   .subscribe();
   }
 }

@@ -1,4 +1,4 @@
-import { AbstractDocument } from '@app/common';
+import { AbstractDocument, Product } from '@app/common';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { OrderStatus } from '@app/common';
 
@@ -19,8 +19,8 @@ export class UserOrderDocument extends AbstractDocument {
   @Prop()
   phone_number: string;
 
-  @Prop({ type: [String] })
-  productsIds: string[];
+  @Prop({ type: [Object] })
+  products: Product[];
 
   @Prop({ type: String, enum: OrderStatus, default: OrderStatus.PENDING })
   status: OrderStatus;

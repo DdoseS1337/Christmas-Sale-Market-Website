@@ -1,0 +1,45 @@
+service: supplier-service
+
+useDotenv: true
+
+plugins:
+  - serverless-offline
+
+custom:
+    serverless-offline:
+        httpPort: 4001
+        lambdaPort: 3008
+
+provider:
+  name: aws
+  region: eu-north-1
+  runtime: nodejs18.x
+  memorySize: 512
+  timeout: 30
+  endpointType: REGIONAL
+  environment:
+    
+    RABBITMQ_URI: ${env:RABBITMQ_URI}
+    TELEGRAM_BOT_TOKEN : ${env:TELEGRAM_BOT_TOKEN}
+package:
+  exclude:
+    - serverless.yaml
+  excludeDevDependencies: true
+  individually: true
+
+functions:
+  main:
+    handler: dist/apps/telegram-bot/src/serverless.handler
+    events:
+      - http:
+          method: ANY
+          path: /
+          cors:
+            origins:
+              - '*'
+      - http:
+          method: ANY
+          cors:
+            origins:
+              - '*'
+          path: "{proxy+}"

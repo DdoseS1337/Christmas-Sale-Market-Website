@@ -7,6 +7,8 @@ import {
   IsArray,
   ValidateNested,
   IsEnum,
+  IsInt,
+  Min,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 
@@ -18,7 +20,7 @@ export enum OrderStatus {
   CANCELLED = 'cancelled',
 }
 
-export class Product {
+export class ProductTg {
   @IsString()
   id: string;
 
@@ -27,6 +29,19 @@ export class Product {
 
   @IsString()
   price: string;
+
+  @IsInt()
+  @Min(1)
+  quantity: number;
+}
+
+export class Product {
+  @IsString()
+  id: string;
+
+  @IsInt()
+  @Min(1)
+  quantity: number;
 }
 
 export class CreateUserOrderDto {
@@ -55,9 +70,11 @@ export class CreateUserOrderDto {
   @IsPhoneNumber('UA')
   phone_number: string;
 
+  @ValidateNested({ each: true })
+  @Type(() => Product)
   @IsArray()
   @IsNotEmpty()
-  productsIds: string[];
+  products: Product[];
 
   @IsOptional()
   @IsString()
@@ -70,8 +87,8 @@ export class CreateUserOrderDto {
 
 export class TelegramOrderDto extends CreateUserOrderDto {
   @ValidateNested({ each: true })
-  @Type(() => Product)
+  @Type(() => ProductTg)
   @IsArray()
   @IsNotEmpty()
-  products: Product[];
+  products: ProductTg[];
 }

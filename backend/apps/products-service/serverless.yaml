@@ -1,0 +1,43 @@
+service: products-service
+
+useDotenv: true
+
+plugins:
+  - serverless-offline
+
+custom:
+    serverless-offline:
+        httpPort: 3001
+        lambdaPort: 3005
+        
+provider:
+  name: aws
+  region: eu-north-1
+  runtime: nodejs18.x
+  memorySize: 512
+  timeout: 30
+  endpointType: REGIONAL
+  environment:
+    RABBITMQ_URI: ${env:RABBITMQ_URI}
+    MONGODB_URI: ${env:MONGODB_URI}
+
+package:
+  excludeDevDependencies: true
+  individually: true
+
+functions:
+  main:
+    handler: dist/apps/products-service/src/serverless.handler
+    events:
+      - http:
+          method: ANY
+          path: /
+          cors:
+            origins:
+              - '*'
+      - http:
+          method: ANY
+          cors:
+            origins:
+              - '*'
+          path: "{proxy+}"

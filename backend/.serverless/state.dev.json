@@ -1,0 +1,32 @@
+{
+  "service": {
+    "id": "749swfs"
+  },
+  "components": {
+    "products-service": {
+      "state": {
+        "detectedFrameworkVersion": "3.36.0"
+      }
+    },
+    "telegram-bot": {
+      "state": {
+        "detectedFrameworkVersion": "3.36.0"
+      }
+    },
+    "order-service": {
+      "state": {
+        "detectedFrameworkVersion": "3.36.0"
+      }
+    },
+    "supplier-service": {
+      "state": {
+        "detectedFrameworkVersion": "3.36.0"
+      }
+    },
+    "auth": {
+      "state": {
+        "detectedFrameworkVersion": "3.36.0"
+      }
+    }
+  }
+}

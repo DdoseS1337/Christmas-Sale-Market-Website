@@ -1,0 +1,47 @@
+service: auth
+
+useDotenv: true
+
+plugins:
+  - serverless-offline
+
+custom:
+    serverless-offline:
+        httpPort: 3004
+        lambdaPort: 3007
+
+provider:
+  name: aws
+  region: eu-north-1
+  runtime: nodejs18.x
+  memorySize: 512
+  timeout: 30
+  endpointType: REGIONAL
+  environment:
+    RABBITMQ_URI: ${env:RABBITMQ_URI}
+    JWT_SECRET: ${env:JWT_SECRET}
+    JWT_EXPIRATION: ${env:JWT_EXPIRATION}
+    MONGODB_URI: ${env:MONGODB_URI}
+
+
+
+package:
+  excludeDevDependencies: true
+  individually: true
+
+functions:
+  main:
+    handler: dist/apps/auth/src/serverless.handler
+    events:
+      - http:
+          method: ANY
+          path: /
+          cors:
+            origins:
+              - '*'
+      - http:
+          method: ANY
+          cors:
+            origins:
+              - '*'
+          path: "{proxy+}"

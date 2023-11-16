@@ -3,7 +3,6 @@ import { SupplierModule } from './supplier.module';
 import { Logger } from 'nestjs-pino';
 import { ConfigService } from '@nestjs/config';
 import * as cookieParser from 'cookie-parser';
-
 async function bootstrap() {
   const app = await NestFactory.create(SupplierModule);
   const configService = app.get(ConfigService);

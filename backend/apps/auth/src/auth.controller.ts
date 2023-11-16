@@ -1,4 +1,4 @@
-import { Controller, Post, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Res, UseGuards, Request } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { Response } from 'express';
 import { CurrentUser, UserDocument } from '@app/common';
@@ -6,7 +6,6 @@ import { AuthService } from './auth.service';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { UsersService } from './users/users.service';
-
 @Controller('auth')
 export class AuthController {
   constructor(
@@ -25,12 +24,12 @@ export class AuthController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @MessagePattern('authenticate')
-  async authenticate(@Payload() data: any) {
-    return data.user;
+  @Get('authenticate')
+  async authenticate(@Request() request: any) {
+    return request.user;
   }
 
-  @MessagePattern('get-admins')
+  @Get('get-admins')
   async GetAdmins() {
     return this.usersService.getAdmins();
   }

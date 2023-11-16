@@ -6,7 +6,6 @@ import { ClientProxy } from '@nestjs/microservices';
 import { ConfigService } from '@nestjs/config';
 import { Cron } from '@nestjs/schedule';
 
-
 import { YmlCatalog, Offer, Category } from './interfaces';
 @Injectable()
 export class SupplierService {
@@ -60,19 +59,19 @@ export class SupplierService {
     );
 
     const jsonDataCategories = JSON.stringify(transformCategories);
-
-    const categories = this.productService
-      .send('set_supply_categories', jsonDataCategories)
-      .subscribe((res) => {
-        return res;
-      });
-
+    const categories = await axios.post(
+      'http://localhost:3001/dev/products/set_supply_categories',
+      {
+        data: jsonDataCategories,
+      },
+    );
     const jsonDataOffers = JSON.stringify(transformOffers);
-    const offers = this.productService
-      .send('set_supply_offers', jsonDataOffers)
-      .subscribe((res) => {
-        return res;
-      });
+    const offers = await axios.post(
+      'http://localhost:3001/dev/products/set_supply_offers',
+      {
+        data: jsonDataOffers,
+      },
+    );
 
     if (categories && offers) {
       return 'Data successfully upload';
@@ -124,7 +123,6 @@ export class SupplierService {
     });
     return transformCategories;
   }
-
 
   randomFromIntervalInt(min: number, max: number) {
     return Math.floor(Math.random() * (max - min) + min);
