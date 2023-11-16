@@ -1,5 +1,5 @@
 import { Galleria } from "primereact/galleria";
-import { Col, Container, Image, Row } from "react-bootstrap";
+import { Col, Image, Row } from "react-bootstrap";
 import christmasTreeApi from "../../services/christmas-tree.api";
 import { useEffect, useState } from "react";
 import { IOffer } from "../../interfaces/Offer";
@@ -15,7 +15,8 @@ import {
 } from "react-bootstrap-icons";
 import { CartService } from "../../services/basketService";
 import { BackgroundType, Section } from "../common/Section";
-import "../../styles/components/adaptivity/hot-offer-adaptivity.css"
+import "../../styles/components/adaptivity/hot-offer-adaptivity.css";
+import { Link } from "react-router-dom";
 
 const HotOffer = () => {
     const [product, setProduct] = useState<IOffer | null>(null);
@@ -48,13 +49,13 @@ const HotOffer = () => {
     const addToBasketIcon = (
         <>
             <Plus style={{ width: 25, height: 25 }} className="me-2" />
-            <span style={{whiteSpace:"nowrap"}}>Додати до кошику</span>
+            <span style={{ whiteSpace: "nowrap" }}>Додати до кошику</span>
         </>
     );
     const removeFromBasketIcon = (
         <>
             <Dash style={{ width: 25, height: 25 }} className="me-2" />
-            <span style={{whiteSpace:"nowrap"}}>Видалити з кошика</span>
+            <span style={{ whiteSpace: "nowrap" }}>Видалити з кошика</span>
         </>
     );
 
@@ -113,7 +114,10 @@ const HotOffer = () => {
     return (
         <Section backgroundType={BackgroundType.RedWithSnow}>
             <h2 id="hotOffer-header-adaptivity">Гаряча пропозиція</h2>
-            <Row className="m-0 p-0 pt-4 pb-4 d-flex text-white align-items-center"  id="hotOffer-gallery-adaptivity">
+            <Row
+                className="m-0 p-0 pt-4 pb-4 d-flex text-white align-items-center"
+                id="hotOffer-gallery-adaptivity"
+            >
                 <Col xs={5} className="d-flex">
                     <Galleria
                         value={product !== null ? product.picture : []}
@@ -147,7 +151,15 @@ const HotOffer = () => {
                     />
                 </Col>
                 <Col>
-                    <h3 className="m-0 mb-3">{product?.name}</h3>
+                    <h3 className="m-0 mb-3">
+                        <Link
+                            to={`/catalog/${product?.id}`}
+                            className="text-decoration-none text-white"
+                            onClick={() => window.scroll(0, 0)}
+                        >
+                            {product?.name}
+                        </Link>
+                    </h3>
                     <span className="fs-4">
                         Вартість:
                         <span className="text-white-50 text-decoration-line-through mx-2">
