@@ -15,6 +15,7 @@ import {
 } from "react-bootstrap-icons";
 import { CartService } from "../../services/basketService";
 import { BackgroundType, Section } from "../common/Section";
+import "../../styles/components/adaptivity/hot-offer-adaptivity.css"
 
 const HotOffer = () => {
     const [product, setProduct] = useState<IOffer | null>(null);
@@ -47,13 +48,13 @@ const HotOffer = () => {
     const addToBasketIcon = (
         <>
             <Plus style={{ width: 25, height: 25 }} className="me-2" />
-            <span>Додати до кошику</span>
+            <span style={{whiteSpace:"nowrap"}}>Додати до кошику</span>
         </>
     );
     const removeFromBasketIcon = (
         <>
             <Dash style={{ width: 25, height: 25 }} className="me-2" />
-            <span>Видалити з кошика</span>
+            <span style={{whiteSpace:"nowrap"}}>Видалити з кошика</span>
         </>
     );
 
@@ -111,8 +112,8 @@ const HotOffer = () => {
 
     return (
         <Section backgroundType={BackgroundType.RedWithSnow}>
-            <h2>Гаряча пропозиція</h2>
-            <Row className="m-0 p-0 pt-4 pb-4 d-flex text-white align-items-center">
+            <h2 id="hotOffer-header-adaptivity">Гаряча пропозиція</h2>
+            <Row className="m-0 p-0 pt-4 pb-4 d-flex text-white align-items-center"  id="hotOffer-gallery-adaptivity">
                 <Col xs={5} className="d-flex">
                     <Galleria
                         value={product !== null ? product.picture : []}
@@ -154,7 +155,7 @@ const HotOffer = () => {
                         </span>
                         {product?.newPrice}₴
                     </span>
-                    <Container className="p-0 d-flex mt-3">
+                    <div className="p-0 d-flex mt-3">
                         <div
                             className="d-flex justify-content-between p-2 border rounded-pill align-items-center h-25 bg-white text-black"
                             style={{ minWidth: "80px", width: "7rem" }}
@@ -190,20 +191,20 @@ const HotOffer = () => {
                             onClick={() => {
                                 isInCard ? removeFromBasket() : addToBasket();
                             }}
-                            id="product-btn-basket"
+                            id="hotOffer-btn-basket"
                         >
                             {isInCard ? removeFromBasketIcon : addToBasketIcon}
                         </div>
-                    </Container>
+                    </div>
                     <h4 className="mt-4">Характеристики</h4>
-                    <Container className="m-0 p-0 mt-4 d-flex flex-wrap justify-content-between">
+                    <div className="m-0 p-0 mt-4 d-flex flex-wrap justify-content-between">
                         {product?.param.map((item: any, index) => {
                             return (
                                 <div
                                     key={index}
                                     className="border-bottom mb-3 pb-3 d-flex justify-content-between"
                                     style={{ width: "48%" }}
-                                    id="product-characteristics"
+                                    id="hotOffer-characteristics"
                                 >
                                     <h6 className="m-0 fw-bold">
                                         {item.name}:
@@ -212,7 +213,7 @@ const HotOffer = () => {
                                 </div>
                             );
                         })}
-                    </Container>
+                    </div>
                 </Col>
             </Row>
             <MediaQuery minWidth={1590}>
@@ -235,7 +236,7 @@ const HotOffer = () => {
                 className="position-absolute bottom-0 start-0 ms-5"
                 style={{ width: "12rem" }}
             />
-            <MediaQuery minWidth={730}>
+            <MediaQuery minWidth={522}>
                 <img
                     src="./images/pictures/presents.png"
                     alt="presents-image-reversed"

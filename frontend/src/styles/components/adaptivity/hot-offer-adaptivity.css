@@ -1,0 +1,32 @@
+@media (max-width: 1070px) {
+    #hotOffer-characteristics {
+        width: 100% !important;
+    }
+}
+
+@media (max-width: 1075px) {
+    #hotOffer-gallery-adaptivity {
+        align-items: start !important;
+    }
+}
+
+@media (max-width: 777px) {
+    #hotOffer-btn-basket {
+        padding: 0rem 1rem !important;
+    }
+}
+
+@media (max-width: 860px) {
+    #hotOffer-gallery-adaptivity {
+        display: block !important;
+    }
+    #hotOffer-gallery-adaptivity .col-5 {
+        width: 100% !important;
+        justify-content: center !important;
+        margin-bottom: 3rem !important;
+    }
+    #hotOffer-header-adaptivity {
+        display: flex;
+        justify-content: center !important;
+    }
+}
