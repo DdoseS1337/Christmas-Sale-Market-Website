@@ -1,5 +1,5 @@
 import { Galleria } from "primereact/galleria";
-import { Col, Container, Image, Row } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import christmasTreeApi from "../../services/christmas-tree.api";
 import { useEffect, useState } from "react";
 import { IOffer } from "../../interfaces/Offer";
@@ -7,10 +7,8 @@ import MediaQuery from "react-responsive";
 import useHoverStates from "../sections/basket/AmountChangeHooks";
 import {
     ArrowRight,
-    Dash,
     DashCircle,
     DashCircleFill,
-    Plus,
     PlusCircle,
     PlusCircleFill,
 } from "react-bootstrap-icons";
@@ -18,11 +16,19 @@ import { CartService } from "../../services/basketService";
 import { BackgroundType, Section } from "../common/Section";
 import "../../styles/components/adaptivity/hot-offer-adaptivity.css";
 import { Link } from "react-router-dom";
+import {
+    GalleriaMainPhoto,
+    GalleriaCarousel,
+} from "../sections/product/ProductGalleria";
+import {
+    addToBasketIcon,
+    removeFromBasketIcon,
+} from "../sections/product/BasketIcons";
 
 const HotOffer = () => {
     const [product, setProduct] = useState<IOffer | null>(null);
-    const [amount, setAmount] = useState(1);
     const [, setRefresh] = useState<boolean>(false);
+    const [amount, setAmount] = useState(1);
     const {
         isMinusHovered,
         isPlusHovered,
@@ -35,30 +41,8 @@ const HotOffer = () => {
         .map((item) => item.id)
         .includes(product?.id.toString() ?? "");
 
-    const amountChange = (operation: string) => {
-        if (operation === "+") {
-            const newAmount = amount + 1;
-            setAmount(newAmount);
-        } else if (operation === "-") {
-            const newAmount = amount - 1;
-            if (newAmount >= 1) {
-                setAmount(newAmount);
-            }
-        }
-    };
-
-    const addToBasketIcon = (
-        <>
-            <Plus style={{ width: 25, height: 25 }} className="me-2" />
-            <span style={{ whiteSpace: "nowrap" }}>Додати до кошику</span>
-        </>
-    );
-    const removeFromBasketIcon = (
-        <>
-            <Dash style={{ width: 25, height: 25 }} className="me-2" />
-            <span style={{ whiteSpace: "nowrap" }}>Видалити з кошика</span>
-        </>
-    );
+    const galleriaMainPhotoStyle = { width: "20rem" };
+    const galleriaCarouselStyle = { width: "5rem" };
 
     const addToBasket = () => {
         CartService.loadCart();
@@ -77,6 +61,18 @@ const HotOffer = () => {
         setRefresh((oldValue) => !oldValue);
     };
 
+    const amountChange = (operation: string) => {
+        if (operation === "+") {
+            const newAmount = amount + 1;
+            setAmount(newAmount);
+        } else if (operation === "-") {
+            const newAmount = amount - 1;
+            if (newAmount >= 1) {
+                setAmount(newAmount);
+            }
+        }
+    };
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -89,28 +85,6 @@ const HotOffer = () => {
 
         fetchData();
     }, []);
-
-    const GalleriaCarousel = (imageLink: any) => {
-        return (
-            <Image
-                src={imageLink}
-                alt="Product Image"
-                style={{ width: "5rem" }}
-            />
-        );
-    };
-
-    const GalleriaMainPhoto = (img: any) => {
-        return (
-            <Image
-                fluid
-                src={img}
-                alt="Product Image"
-                className="rounded"
-                style={{ width: "20rem" }}
-            />
-        );
-    };
 
     return (
         <Section backgroundType={BackgroundType.RedWithSnow} isFluid>
@@ -126,9 +100,19 @@ const HotOffer = () => {
                         <Galleria
                             value={product !== null ? product.picture : []}
                             numVisible={3}
-                            item={GalleriaMainPhoto}
+                            item={(img) => (
+                                <GalleriaMainPhoto
+                                    src={img}
+                                    styles={galleriaMainPhotoStyle}
+                                />
+                            )}
                             thumbnailsPosition={"left"}
-                            thumbnail={GalleriaCarousel}
+                            thumbnail={(imageLink) => (
+                                <GalleriaCarousel
+                                    src={imageLink}
+                                    styles={galleriaCarouselStyle}
+                                />
+                            )}
                             showItemNavigators
                             showItemNavigatorsOnHover
                             circular
