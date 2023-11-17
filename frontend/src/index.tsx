@@ -2,10 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import "bootstrap/dist/css/bootstrap.min.css";
-import {
-	ValidatorContextOptions,
-	ValidatorProvider,
-} from "react-class-validator";
 import { PrimeReactProvider } from "primereact/api";
 import "primereact/resources/primereact.css"; // core css
 import "./styles/theme.css"; // theme
@@ -16,11 +12,6 @@ import { DropdownPassThroughMethodOptions } from "primereact/dropdown";
 const root = ReactDOM.createRoot(
 	document.getElementById("root") as HTMLElement
 );
-
-const validationContextOptions: ValidatorContextOptions = {
-	onErrorMessage: (error) =>
-		Object.keys(error.constraints!).map((key) => error.constraints![key]),
-};
 
 root.render(
 	<PrimeReactProvider
@@ -65,10 +56,8 @@ root.render(
 			},
 		}}
 	>
-		<ValidatorProvider options={validationContextOptions}>
-			<React.StrictMode>
-				<App />
-			</React.StrictMode>
-		</ValidatorProvider>
+		<React.StrictMode>
+			<App />
+		</React.StrictMode>
 	</PrimeReactProvider>
 );
