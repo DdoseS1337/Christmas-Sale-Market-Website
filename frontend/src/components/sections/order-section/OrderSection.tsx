@@ -8,19 +8,28 @@ import {
 	OrderCustomerInformationValidation as CustomerInformationFormFields,
 	IOrderOffer,
 } from "../../../interfaces/Order";
-import { useValidation } from "react-class-validator";
 import { useFormik } from "formik";
 import { OrderForm } from "./OrderForm";
 import { Toast } from "primereact/toast";
 import { OrderService } from "../../../services/OrderService";
+import { validate } from "class-validator";
 
 export const OrderSection = () => {
 	const itemsOfCart = CartService.getCart();
 	const totalPrice = CartService.getTotalPrice();
 
-	const [validate, errors] = useValidation(CustomerInformationFormFields);
 	const formik = useFormik({
 		initialValues: new CustomerInformationFormFields(),
+		validate: async (data) => {
+			const validateResult = await validate(data);
+			return validateResult.reduce(
+				(previous, current) => ({
+					...previous,
+					[current.property]: Object.values(current.constraints!)[0],
+				}),
+				{}
+			);
+		},
 		onSubmit: sendOrder,
 	});
 
@@ -97,8 +106,6 @@ export const OrderSection = () => {
 	);
 
 	async function sendOrder(data: CustomerInformationFormFields) {
-		if ((await validate(data)) === false) return;
-
 		showSuccessOrderToast();
 		OrderService.sendOrder({
 			customerInformation: data,

@@ -21,20 +21,32 @@ export interface IOrderOffer {
 }
 
 export class OrderCustomerInformationValidation implements IOrderCustomerInformation {
-    @IsNotEmpty()
+    @IsNotEmpty({
+        message: "Вкажіть ваше ім'я"
+    })
     firstName: string = "";
 
-    @IsNotEmpty()
+    @IsNotEmpty({
+        message: "Вкажіть ваше прізвище"
+    })
     secondName: string = "";
 
-    @IsNotEmpty()
-    @IsPhoneNumber('UA')
+    @IsPhoneNumber('UA', {
+        message: "Некоректний номер телефону"
+    })
+    @IsNotEmpty({
+        message: "Вкажіть ваш телефон для зв'язку"
+    })
     phoneNumber: string = "";
 
-    @IsNotEmpty()
+    @IsNotEmpty({
+        message: "Вкажіть відділення для доставлення товару"
+    })
     branchOfNovaPoshta: string = "";
 
-    @IsNotEmpty()
+    @IsNotEmpty({
+        message: "Вкажіть місто для доставлення товару"
+    })
     city: string = "";
 
     @IsOptional()
