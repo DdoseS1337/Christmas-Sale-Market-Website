@@ -1,5 +1,5 @@
 import { NOVA_POSHTA } from "../common";
-import { ICity as ICity } from "../interfaces/NovaPoshta";
+import { IBranch, ICity as ICity } from "../interfaces/NovaPoshta";
 import HttpService from "./HttpService";
 
 class NovaPoshtaApi extends HttpService {
@@ -29,7 +29,7 @@ class NovaPoshtaApi extends HttpService {
         return response.data.map((item: any) => ({name: item.Description, id: item["Ref"]} as ICity));
     }
 
-    async getWarehouses(cityId: string): Promise<any[]> {
+    async getWarehouses(cityId: string): Promise<Array<IBranch>> {
         var response = await this.post<any>({
             url: "/Address/getWarehouses",
             data: {
@@ -48,7 +48,7 @@ class NovaPoshtaApi extends HttpService {
             return [];
         }
 
-        return response;
+        return response.data.map((item: any) => ({ name: item.Description }));
     }
 }
 

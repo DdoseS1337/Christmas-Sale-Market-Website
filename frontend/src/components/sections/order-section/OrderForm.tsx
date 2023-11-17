@@ -1,29 +1,21 @@
-import { Form, Toast } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import { IOrderCustomerInformation } from "../../../interfaces/Order";
-import { Dispatch, SetStateAction, useRef, useState } from "react";
-import { InputText } from "primereact/inputtext";
-import { classNames } from "primereact/utils";
+import { useState } from "react";
 import {
 	FieldConfig,
 	FieldInputProps,
 	FormikErrors,
-	FormikState,
 	FormikTouched,
 } from "formik";
-import { Dropdown } from "primereact/dropdown";
-import { CityDropdownItem } from "./DropdownItems";
 import { useFetchData } from "../../../hooks/FetchDataHook";
 import novaPoshtaApi from "../../../services/NovaPoshtaApi";
-import { ICity } from "../../../interfaces/NovaPoshta";
+import { IBranch, ICity } from "../../../interfaces/NovaPoshta";
 import { CustomDropdown } from "./CustomDropdown";
-
-interface ICustomerInformationFields
-	extends Partial<IOrderCustomerInformation> {}
+import { InputTextarea } from "primereact/inputtextarea";
+import { CustomInput } from "./CustomInput";
 
 interface IProps {
-	setCustomerInformation: Dispatch<SetStateAction<IOrderCustomerInformation>>;
 	formik: {
-		handleSubmit: (e?: React.FormEvent<HTMLFormElement>) => void;
 		errors: FormikErrors<IOrderCustomerInformation>;
 		touched: FormikTouched<IOrderCustomerInformation>;
 		setFieldValue: (
@@ -31,17 +23,15 @@ interface IProps {
 			value: any,
 			shouldValidate?: boolean
 		) => Promise<FormikErrors<IOrderCustomerInformation>> | Promise<void>;
-		resetForm: (
-			nextState?: Partial<FormikState<IOrderCustomerInformation>>
-		) => void;
 		getFieldProps: (
 			nameOrOptions: string | FieldConfig<any>
 		) => FieldInputProps<any>;
 	};
 }
 
-export const OrderForm = ({ setCustomerInformation, formik }: IProps) => {
+export const OrderForm = ({ formik }: IProps) => {
 	const [citiesFilter, setCitiesFilter] = useState<string>("");
+	const [selectedCity, setSelectedCity] = useState<ICity>();
 
 	const { items: cities } = useFetchData({
 		executeIf: () => citiesFilter.length <= 2,
@@ -50,175 +40,119 @@ export const OrderForm = ({ setCustomerInformation, formik }: IProps) => {
 		},
 		dependencies: [citiesFilter],
 	});
-	console.log(cities?.length);
 
-	const toast = useRef<any>(null);
+	const { items: branchesOfCity } = useFetchData({
+		executeIf: () => selectedCity != null,
+		callApi: async () => {
+			return novaPoshtaApi.getWarehouses(selectedCity!.id);
+		},
+		dependencies: [selectedCity],
+	});
 
-	const show = () => {
-		toast.current!.show({
-			severity: "success",
-			summary: "Успіх",
-			detail: "Замовлення відправлено",
-		});
-	};
+	console.log(cities?.length, branchesOfCity?.length);
 
 	const isFormFieldInvalid = (name: keyof IOrderCustomerInformation) =>
 		!!(formik.touched[name] && formik.errors[name]);
 
-	const [selectedCity, setSelectedCity] = useState<ICity>();
-
 	return (
-		<form
-			onSubmit={(e) => {
-				show();
-				formik.resetForm();
-				formik.handleSubmit(e);
-			}}
-		>
-			<Toast ref={toast} />
-
+		<form>
 			<h1>Платіжна інформація</h1>
 			<div className="mb-3 d-flex gap-2">
-				<Form.Group className="d-flex flex-column gap-2">
-					<label htmlFor="firstName">Ім'я*</label>
-					<InputText
-						style={{ minWidth: 300 }}
-						placeholder="Ваше ім'я"
-						onChange={(e) => {
-							formik.setFieldValue("firstName", e.target.value);
-						}}
-						className={classNames({
-							"p-invalid": isFormFieldInvalid("firstName"),
-						})}
-					/>
-					<small className="p-error">
-						{isFormFieldInvalid("firstName") &&
-							formik.errors["firstName"]}
-					</small>
-				</Form.Group>
-				<Form.Group className="d-flex flex-column gap-2">
-					<label htmlFor="secondName">Прізвище*</label>
-					<InputText
-						style={{ minWidth: 300 }}
-						placeholder="Ваше прізвище"
-						onChange={(e) => {
-							formik.setFieldValue("secondName", e.target.value);
-						}}
-						className={classNames({
-							"p-invalid": isFormFieldInvalid("secondName"),
-						})}
-					/>
-					<small className="p-error">
-						{isFormFieldInvalid("secondName") &&
-							formik.errors["secondName"]}
-					</small>
-				</Form.Group>
+				<CustomInput
+					width="1/3"
+					label="Ім'я"
+					placeholder="Ваше ім'я"
+					field="firstName"
+					isRequired
+					setValue={formik.setFieldValue}
+					isInvalid={isFormFieldInvalid}
+					errors={formik.errors}
+				/>
+				<CustomInput
+					width="1/3"
+					label="Прізвище"
+					placeholder="Ваше прізвище"
+					field="secondName"
+					isRequired
+					setValue={formik.setFieldValue}
+					isInvalid={isFormFieldInvalid}
+					errors={formik.errors}
+				/>
 			</div>
 			<div className="mb-3 d-flex gap-2">
-				<Form.Group
-					className="d-flex flex-column"
-					style={{ minWidth: 300 }}
-				>
-					<Form.Label>Населений пункт*</Form.Label>
-					<CustomDropdown
-						value={selectedCity}
-						onChange={(e) => {
-							setSelectedCity(e.value);
-							formik.setFieldValue("city", e.value.name);
-						}}
-						isInvalid={isFormFieldInvalid("city")}
-						options={cities}
-						optionLabel="name"
-					/>
-					<small className="p-error">
-						{isFormFieldInvalid("city") && formik.errors["city"]}
-					</small>
-				</Form.Group>
+				<CustomDropdown
+					placeholder="Обирайте"
+					value={selectedCity}
+					setSelectedValue={setSelectedCity}
+					isInvalid={isFormFieldInvalid}
+					options={cities}
+					optionLabel="name"
+					filterMatchMode="startsWith"
+					field="city"
+					setField={formik.setFieldValue}
+					label={"Населений пункт"}
+					isRequired
+					width={"1/3"}
+					errors={formik.errors}
+					filterState={[citiesFilter, setCitiesFilter]}
+				/>
 			</div>
 			<div className="mb-3 d-flex">
-				<Form.Group
-					className="d-flex flex-column"
-					style={{ minWidth: 300 }}
-				>
-					<Form.Label>Почтове відділення*</Form.Label>
-					<CustomDropdown
-						disabled={selectedCity === undefined}
-						placeholder={
-							selectedCity === undefined
-								? "Спочатку вибери місто"
-								: "Вибирай"
-						}
-						// value={undefined}
-						onChange={(e) => {
-							setSelectedCity(e.value);
-							formik.setFieldValue(
-								"branchOfNovaPoshta",
-								e.value.name
-							);
-						}}
-						isInvalid={isFormFieldInvalid("branchOfNovaPoshta")}
-						options={["branch"]}
-					/>
-					<small className="p-error">
-						{isFormFieldInvalid("branchOfNovaPoshta") &&
-							formik.errors["branchOfNovaPoshta"]}
-					</small>
-				</Form.Group>
+				<CustomDropdown
+					disabled={selectedCity === undefined}
+					placeholder={
+						selectedCity === undefined
+							? "Спочатку вибери місто"
+							: "Обирайте"
+					}
+					isInvalid={isFormFieldInvalid}
+					options={branchesOfCity}
+					optionLabel="name"
+					filterMatchMode="contains"
+					field="branchOfNovaPoshta"
+					setField={formik.setFieldValue}
+					label={"Почтове відділення"}
+					isRequired
+					width={"full"}
+					errors={formik.errors}
+				/>
 			</div>
-			<div className="mb-3 d-flex">
-				<Form.Group className="me-3">
-					<Form.Label>Email</Form.Label>
-					<Form.Control
-						placeholder="example@gmail.com"
-						type="email"
-						onChange={(e) =>
-							setFieldOfCustomerInformation({
-								email: e.target.value,
-							})
-						}
-					/>
-				</Form.Group>
-				<Form.Group className="mb-3">
-					<Form.Label>Телефон*</Form.Label>
-					<Form.Control
-						type="text"
-						placeholder="(+380)00-000-00-00"
-						onChange={(e) =>
-							setFieldOfCustomerInformation({
-								phoneNumber: e.target.value,
-							})
-						}
-					/>
-				</Form.Group>
+			<div className="mb-3 d-flex gap-2">
+				<CustomInput
+					width="1/2"
+					label="Пошта"
+					placeholder="example@gmail.com"
+					field="email"
+					setValue={formik.setFieldValue}
+					isInvalid={isFormFieldInvalid}
+					errors={formik.errors}
+				/>
+				<CustomInput
+					width="1/2"
+					label="Телефон"
+					placeholder="(+380)00-000-00-00"
+					field="phoneNumber"
+					isRequired
+					setValue={formik.setFieldValue}
+					isInvalid={isFormFieldInvalid}
+					errors={formik.errors}
+				/>
 			</div>
-			<hr className="divide" />
 			<div className="mb-3">
-				<h1>Додаткова інформація</h1>
 				<Form.Group className="mb-3">
 					<Form.Label>Примітки до замовлення</Form.Label>
-					<Form.Control
+					<InputTextarea
 						id="additional-info-textbox"
-						as="textarea"
 						placeholder="Примітки щодо вашого замовлення, напр. спеціальні примітки для доставки"
 						onChange={(e) =>
-							setFieldOfCustomerInformation({
-								additionalInformation: e.target.value,
-							})
+							formik.setFieldValue(
+								"additionalInformation",
+								e.target.value
+							)
 						}
 					/>
 				</Form.Group>
 			</div>
 		</form>
 	);
-
-	function setFieldOfCustomerInformation(
-		objectWithFields: ICustomerInformationFields
-	) {
-		setCustomerInformation((old) => {
-			return {
-				...old,
-				...objectWithFields,
-			} as IOrderCustomerInformation;
-		});
-	}
 };

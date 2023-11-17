@@ -13,7 +13,7 @@
   border: 1px solid var(--Light-red, #c93f4f);
   background: var(--gray-scale-white, #fff);
   /* width: 415.833px; */
-  padding: 2rem 2rem 3.5rem;
+  padding: 2rem;
   flex-direction: column;
   align-items: flex-start;
   height: auto;
@@ -72,6 +72,7 @@
   display: flex;
   width: 376px;
   padding: 12px 0px;
+  margin: 0;
   justify-content: space-between;
   align-items: center;
 }
@@ -83,4 +84,5 @@
 
 .divide {
   background: var(--gray-100);
+  margin: 0;
 }

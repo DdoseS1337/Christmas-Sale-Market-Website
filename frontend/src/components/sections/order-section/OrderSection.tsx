@@ -3,28 +3,16 @@ import { Container, Image } from "react-bootstrap";
 import RoundedButton from "../../common/RoundedButton";
 import { CartService } from "../../../services/basketService";
 import { Link } from "react-router-dom";
-import { useState } from "react";
-import {
-	IOrderCustomerInformation,
-	OrderCustomerInformationValidation as CustomerInformationFormFields,
-} from "../../../interfaces/Order";
+import { useRef } from "react";
+import { OrderCustomerInformationValidation as CustomerInformationFormFields } from "../../../interfaces/Order";
 import { useValidation } from "react-class-validator";
 import { useFormik } from "formik";
 import { OrderForm } from "./OrderForm";
-import { Button } from "primereact/button";
+import { Toast } from "primereact/toast";
 
 export const OrderSection = () => {
 	const itemsOfCart = CartService.getCart();
 	const totalPrice = CartService.getTotalPrice();
-
-	const [customerInformation, setCustomerInformation] =
-		useState<IOrderCustomerInformation>({
-			firstName: "",
-			secondName: "",
-			city: "",
-			phoneNumber: "",
-			branchOfNovaPoshta: "",
-		});
 
 	const [validate, errors] = useValidation(CustomerInformationFormFields);
 	const formik = useFormik({
@@ -42,15 +30,23 @@ export const OrderSection = () => {
 		onSubmit: sendOrder,
 	});
 
+	const toast = useRef<any>(null);
+
+	const showSuccessOrderToast = () => {
+		toast.current!.show({
+			severity: "success",
+			summary: "Успіх",
+			detail: "Замовлення відправлено",
+		});
+	};
+
 	return (
 		<Container
 			fluid
 			className="d-flex align-items-start justify-content-around"
 		>
-			<OrderForm
-				setCustomerInformation={setCustomerInformation}
-				formik={formik}
-			/>
+			<Toast ref={toast} />
+			<OrderForm formik={formik} />
 
 			<div className="order-summary">
 				<h3 className="order-sum">Підсумок Замовлення</h3>
@@ -80,13 +76,13 @@ export const OrderSection = () => {
 							);
 						})}
 				</ul>
-				<div>
-					<p className="subtotal">
+				<div className="mb-4 mt-4">
+					{/* <p className="subtotal">
 						Проміжний підсумок:{" "}
 						<span>
 							<b>{totalPrice} грн</b>
 						</span>
-					</p>
+					</p> */}
 					<hr className="divide" />
 					<p className="total">
 						Повна сума :{" "}
@@ -96,11 +92,10 @@ export const OrderSection = () => {
 					</p>
 				</div>
 				<div className="payment-method">
-					<h4 className="order-pay">Спосіб оплати</h4>
-					<label className="mb-5">
-						<input type="radio" name="payment" /> Оплата при
-						отриманні
-					</label>
+					<h4 className="order-pay m-0">Оплата</h4>
+					<small className="d-inline-flex pb-3">
+						*Оплата тільки при отримані
+					</small>
 				</div>
 
 				<RoundedButton
@@ -117,24 +112,7 @@ export const OrderSection = () => {
 	);
 
 	async function sendOrder(data: CustomerInformationFormFields) {
-		// TODO: validation of all fields
-		// if (customerInformation === undefined) {
-		// 	setErrorMessage("Ви не заповнили усі поля");
-		// 	return;
-		// }
-		// if (itemsOfCart.length === 0) {
-		// 	setErrorMessage("У кошику немає товарів");
-		// 	return;
-		// }
-		// orderService.sendOrder({
-		// 	customerInformation: customerInformation!,
-		// 	offers: itemsOfCart.map((item) => {
-		// 		return {
-		// 			offerId: Number(item.id),
-		// 			number: item.amount,
-		// 		};
-		// 	}),
-		// });
+		showSuccessOrderToast();
 		console.log(data);
 	}
 };
