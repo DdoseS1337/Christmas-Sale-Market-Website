@@ -3,12 +3,11 @@ import { LinkContainer } from "react-router-bootstrap";
 import { ReactElement, useEffect, useState } from "react";
 import christmasTreeApi from "../../services/christmas-tree.api";
 import { ICategory } from "../../interfaces/Category";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 
 const HeaderNavBar = () => {
 	const [categories, setCategories] = useState<Array<ICategory>>([]);
 	const navigate = useNavigate();
-	const location = useLocation();
 
 	useEffect(() => {
 		christmasTreeApi
@@ -25,7 +24,7 @@ const HeaderNavBar = () => {
 			.catch((error) => console.log(error));
 	}, []);
 
-	const handleCategoryClick = (categoryId?: any) => {
+	const handleCategoryClick = (categoryId?: number) => {
 		navigate(
 			`/catalog?${
 				categoryId ? `categoryId=${categoryId}&` : ""
@@ -46,7 +45,7 @@ const HeaderNavBar = () => {
 						<Nav.Link>Головна</Nav.Link>
 					</LinkContainer>
 					<NavDropdown title="Категорії" id="navbarScrollingDropdown">
-						{categories.map<ReactElement>((el: any, index) => {
+						{categories.map<ReactElement>((el: ICategory, index) => {
 							return (
 								<div key={index}>
 									<NavDropdown.Item

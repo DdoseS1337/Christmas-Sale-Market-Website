@@ -1,7 +1,10 @@
-const DiscountBadge = (props: any) => {
+import DiscountBadgeInterface from "../../../interfaces/DiscountBadgeInterface";
+
+const DiscountBadge = ({ price, newPrice }: DiscountBadgeInterface) => {
     const discountValue =
-        props.oldPrice &&
-        (100 * (props.oldPrice - props.price)) / props.oldPrice;
+        price !== undefined && newPrice !== undefined
+            ? (100 * (price - newPrice)) / price
+            : undefined;
     const discount =
         discountValue !== undefined ? discountValue.toFixed(0) : null;
 

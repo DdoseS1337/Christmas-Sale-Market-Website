@@ -6,18 +6,17 @@ import {
     useNavigate,
     useSearchParams,
 } from "react-router-dom";
+import ProductParameters from "../interfaces/ProductParameters";
 import { IOffer } from "../interfaces/Offer";
-import { Col, Container, Row, Image } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import { Galleria } from "primereact/galleria";
 import DiscountBadge from "../components/sections/product/DiscountBadge";
 import InStockBlock from "../components/sections/product/InStockBlock";
 import GreyLine from "../components/sections/product/GreyLine";
 import { ICategory } from "../interfaces/Category";
 import {
-    Dash,
     DashCircle,
     DashCircleFill,
-    Plus,
     PlusCircle,
     PlusCircleFill,
 } from "react-bootstrap-icons";
@@ -25,6 +24,14 @@ import "../styles/components/product.css";
 import { CartService } from "../services/basketService";
 import { SimilarProducts } from "../components/sections/similar-products/SimilarProducts";
 import useHoverStates from "../components/sections/basket/AmountChangeHooks";
+import {
+    addToBasketIcon,
+    removeFromBasketIcon,
+} from "../components/sections/product/BasketIcons";
+import {
+    GalleriaMainPhoto,
+    GalleriaCarousel,
+} from "../components/sections/product/ProductGalleria";
 import "../styles/components/basket.css";
 import "../styles/components/adaptivity/product-adaptivity.css";
 
@@ -34,6 +41,7 @@ interface IProps {
 
 const ProductPage = ({ setAdditionalBreadCrumbs }: IProps) => {
     const location = useLocation();
+    const [amount, setAmount] = useState(1);
     const [queryParameters] = useSearchParams();
     const [notFound, setNotFound] = useState(false);
     const navigate = useNavigate();
@@ -44,7 +52,6 @@ const ProductPage = ({ setAdditionalBreadCrumbs }: IProps) => {
         .map((item) => item.id)
         .includes(product?.id.toString() ?? "");
     const [, setRefresh] = useState<boolean>(false);
-    const [amount, setAmount] = useState(1);
     const {
         isMinusHovered,
         isPlusHovered,
@@ -54,18 +61,20 @@ const ProductPage = ({ setAdditionalBreadCrumbs }: IProps) => {
         handlePlusMouseLeave,
     } = useHoverStates();
 
-    const addToBasketIcon = (
-        <>
-            <Plus style={{ width: 25, height: 25 }} className="me-2" />
-            <span>Додати до кошику</span>
-        </>
-    );
-    const removeFromBasketIcon = (
-        <>
-            <Dash style={{ width: 25, height: 25 }} className="me-2" />
-            <span>Видалити з кошика</span>
-        </>
-    );
+    const galleriaMainPhotoStyle = { width: "16rem" };
+    const galleriaCarouselStyle = { width: "3.5rem" };
+
+    const amountChange = (operation: string) => {
+        if (operation === "+") {
+            const newAmount = amount + 1;
+            setAmount(newAmount);
+        } else if (operation === "-") {
+            const newAmount = amount - 1;
+            if (newAmount >= 1) {
+                setAmount(newAmount);
+            }
+        }
+    };
 
     useEffect(() => {
         if (pathnames[pathnames.length - 1] !== null) {
@@ -93,24 +102,12 @@ const ProductPage = ({ setAdditionalBreadCrumbs }: IProps) => {
         }
     }, [queryParameters, setAdditionalBreadCrumbs]);
 
-    const handleCategoryClick = (categoryId?: any) => {
+    const handleCategoryClick = (categoryId?: number) => {
         navigate(
             `/catalog?${
                 categoryId ? `categoryId=${categoryId}&` : ""
             }priceMin=0&priceMax=20000`
         );
-    };
-
-    const amountChange = (operation: string) => {
-        if (operation === "+") {
-            const newAmount = amount + 1;
-            setAmount(newAmount);
-        } else if (operation === "-") {
-            const newAmount = amount - 1;
-            if (newAmount >= 1) {
-                setAmount(newAmount);
-            }
-        }
     };
 
     const addToBasket = () => {
@@ -130,28 +127,6 @@ const ProductPage = ({ setAdditionalBreadCrumbs }: IProps) => {
         setRefresh((oldValue) => !oldValue);
     };
 
-    const GalleriaCarousel = (imageLink: any) => {
-        return (
-            <Image
-                src={imageLink}
-                alt="Product Image"
-                style={{ width: "3.5rem" }}
-            />
-        );
-    };
-
-    const GalleriaMainPhoto = (img: any) => {
-        return (
-            <Image
-                fluid
-                src={img}
-                alt="Product Image"
-                className="rounded"
-                style={{ width: "16rem" }}
-            />
-        );
-    };
-
     if (notFound) {
         return <Navigate to="/404" />;
     }
@@ -164,9 +139,19 @@ const ProductPage = ({ setAdditionalBreadCrumbs }: IProps) => {
                         <Galleria
                             value={product !== null ? product.picture : []}
                             numVisible={3}
-                            item={GalleriaMainPhoto}
+                            item={(img) => (
+                                <GalleriaMainPhoto
+                                    src={img}
+                                    styles={galleriaMainPhotoStyle}
+                                />
+                            )}
                             thumbnailsPosition={"left"}
-                            thumbnail={GalleriaCarousel}
+                            thumbnail={(imageLink) => (
+                                <GalleriaCarousel
+                                    src={imageLink}
+                                    styles={galleriaCarouselStyle}
+                                />
+                            )}
                             showItemNavigators
                             showItemNavigatorsOnHover
                             circular
@@ -202,8 +187,8 @@ const ProductPage = ({ setAdditionalBreadCrumbs }: IProps) => {
                                 {product?.newPrice}₴
                             </span>
                             <DiscountBadge
-                                oldPrice={product?.price}
-                                price={product?.newPrice}
+                                price={product?.price}
+                                newPrice={product?.newPrice}
                             />
                         </Container>
                         <GreyLine />
@@ -283,7 +268,7 @@ const ProductPage = ({ setAdditionalBreadCrumbs }: IProps) => {
                     <div className="border-bottom" />
                 </Row>
                 <Container className="m-0 p-0 mt-4 d-flex flex-wrap justify-content-between">
-                    {product?.param.map((item: any, index) => (
+                    {product?.param.map((item: ProductParameters, index) => (
                         <div
                             key={index}
                             className="border-bottom mb-3 pb-3 d-flex justify-content-between"
