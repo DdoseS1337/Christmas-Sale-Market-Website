@@ -1,17 +1,16 @@
-const InStockBlock = (props: any) => {
-    return props.available ? (
+import InStockBlockProps from "../../../interfaces/InStockBlockProps";
+
+const InStockBlock = ({ available }: InStockBlockProps) => {
+    return (
         <div
-            className="ms-4 d-flex justify-content-center align-items-center bg-success-subtle rounded-3 px-3 py-2 text-primary"
+            className={`${
+                available
+                    ? "bg-success-subtle  text-primary"
+                    : "bg-danger-subtle text-danger"
+            } ms-4 d-flex justify-content-center align-items-center  rounded-3 px-3 py-2`}
             style={{ whiteSpace: "nowrap" }}
         >
-            <span>В наявності</span>
-        </div>
-    ) : (
-        <div
-            className="bg-danger-subtle ms-4 d-flex justify-content-center align-items-center rounded-3 px-3 py-2 text-danger"
-            style={{ whiteSpace: "nowrap" }}
-        >
-            <span>Немає в наявності</span>
+            <span>{available ? "В наявності" : "Немає в наявності"}</span>
         </div>
     );
 };

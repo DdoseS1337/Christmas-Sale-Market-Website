@@ -6,8 +6,9 @@ import {
     useNavigate,
     useSearchParams,
 } from "react-router-dom";
+import ProductParameters from "../interfaces/ProductParameters";
 import { IOffer } from "../interfaces/Offer";
-import { Col, Container, Row} from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import { Galleria } from "primereact/galleria";
 import DiscountBadge from "../components/sections/product/DiscountBadge";
 import InStockBlock from "../components/sections/product/InStockBlock";
@@ -63,7 +64,7 @@ const ProductPage = ({ setAdditionalBreadCrumbs }: IProps) => {
     const galleriaMainPhotoStyle = { width: "16rem" };
     const galleriaCarouselStyle = { width: "3.5rem" };
 
-    const amountChange = (operation: any) => {
+    const amountChange = (operation: string) => {
         if (operation === "+") {
             const newAmount = amount + 1;
             setAmount(newAmount);
@@ -101,7 +102,7 @@ const ProductPage = ({ setAdditionalBreadCrumbs }: IProps) => {
         }
     }, [queryParameters, setAdditionalBreadCrumbs]);
 
-    const handleCategoryClick = (categoryId?: any) => {
+    const handleCategoryClick = (categoryId?: number) => {
         navigate(
             `/catalog?${
                 categoryId ? `categoryId=${categoryId}&` : ""
@@ -186,8 +187,8 @@ const ProductPage = ({ setAdditionalBreadCrumbs }: IProps) => {
                                 {product?.newPrice}₴
                             </span>
                             <DiscountBadge
-                                oldPrice={product?.price}
-                                price={product?.newPrice}
+                                price={product?.price}
+                                newPrice={product?.newPrice}
                             />
                         </Container>
                         <GreyLine />
@@ -267,7 +268,7 @@ const ProductPage = ({ setAdditionalBreadCrumbs }: IProps) => {
                     <div className="border-bottom" />
                 </Row>
                 <Container className="m-0 p-0 mt-4 d-flex flex-wrap justify-content-between">
-                    {product?.param.map((item: any, index) => (
+                    {product?.param.map((item: ProductParameters, index) => (
                         <div
                             key={index}
                             className="border-bottom mb-3 pb-3 d-flex justify-content-between"

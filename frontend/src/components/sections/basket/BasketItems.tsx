@@ -26,7 +26,7 @@ const BasketItems = () => {
         updateCart(cartItems.filter((item) => item.id !== itemId));
     };
 
-    const handleAmountChanged = (newPrice: any) => {
+    const handleAmountChanged = (newPrice: number) => {
         setTotalCartPrice(() => {
             return newPrice;
         });

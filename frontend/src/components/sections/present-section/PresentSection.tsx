@@ -129,7 +129,7 @@ export const PresentSection = () => {
 		<>
 			{showConfetti && (
 				<Confetti
-					width={window.innerWidth}
+					width={window.innerWidth-30}
 					height={window.innerHeight}
 					numberOfPieces={400}
 					tweenDuration={10000}
