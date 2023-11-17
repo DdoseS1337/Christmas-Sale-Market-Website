@@ -50,7 +50,10 @@ export const ProductCard = ({
 				body
 				className={"product-card " + className}
 				onClick={() => {
-					!clickedOnBasked && linkRef.current?.click();
+					!clickedOnBasked &&
+						linkRef.current?.click() &&
+						window.scroll(0, 0);
+
 					clickedOnBasked = false;
 				}}
 			>
@@ -74,7 +77,11 @@ export const ProductCard = ({
 				<Card.Footer>
 					<div>
 						<Card.Title className="product-card__title">
-							<Link to={`/catalog/${id}`} ref={linkRef}>
+							<Link
+								to={`/catalog/${id}`}
+								ref={linkRef}
+								onClick={() => window.scroll(0, 0)}
+							>
 								{title}
 							</Link>
 						</Card.Title>
@@ -89,7 +96,7 @@ export const ProductCard = ({
 							)}
 						</div>
 					</div>
-					{available && (
+					{available ? (
 						<RoundedButton
 							isCircle
 							backgroundIsGray
@@ -102,7 +109,7 @@ export const ProductCard = ({
 						>
 							{iconOnBasketButton}
 						</RoundedButton>
-					)}
+					) : undefined}
 				</Card.Footer>
 			</Card>
 			<ConfirmRemoveFromBasketModal

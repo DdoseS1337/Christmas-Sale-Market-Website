@@ -49,7 +49,11 @@ export const BannerBigItem = ({
                 </div>
             )}
             {orderLink && (
-                <Link to={orderLink} className="banner-big__button">
+                <Link
+                    to={orderLink}
+                    className="banner-big__button"
+                    onClick={() => window.scroll(0, 0)}
+                >
                     {buttonName}
                     <ArrowRight className="ms-2" />
                 </Link>

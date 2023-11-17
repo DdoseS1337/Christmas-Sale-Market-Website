@@ -11,6 +11,7 @@ import "primereact/resources/primereact.css"; // core css
 import "./styles/theme.css"; // theme
 import "./styles/index.css"; // global css
 import { classNames } from "primereact/utils";
+import { DropdownPassThroughMethodOptions } from "primereact/dropdown";
 
 const root = ReactDOM.createRoot(
 	document.getElementById("root") as HTMLElement
@@ -27,17 +28,22 @@ root.render(
 			ripple: true,
 			pt: {
 				button: {
-					root: ({ props, context }: any) => ({
+					root: {
 						className: classNames(
 							"py-2 px-4",
 							"outline-none outline-offset-0 border-0"
 						),
-					}),
-					label: () => ({
+					},
+					label: {
 						className: classNames("my-1"),
-					}),
+					},
 				},
 				dropdown: {
+					root: ({ props }: DropdownPassThroughMethodOptions) => ({
+						className: classNames("opacity-100", {
+							"bg-slate-300": props.disabled,
+						}),
+					}),
 					list: {
 						className: classNames("p-2 m-0"),
 					},

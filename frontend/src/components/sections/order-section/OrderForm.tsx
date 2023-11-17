@@ -1,17 +1,6 @@
 import { Form, Toast } from "react-bootstrap";
-import {
-	IOrder,
-	IOrderCustomerInformation,
-	OrderCustomerInformationValidation,
-} from "../../../interfaces/Order";
-import {
-	Dispatch,
-	FormEventHandler,
-	SetStateAction,
-	useEffect,
-	useRef,
-	useState,
-} from "react";
+import { IOrderCustomerInformation } from "../../../interfaces/Order";
+import { Dispatch, SetStateAction, useRef, useState } from "react";
 import { InputText } from "primereact/inputtext";
 import { classNames } from "primereact/utils";
 import {
@@ -22,11 +11,11 @@ import {
 	FormikTouched,
 } from "formik";
 import { Dropdown } from "primereact/dropdown";
-import { CityDropdownItem, GetCityDropdownItem } from "./DropdownItems";
+import { CityDropdownItem } from "./DropdownItems";
 import { useFetchData } from "../../../hooks/FetchDataHook";
 import novaPoshtaApi from "../../../services/NovaPoshtaApi";
 import { ICity } from "../../../interfaces/NovaPoshta";
-import { Skeleton } from "primereact/skeleton";
+import { CustomDropdown } from "./CustomDropdown";
 
 interface ICustomerInformationFields
 	extends Partial<IOrderCustomerInformation> {}
@@ -52,10 +41,16 @@ interface IProps {
 }
 
 export const OrderForm = ({ setCustomerInformation, formik }: IProps) => {
-	const { items: allCities } = useFetchData<Array<ICity>>({
-		callApi: async () => novaPoshtaApi.getCitiesByName(),
+	const [citiesFilter, setCitiesFilter] = useState<string>("");
+
+	const { items: cities } = useFetchData({
+		executeIf: () => citiesFilter.length <= 2,
+		callApi: async () => {
+			return novaPoshtaApi.getCitiesByName(citiesFilter);
+		},
+		dependencies: [citiesFilter],
 	});
-	console.log(allCities);
+	console.log(cities?.length);
 
 	const toast = useRef<any>(null);
 
@@ -125,36 +120,15 @@ export const OrderForm = ({ setCustomerInformation, formik }: IProps) => {
 					style={{ minWidth: 300 }}
 				>
 					<Form.Label>Населений пункт*</Form.Label>
-					<Dropdown
+					<CustomDropdown
 						value={selectedCity}
 						onChange={(e) => {
 							setSelectedCity(e.value);
 							formik.setFieldValue("city", e.value.name);
 						}}
-						virtualScrollerOptions={{ itemSize: 38 }}
-						filterInputAutoFocus
-						emptyMessage="Завантажуємо..."
-						emptyFilterMessage="Немає результатів"
-						options={
-							allCities ??
-							Array.from({ length: 10 }, () => ({
-								name: "",
-								id: "",
-							}))
-						}
+						isInvalid={isFormFieldInvalid("city")}
+						options={cities}
 						optionLabel="name"
-						placeholder="Виберай"
-						filter
-						filterMatchMode="startsWith"
-						itemTemplate={(city: ICity) =>
-							GetCityDropdownItem(
-								city,
-								allCities === null || allCities === undefined
-							)
-						}
-						className={classNames({
-							"p-invalid": isFormFieldInvalid("city"),
-						})}
 					/>
 					<small className="p-error">
 						{isFormFieldInvalid("city") && formik.errors["city"]}
@@ -166,35 +140,24 @@ export const OrderForm = ({ setCustomerInformation, formik }: IProps) => {
 					className="d-flex flex-column"
 					style={{ minWidth: 300 }}
 				>
-					<Form.Label>Населений пункт*</Form.Label>
-					<Dropdown
-						value={formik.getFieldProps("branchOfNovaPoshta").value}
+					<Form.Label>Почтове відділення*</Form.Label>
+					<CustomDropdown
+						disabled={selectedCity === undefined}
+						placeholder={
+							selectedCity === undefined
+								? "Спочатку вибери місто"
+								: "Вибирай"
+						}
+						// value={undefined}
 						onChange={(e) => {
+							setSelectedCity(e.value);
 							formik.setFieldValue(
 								"branchOfNovaPoshta",
 								e.value.name
 							);
 						}}
-						virtualScrollerOptions={{ itemSize: 38 }}
-						filterInputAutoFocus
-						emptyMessage="Завантажуємо..."
-						emptyFilterMessage="Немає результатів"
-						options={
-							// allCities ??
-							Array.from({ length: 10 }, () => ({
-								name: "",
-								id: "",
-							}))
-						}
-						optionLabel="name"
-						placeholder="Виберай"
-						filter
-						filterMatchMode="startsWith"
-						itemTemplate={(branchName) => <span>{branchName}</span>}
-						className={classNames({
-							"p-invalid":
-								isFormFieldInvalid("branchOfNovaPoshta"),
-						})}
+						isInvalid={isFormFieldInvalid("branchOfNovaPoshta")}
+						options={["branch"]}
 					/>
 					<small className="p-error">
 						{isFormFieldInvalid("branchOfNovaPoshta") &&

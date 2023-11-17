@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
-import '../../styles/components/footer/footer-list.css';
+import { Link } from "react-router-dom";
+import "../../styles/components/footer/footer-list.css";
 
 interface IProps {
     title: string;
@@ -12,14 +12,22 @@ interface ILink {
 }
 
 const FooterList = (props: IProps) => {
-  return (
-    <div className='footer-list'>
-        <h3 className='footer-list__title'>{props.title}</h3>
-        {props.list.map((item, index) => {
-            return <Link key={index} to={item.link}>{item.text}</Link>
-        })}
-    </div>
-  )
-}
+    return (
+        <div className="footer-list">
+            <h3 className="footer-list__title">{props.title}</h3>
+            {props.list.map((item, index) => {
+                return (
+                    <Link
+                        key={index}
+                        to={item.link}
+                        onClick={() => window.scroll(0, 0)}
+                    >
+                        {item.text}
+                    </Link>
+                );
+            })}
+        </div>
+    );
+};
 
-export default FooterList
+export default FooterList;

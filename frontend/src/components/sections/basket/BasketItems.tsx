@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import ItemCard from "./ItemCard";
 import { CartService, CartItem } from "../../../services/basketService";
 import AnimatedEmptyPage from "../../ui/AnimatedEmptyPage";
-import "../../../styles/components/basket.css";
 
 const BasketItems = () => {
     const [cartItems, setCartItems] = useState(CartService.getCart());
@@ -44,14 +43,14 @@ const BasketItems = () => {
         <>
             <h1 className="text-center basket-logo">Кошик</h1>
             <Container className="border rounded py-3 mt-4">
-                <Row className="text-center">
+                <Row className="text-center" id="basket-description-columns">
                     <Col xs={5}>Товар</Col>
                     <Col xs={1}>Склад</Col>
                     <Col xs={3}>Кількість</Col>
                     <Col xs={2}>Всього</Col>
                     <Col></Col>
                 </Row>
-                <div className="basket-delimiter" />
+                <div className="basket-delimiter" id="basket-first-delimiter" />
 
                 {cartItems.map((item) => (
                     <ItemCard
@@ -69,20 +68,42 @@ const BasketItems = () => {
                     <Link
                         to="/catalog"
                         className="arrow-button"
-                        style={{ width: "16rem" }}
+                        id="basket-back-to-catalog-btn"
                     >
-                        <span className="arrow"></span>Повернутись до каталогу
+                        <span className="arrow"></span>
+                        <span id="basket-visible-adaptivity">
+                            Повернутись до каталогу
+                        </span>
+                        <span
+                            id="basket-hidden-adaptivity"
+                            hidden
+                            style={{ whiteSpace: "nowrap" }}
+                        >
+                            До каталогу
+                        </span>
                     </Link>
                     <Container
                         className="px-3 py-2 m-0 d-flex justify-content-between align-items-center"
                         style={{ width: "22rem" }}
+                        id="basket-submit-container"
                     >
-                        <h3 className="p-0 m-0">{totalCartPrice} ₴</h3>
+                        <h3
+                            className="p-0 m-0"
+                            style={{ whiteSpace: "nowrap" }}
+                        >
+                            <span id="basket-total-price-span-adaptivity" className="m-0" hidden>Всього: </span>
+                            {totalCartPrice} ₴
+                        </h3>
                         <Link
                             to="/basket/order"
                             className="btn-red-theme link-settings p-2"
                         >
-                            <span>Оформити замовлення</span>
+                            <span id="basket-visible-adaptivity">
+                                Оформити замовлення
+                            </span>
+                            <span hidden id="basket-hidden-adaptivity">
+                                Замовити
+                            </span>
                         </Link>
                     </Container>
                 </Container>
