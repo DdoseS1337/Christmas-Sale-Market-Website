@@ -24,6 +24,7 @@ import {
     addToBasketIcon,
     removeFromBasketIcon,
 } from "../sections/product/BasketIcons";
+import ProductParameters from "../../interfaces/ProductParameters";
 
 const HotOffer = () => {
     const [product, setProduct] = useState<IOffer | null>(null);
@@ -202,7 +203,7 @@ const HotOffer = () => {
                         </div>
                         <h4 className="mt-4">Характеристики</h4>
                         <div className="m-0 p-0 mt-4 d-flex flex-wrap justify-content-between">
-                            {product?.param.map((item: any, index) => {
+                            {product?.param.map((item: ProductParameters, index) => {
                                 return (
                                     <div
                                         key={index}
