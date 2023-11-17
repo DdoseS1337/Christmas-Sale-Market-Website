@@ -1,8 +1,12 @@
+
+const SERVER_URL = "http://k8s-default-christma-d8102c8be9-1626215440.eu-north-1.elb.amazonaws.com";
 export const BACKEND_KEYS = {
+    SERVER_URL: SERVER_URL,
     PRODUCTS_SERVER_URL: "http://localhost:3001",
-    ORDER_SERVER_URL: "http://localhost:3003",
+    ORDER_SERVER_URL: "http://localhost:3002",
     CHRISTMAS_TREE_CATEGORIES: "christmas-tree-categories",
     CHRISTMAS_TREE_OFFERS: "christmas-tree-offers",
+    SEND_ORDER: "user-order"
 };
 
 export const STORAGE_KEYS = {
@@ -12,6 +16,11 @@ export const STORAGE_KEYS = {
     TOKEN: "TOKEN",
     ACCESSTOKEN: "accessToken",
 };
+
+export const NOVA_POSHTA = {
+    BASE_URL: "https://api.novaposhta.ua/v2.0/json", // "http://new.novaposhta.ua",
+    API_KEY: "0729b8d2c7d323c51c21503e113f627f"
+}
 
 export const CONTACTS = {
     telephone: "+1234567890",

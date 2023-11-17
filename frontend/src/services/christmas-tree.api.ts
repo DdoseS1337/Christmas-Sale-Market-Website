@@ -29,7 +29,7 @@ class ChristmasTreeApi extends HttpService {
     }
 
     async getOfferById(id: string) {
-        return this.get<IOffer>({
+        return this.getWithCaching<IOffer>({
             url: `${BACKEND_KEYS.CHRISTMAS_TREE_OFFERS}/${id}`,
         });
     }

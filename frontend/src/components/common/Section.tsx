@@ -1,8 +1,9 @@
 import { ReactNode } from "react";
 import Snowfall from "../ui/Snowfall";
-import { Container } from "react-bootstrap";
+import { Container, ContainerProps } from "react-bootstrap";
 import "../../styles/components/common/section.css";
 import { useMediaQuery } from "react-responsive";
+import { classNames } from "primereact/utils";
 
 export enum BackgroundType {
 	Transparent,
@@ -15,6 +16,10 @@ interface IProps extends React.AnchorHTMLAttributes<HTMLDivElement> {
 	children: ReactNode[] | ReactNode;
 	unPadded?: boolean;
 	width?: string;
+	pt?: {
+		root?: React.HTMLAttributes<HTMLDivElement>;
+		inner?: ContainerProps;
+	};
 }
 
 export const Section = ({
@@ -24,6 +29,7 @@ export const Section = ({
 	unPadded,
 	width,
 	className,
+	pt,
 	...divProps
 }: IProps) => {
 	const isRedWithSnow = backgroundType === BackgroundType.RedWithSnow;
@@ -34,22 +40,31 @@ export const Section = ({
 
 	return (
 		<div
-			className={`section ${
-				isRedWithSnow ? "section--red" : ""
-			} ${className}`}
 			{...divProps}
+			{...pt?.root}
+			className={classNames(
+				"section",
+				{
+					"section--red": isRedWithSnow,
+				},
+				className
+			)}
 		>
 			{isRedWithSnow && <Snowfall />}
 			<Container
+				{...pt?.inner}
 				fluid={isFluid ?? "xl"}
-				className={`position-relative ${unPadded ? "" : "py-5"}`}
-				style={
-					isDesktop
-						? {
-								maxWidth: width,
-						  }
-						: {}
-				}
+				className={classNames(
+					"position-relative",
+					pt?.inner?.className,
+					{
+						"py-5": !unPadded,
+					}
+				)}
+				style={{
+					...pt?.inner?.style,
+					maxWidth: isDesktop ? width : "",
+				}}
 			>
 				{children}
 			</Container>
