@@ -2,7 +2,7 @@ import { NOVA_POSHTA } from "../common";
 import { IBranch, ICity as ICity } from "../interfaces/NovaPoshta";
 import HttpService from "./HttpService";
 
-class NovaPoshtaApi extends HttpService {
+class NovaPoshtaServiceSingleton extends HttpService {
     constructor() {
         super(NOVA_POSHTA.BASE_URL);
     }
@@ -52,5 +52,4 @@ class NovaPoshtaApi extends HttpService {
     }
 }
 
-const novaPoshtaApi = new NovaPoshtaApi();
-export default novaPoshtaApi;
+export const NovaPoshtaService = new NovaPoshtaServiceSingleton();

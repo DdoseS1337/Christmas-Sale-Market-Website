@@ -8,8 +8,8 @@ import {
 	FormikTouched,
 } from "formik";
 import { useFetchData } from "../../../hooks/FetchDataHook";
-import novaPoshtaApi from "../../../services/NovaPoshtaApi";
-import { IBranch, ICity } from "../../../interfaces/NovaPoshta";
+import { NovaPoshtaService } from "../../../services/NovaPoshtaApi";
+import { ICity } from "../../../interfaces/NovaPoshta";
 import { CustomDropdown } from "./CustomDropdown";
 import { InputTextarea } from "primereact/inputtextarea";
 import { CustomInput } from "./CustomInput";
@@ -36,7 +36,7 @@ export const OrderForm = ({ formik }: IProps) => {
 	const { items: cities } = useFetchData({
 		executeIf: () => citiesFilter.length <= 2,
 		callApi: async () => {
-			return novaPoshtaApi.getCitiesByName(citiesFilter);
+			return NovaPoshtaService.getCitiesByName(citiesFilter);
 		},
 		dependencies: [citiesFilter],
 	});
@@ -44,12 +44,10 @@ export const OrderForm = ({ formik }: IProps) => {
 	const { items: branchesOfCity } = useFetchData({
 		executeIf: () => selectedCity != null,
 		callApi: async () => {
-			return novaPoshtaApi.getWarehouses(selectedCity!.id);
+			return NovaPoshtaService.getWarehouses(selectedCity!.id);
 		},
 		dependencies: [selectedCity],
 	});
-
-	console.log(cities?.length, branchesOfCity?.length);
 
 	const isFormFieldInvalid = (name: keyof IOrderCustomerInformation) =>
 		!!(formik.touched[name] && formik.errors[name]);
@@ -99,6 +97,7 @@ export const OrderForm = ({ formik }: IProps) => {
 			</div>
 			<div className="mb-3 d-flex">
 				<CustomDropdown
+					value={formik.getFieldProps("branchOfNovaPoshta").value}
 					disabled={selectedCity === undefined}
 					placeholder={
 						selectedCity === undefined

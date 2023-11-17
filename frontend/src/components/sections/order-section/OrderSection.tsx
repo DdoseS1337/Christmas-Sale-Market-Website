@@ -4,11 +4,15 @@ import RoundedButton from "../../common/RoundedButton";
 import { CartService } from "../../../services/basketService";
 import { Link } from "react-router-dom";
 import { useRef } from "react";
-import { OrderCustomerInformationValidation as CustomerInformationFormFields } from "../../../interfaces/Order";
+import {
+	OrderCustomerInformationValidation as CustomerInformationFormFields,
+	IOrderOffer,
+} from "../../../interfaces/Order";
 import { useValidation } from "react-class-validator";
 import { useFormik } from "formik";
 import { OrderForm } from "./OrderForm";
 import { Toast } from "primereact/toast";
+import { OrderService } from "../../../services/OrderService";
 
 export const OrderSection = () => {
 	const itemsOfCart = CartService.getCart();
@@ -16,13 +20,7 @@ export const OrderSection = () => {
 
 	const [validate, errors] = useValidation(CustomerInformationFormFields);
 	const formik = useFormik({
-		initialValues: {
-			firstName: "",
-			secondName: "",
-			city: "",
-			branchOfNovaPoshta: "",
-			phoneNumber: "",
-		} as CustomerInformationFormFields,
+		initialValues: new CustomerInformationFormFields(),
 		validate: async (data) => {
 			await validate(data);
 			return errors;
@@ -77,12 +75,6 @@ export const OrderSection = () => {
 						})}
 				</ul>
 				<div className="mb-4 mt-4">
-					{/* <p className="subtotal">
-						Проміжний підсумок:{" "}
-						<span>
-							<b>{totalPrice} грн</b>
-						</span>
-					</p> */}
 					<hr className="divide" />
 					<p className="total">
 						Повна сума :{" "}
@@ -113,6 +105,12 @@ export const OrderSection = () => {
 
 	async function sendOrder(data: CustomerInformationFormFields) {
 		showSuccessOrderToast();
-		console.log(data);
+		OrderService.sendOrder({
+			customerInformation: data,
+			offers: itemsOfCart.map<IOrderOffer>((item) => ({
+				offerId: Number(item.id),
+				number: item.amount,
+			})),
+		});
 	}
 };

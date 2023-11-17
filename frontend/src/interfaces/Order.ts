@@ -20,22 +20,22 @@ export interface IOrderOffer {
     number: number;
 }
 
-export class OrderCustomerInformationValidation {
+export class OrderCustomerInformationValidation implements IOrderCustomerInformation {
     @IsNotEmpty()
-    firstName?: string;
+    firstName: string = "";
 
     @IsNotEmpty()
-    secondName?: string;
+    secondName: string = "";
 
     @IsNotEmpty()
     @IsPhoneNumber('UA')
-    phoneNumber?: string;
+    phoneNumber: string = "";
 
     @IsNotEmpty()
-    branchOfNovaPoshta?: string;
+    branchOfNovaPoshta: string = "";
 
     @IsNotEmpty()
-    city?: string;
+    city: string = "";
 
     @IsOptional()
     @IsEmail({}, {

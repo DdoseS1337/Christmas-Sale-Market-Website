@@ -3,7 +3,7 @@ const SERVER_URL = "http://k8s-default-christma-d8102c8be9-1626215440.eu-north-1
 export const BACKEND_KEYS = {
     SERVER_URL: SERVER_URL,
     PRODUCTS_SERVER_URL: "http://localhost:3001",
-    ORDER_SERVER_URL: "http://localhost:3003",
+    ORDER_SERVER_URL: "http://localhost:3002",
     CHRISTMAS_TREE_CATEGORIES: "christmas-tree-categories",
     CHRISTMAS_TREE_OFFERS: "christmas-tree-offers",
     SEND_ORDER: "user-order"
