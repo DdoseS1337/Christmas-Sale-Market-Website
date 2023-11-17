@@ -12,7 +12,7 @@ interface IProps extends Omit<ICustomInputWrapperProps, "input"> {
 	filterState?: [string, Dispatch<SetStateAction<string>>];
 	options?: Array<any>;
 	optionLabel: string;
-	filterMatchMode: "startsWith" | "contains";
+	filterMatchMode: "contains" | "startsWith";
 	disabled?: boolean;
 	placeholder: string;
 	value?: any;
@@ -55,10 +55,14 @@ export const CustomDropdown = ({
 					filter
 					filterTemplate={(options) => (
 						<InputText
-							onKeyDown={options.filterOptions.filter}
-							onChange={(e) => {
-								setFilter && setFilter(e.target.value);
-							}}
+							onKeyUp={options.filterOptions.filter}
+							onChange={
+								setFilter
+									? (e) => {
+											setFilter(e.target.value);
+									  }
+									: undefined
+							}
 							placeholder="Пошук"
 							value={filter}
 							className="w-100"

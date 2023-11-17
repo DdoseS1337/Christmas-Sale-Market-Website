@@ -21,10 +21,6 @@ export const OrderSection = () => {
 	const [validate, errors] = useValidation(CustomerInformationFormFields);
 	const formik = useFormik({
 		initialValues: new CustomerInformationFormFields(),
-		validate: async (data) => {
-			await validate(data);
-			return errors;
-		},
 		onSubmit: sendOrder,
 	});
 
@@ -92,10 +88,7 @@ export const OrderSection = () => {
 
 				<RoundedButton
 					className="d-flex justify-content-center"
-					onClick={async () => {
-						await formik.validateForm();
-						formik.isValid && (await formik.submitForm());
-					}}
+					onClick={formik.submitForm}
 				>
 					Замовити товар
 				</RoundedButton>
@@ -104,6 +97,8 @@ export const OrderSection = () => {
 	);
 
 	async function sendOrder(data: CustomerInformationFormFields) {
+		if ((await validate(data)) === false) return;
+
 		showSuccessOrderToast();
 		OrderService.sendOrder({
 			customerInformation: data,

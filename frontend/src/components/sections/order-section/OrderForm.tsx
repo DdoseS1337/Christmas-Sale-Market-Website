@@ -13,6 +13,7 @@ import { ICity } from "../../../interfaces/NovaPoshta";
 import { CustomDropdown } from "./CustomDropdown";
 import { InputTextarea } from "primereact/inputtextarea";
 import { CustomInput } from "./CustomInput";
+import { CustomInputMask } from "./CustomInputMask";
 
 interface IProps {
 	formik: {
@@ -36,6 +37,7 @@ export const OrderForm = ({ formik }: IProps) => {
 	const { items: cities } = useFetchData({
 		executeIf: () => citiesFilter.length <= 2,
 		callApi: async () => {
+			formik.setFieldValue("branchOfNovaPoshta", "");
 			return NovaPoshtaService.getCitiesByName(citiesFilter);
 		},
 		dependencies: [citiesFilter],
@@ -97,7 +99,9 @@ export const OrderForm = ({ formik }: IProps) => {
 			</div>
 			<div className="mb-3 d-flex">
 				<CustomDropdown
-					value={formik.getFieldProps("branchOfNovaPoshta").value}
+					value={{
+						name: formik.getFieldProps("branchOfNovaPoshta").value,
+					}}
 					disabled={selectedCity === undefined}
 					placeholder={
 						selectedCity === undefined
@@ -126,8 +130,9 @@ export const OrderForm = ({ formik }: IProps) => {
 					isInvalid={isFormFieldInvalid}
 					errors={formik.errors}
 				/>
-				<CustomInput
+				<CustomInputMask
 					width="1/2"
+					mask="+380(99)-999-99-99"
 					label="Телефон"
 					placeholder="(+380)00-000-00-00"
 					field="phoneNumber"
