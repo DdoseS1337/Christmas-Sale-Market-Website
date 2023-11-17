@@ -2,6 +2,7 @@ import { FormikErrors } from "formik";
 import { IOrderCustomerInformation } from "../../../interfaces/Order";
 import { Form } from "react-bootstrap";
 import { ReactNode } from "react";
+import { classNames } from "primereact/utils";
 
 export interface ICustomInputWrapperProps {
 	isInvalid: (field: keyof IOrderCustomerInformation) => boolean;
@@ -24,11 +25,11 @@ export const CustomInputWrapper = ({
 }: ICustomInputWrapperProps) => {
 	return (
 		<Form.Group
-			className="d-flex flex-column gap-2"
-			style={{
-				width:
-					width === "1/3" ? "35%" : width === "1/2" ? "50%" : "100%",
-			}}
+			className={classNames("d-flex flex-column gap-2", {
+				"input-w-33": width === "1/3",
+				"input-w-50": width === "1/2",
+				"input-w-full": width === "full",
+			})}
 		>
 			<label htmlFor={field}>
 				{label}

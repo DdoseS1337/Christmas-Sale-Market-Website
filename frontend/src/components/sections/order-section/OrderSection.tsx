@@ -13,6 +13,7 @@ import { OrderForm } from "./OrderForm";
 import { Toast } from "primereact/toast";
 import { OrderService } from "../../../services/OrderService";
 import { validate } from "class-validator";
+import { Section } from "../../common/Section";
 
 export const OrderSection = () => {
 	const itemsOfCart = CartService.getCart();
@@ -44,9 +45,15 @@ export const OrderSection = () => {
 	};
 
 	return (
-		<Container
-			fluid
-			className="d-flex align-items-start justify-content-around"
+		<Section
+			width="1400px"
+			unPadded
+			pt={{
+				inner: {
+					className:
+						"d-flex justify-content-center align-items-start flex-wrap gap-4",
+				},
+			}}
 		>
 			<Toast ref={toast} />
 			<OrderForm formik={formik} />
@@ -102,7 +109,7 @@ export const OrderSection = () => {
 					Замовити товар
 				</RoundedButton>
 			</div>
-		</Container>
+		</Section>
 	);
 
 	async function sendOrder(data: CustomerInformationFormFields) {

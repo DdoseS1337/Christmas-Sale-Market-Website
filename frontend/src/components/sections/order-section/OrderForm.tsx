@@ -55,9 +55,9 @@ export const OrderForm = ({ formik }: IProps) => {
 		!!(formik.touched[name] && formik.errors[name]);
 
 	return (
-		<form>
+		<form className="order-form">
 			<h1>Платіжна інформація</h1>
-			<div className="mb-3 d-flex gap-2">
+			<div className="order-form__row">
 				<CustomInput
 					width="1/3"
 					label="Ім'я"
@@ -79,7 +79,7 @@ export const OrderForm = ({ formik }: IProps) => {
 					errors={formik.errors}
 				/>
 			</div>
-			<div className="mb-3 d-flex gap-2">
+			<div className="order-form__row">
 				<CustomDropdown
 					placeholder="Обирайте"
 					value={selectedCity}
@@ -97,7 +97,7 @@ export const OrderForm = ({ formik }: IProps) => {
 					filterState={[citiesFilter, setCitiesFilter]}
 				/>
 			</div>
-			<div className="mb-3 d-flex">
+			<div className="order-form__row">
 				<CustomDropdown
 					value={{
 						name: formik.getFieldProps("branchOfNovaPoshta").value,
@@ -120,7 +120,7 @@ export const OrderForm = ({ formik }: IProps) => {
 					errors={formik.errors}
 				/>
 			</div>
-			<div className="mb-3 d-flex gap-2">
+			<div className="order-form__row">
 				<CustomInput
 					width="1/2"
 					label="Пошта"
@@ -142,20 +142,18 @@ export const OrderForm = ({ formik }: IProps) => {
 					errors={formik.errors}
 				/>
 			</div>
-			<div className="mb-3">
-				<Form.Group className="mb-3">
-					<Form.Label>Примітки до замовлення</Form.Label>
-					<InputTextarea
-						id="additional-info-textbox"
-						placeholder="Примітки щодо вашого замовлення, напр. спеціальні примітки для доставки"
-						onChange={(e) =>
-							formik.setFieldValue(
-								"additionalInformation",
-								e.target.value
-							)
-						}
-					/>
-				</Form.Group>
+			<div className="order-form__row flex-column">
+				<Form.Label>Примітки до замовлення</Form.Label>
+				<InputTextarea
+					id="additional-info-textbox"
+					placeholder="Примітки щодо вашого замовлення, напр. спеціальні примітки для доставки"
+					onChange={(e) =>
+						formik.setFieldValue(
+							"additionalInformation",
+							e.target.value
+						)
+					}
+				/>
 			</div>
 		</form>
 	);
