@@ -1,14 +1,19 @@
-service: supplier-service
+service: telegram-bot
 
 useDotenv: true
 
 plugins:
   - serverless-offline
+  - serverless-domain-manager
 
 custom:
     serverless-offline:
         httpPort: 4001
-        lambdaPort: 3008
+        lambdaPort: 3008 	
+    customDomain:
+      domainName: 'christmas-tree-api.store'
+      stage: prod
+      createRoute53Record: true
 
 provider:
   name: aws
@@ -17,16 +22,19 @@ provider:
   memorySize: 512
   timeout: 30
   endpointType: REGIONAL
-  environment:
-    
+  environment:    
     RABBITMQ_URI: ${env:RABBITMQ_URI}
     TELEGRAM_BOT_TOKEN : ${env:TELEGRAM_BOT_TOKEN}
+    
 package:
-  exclude:
-    - serverless.yaml
   excludeDevDependencies: true
-  individually: true
-
+  exclude:
+    - ../../node_modules/**
+    - ./src/**
+    - ./test/**
+    - ./dist/libs/common/src/database/*.js
+    - ./dist/libs/common/src/models/*.js
+    - ./dist/libs/common/src/decorators/*.js
 functions:
   main:
     handler: dist/apps/telegram-bot/src/serverless.handler

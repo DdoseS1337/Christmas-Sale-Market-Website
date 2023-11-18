@@ -16,8 +16,6 @@ import { LocalStategy } from './strategies/local.strategy';
     ConfigModule.forRoot({
       isGlobal: true,
       validationSchema: Joi.object({
-        PORT: Joi.number().required(),
-        RABBITMQ_URI: Joi.string().required(),
         JWT_SECRET: Joi.string().required(),
         JWT_EXPIRATION: Joi.string().required(),
         MONGODB_URI: Joi.string().required(),

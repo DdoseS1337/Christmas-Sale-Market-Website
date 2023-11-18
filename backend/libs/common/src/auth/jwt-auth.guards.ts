@@ -1,17 +1,15 @@
 import {
   CanActivate,
   ExecutionContext,
-  Inject,
   Injectable,
   Logger,
   UnauthorizedException,
 } from '@nestjs/common';
-import { ClientProxy } from '@nestjs/microservices';
 import { Reflector } from '@nestjs/core';
 import { catchError, from, map, Observable, of, tap } from 'rxjs';
-import { AUTH_SERVICE } from '../constants/services';
 import { UserDto } from '../dto';
 import axios from 'axios';
+import { AUTH_SERVICE_URL } from '../constants';
 
 @Injectable()
 export class JwtAuthGuard implements CanActivate {
@@ -35,7 +33,7 @@ export class JwtAuthGuard implements CanActivate {
     const roles = this.reflector.get<string[]>('roles', context.getHandler());
 
     return from(
-      axios.get<UserDto>('http://localhost:3004/dev/auth/authenticate', {
+      axios.get<UserDto>(`${AUTH_SERVICE_URL.PROD}/auth/authenticate`, {
         headers: {
           Authentication: jwt,
         }

@@ -1,6 +1,5 @@
-import { Body, Controller, Get, Param, Post, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Post, UseInterceptors } from '@nestjs/common';
 import { ProductsService } from './products.service';
-import { MessagePattern, Payload } from '@nestjs/microservices';
 import { FormatResponseInterceptor } from '@app/common';
 
 @UseInterceptors(FormatResponseInterceptor)
@@ -20,14 +19,14 @@ export class ProductsController {
     return this.productsService.setOffers(offers);
   }
 
-  @MessagePattern('update_supply_categories')
-  async updateDataCategories(@Payload() data) {
-    const categories = JSON.parse(data);
+  @Post('update_supply_categories')
+  async updateDataCategories(@Body() data) {
+    const categories = JSON.parse(data.data);
     return this.productsService.updateCategories(categories);
   }
-  @MessagePattern('update_supply_offers')
-  async updateDataOffers(@Payload() data) {
-    const offers = JSON.parse(data);
+  @Post('update_supply_offers')
+  async updateDataOffers(@Body() data) {
+    const offers = JSON.parse(data.data);
     return this.productsService.updateOffers(offers);
   }
 

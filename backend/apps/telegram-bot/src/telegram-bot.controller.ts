@@ -1,5 +1,4 @@
-import { Body, Controller, Post } from "@nestjs/common";
-import { EventPattern, Payload } from "@nestjs/microservices";
+import { Body, Controller, Post } from "@nestjs/common"
 import { TelegramBotService } from "./telegram-bot.service";
 import { TelegramOrderDto } from "@app/common";
 

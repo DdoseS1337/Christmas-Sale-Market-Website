@@ -4,11 +4,16 @@ useDotenv: true
 
 plugins:
   - serverless-offline
+  - serverless-domain-manager
 
 custom:
     serverless-offline:
         httpPort: 3004
         lambdaPort: 3007
+    customDomain:
+      domainName: 'christmas-tree-api.store'
+      stage: prod
+      createRoute53Record: true
 
 provider:
   name: aws
@@ -23,12 +28,13 @@ provider:
     JWT_EXPIRATION: ${env:JWT_EXPIRATION}
     MONGODB_URI: ${env:MONGODB_URI}
 
-
-
 package:
   excludeDevDependencies: true
-  individually: true
-
+  exclude:
+    - ../../node_modules/**
+    - ./src/**
+    - ./test/**
+  
 functions:
   main:
     handler: dist/apps/auth/src/serverless.handler

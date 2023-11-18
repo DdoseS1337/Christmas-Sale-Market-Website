@@ -9,6 +9,7 @@ import {
   IsEnum,
   IsInt,
   Min,
+  IsNumber,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 
@@ -27,8 +28,8 @@ export class ProductTg {
   @IsString()
   name: string;
 
-  @IsString()
-  price: string;
+  @IsNumber()
+  price: number;
 
   @IsInt()
   @Min(1)
@@ -63,7 +64,7 @@ export class CreateUserOrderDto {
 
   @IsString()
   @IsNotEmpty()
-  Branch_nova_poshta: string;
+  branch_nova_poshta: string;
 
   @IsString()
   @IsNotEmpty()

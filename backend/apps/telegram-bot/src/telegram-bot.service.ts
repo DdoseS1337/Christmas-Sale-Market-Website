@@ -1,17 +1,14 @@
 import { ConfigService } from '@nestjs/config';
 import { Start, Ctx, Update, On, Message } from 'nestjs-telegraf';
 import { Context, Telegraf } from 'telegraf';
-import { AUTH_SERVICE, TelegramOrderDto, UserDto } from '@app/common';
-import { Inject } from '@nestjs/common';
-import { ClientProxy } from '@nestjs/microservices';
-import { tap } from 'rxjs';
 import axios from 'axios';
+import { AUTH_SERVICE_URL, TelegramOrderDto, UserDto } from '@app/common';
+
 
 @Update()
 export class TelegramBotService extends Telegraf<Context> {
   constructor(
     private readonly configService: ConfigService,
-    @Inject(AUTH_SERVICE) private readonly authService: ClientProxy,
   ) {
     super(configService.get('TELEGRAM_BOT_TOKEN'));
   }
@@ -46,12 +43,12 @@ export class TelegramBotService extends Telegraf<Context> {
     const productsMessage = productsDataArray
       .map(
         (product) =>
-          `<b>${product.name}</b>\nID: ${product.id}\nPrice: ${product.price} ₴`,
+          `<b>${product.name}</b>\n  ID: ${product.id}\n  Price per one: ${product.price}₴\n  Quantity ${product.quantity} Total Amount for product ${product.price * product.quantity}`,
       )
       .join('\n\n');
 
     const totalAmount = productsDataArray.reduce((total, product) => {
-      return total + parseFloat(product.price);
+      return total + (product.price * product.quantity) ;
     }, 0);
 
     const userInfo = `
@@ -59,7 +56,7 @@ export class TelegramBotService extends Telegraf<Context> {
     Second name: ${data.second_name}
     Email: ${data.email || 'not provided'}
     City: ${data.city}
-    Nova Poshta: ${data.Branch_nova_poshta}
+    Nova Poshta: ${data.branch_nova_poshta}
     Phone number: ${data.phone_number}
     Additional info: ${data.additional_info || 'not provided'}
     `;
@@ -81,21 +78,21 @@ export class TelegramBotService extends Telegraf<Context> {
         parse_mode: 'HTML',
       });
     }
-    return "yes" 
-
-    // return this.authService
-    //   .send('get-admins', {})
-    //   .pipe(
-    //     tap((adminsResponse: UserDto[]) => {
-    //       adminsResponse
-    //         .filter((admin) => admin.telegramChatId)
-    //         .map((admin) => {
-    //           this.telegram.sendMessage(admin.telegramChatId, message, {
-    //             parse_mode: 'HTML',
-    //           });
-    //         });
-    //     }),
-    //   )
-    //   .subscribe();
+    return 'test';
+    // return axios.get(`${AUTH_SERVICE_URL}/auth/get-admins`)
+    // .then((response) => {
+    //   const adminsResponse: UserDto[] = response.data;
+  
+    //   adminsResponse
+    //     .filter((admin) => admin.telegramChatId)
+    //     .forEach((admin) => {
+    //       this.telegram.sendMessage(admin.telegramChatId, message, {
+    //         parse_mode: 'HTML',
+    //       });
+    //     });
+    // })
+    // .catch((error) => {
+    //   console.error('Error:', error);
+    // });
   }
 }

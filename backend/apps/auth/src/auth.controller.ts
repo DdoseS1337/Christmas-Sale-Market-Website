@@ -1,5 +1,4 @@
-import { Body, Controller, Get, Post, Res, UseGuards, Request } from '@nestjs/common';
-import { MessagePattern, Payload } from '@nestjs/microservices';
+import { Controller, Get, Post, Res, UseGuards, Request } from '@nestjs/common';
 import { Response } from 'express';
 import { CurrentUser, UserDocument } from '@app/common';
 import { AuthService } from './auth.service';

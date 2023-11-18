@@ -9,3 +9,12 @@ services:
     path: apps/supplier-service
   telegram-bot:
     path: apps/telegram-bot
+
+
+
+
+
+
+
+
+

@@ -9,7 +9,6 @@ import {
 } from '@nestjs/common';
 import { OrderServiceService } from './order-service.service';
 import { CreateUserOrderDto, JwtAuthGuard, Roles } from '@app/common';
-import { MessagePattern, Payload } from '@nestjs/microservices';
 import { UpdateUserOrderDto } from './dto';
 
 @Controller('user-order')
@@ -45,13 +44,13 @@ export class OrderServiceController {
     return this.orderServiceService.update(id, updateUserOrderDto);
   }
 
-  @MessagePattern('info_about_all_offers')
+  @Get('info_about_all_offers')
   async GetOffers() {
     return this.orderServiceService.findAll();
   }
 
-  @MessagePattern('info_about_offer')
-  async GetOfferById(@Payload() id: string) {
+  @Get('info_about_offer')
+  async GetOfferById(@Param() id: string) {
     return this.orderServiceService.findOne(id);
   }
 }

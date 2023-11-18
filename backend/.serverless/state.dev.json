@@ -1,24 +1,9 @@
 {
   "service": {
-    "id": "749swfs"
+    "id": "4fqm4cd"
   },
   "components": {
     "products-service": {
-      "state": {
-        "detectedFrameworkVersion": "3.36.0"
-      }
-    },
-    "telegram-bot": {
-      "state": {
-        "detectedFrameworkVersion": "3.36.0"
-      }
-    },
-    "order-service": {
-      "state": {
-        "detectedFrameworkVersion": "3.36.0"
-      }
-    },
-    "supplier-service": {
       "state": {
         "detectedFrameworkVersion": "3.36.0"
       }

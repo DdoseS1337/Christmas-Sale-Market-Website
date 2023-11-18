@@ -14,4 +14,11 @@ export class SupplierController {
   async getDataFromButikElok(): Promise<string> {
     return this.supplierService.restoreData();
   }
+
+  @Get('update-data')
+  @UseGuards(JwtAuthGuard)
+  @Roles('Admin', 'Owner')
+  async updateDataFromButikElok(): Promise<void> {
+    return this.supplierService.updateDate();
+  }
 }

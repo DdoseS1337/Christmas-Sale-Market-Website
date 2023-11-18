@@ -1,17 +1,13 @@
-import { Inject, Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import axios from 'axios';
 import * as xml2js from 'xml2js';
-import { PRODUCT_SERVICE } from '@app/common';
-import { ClientProxy } from '@nestjs/microservices';
 import { ConfigService } from '@nestjs/config';
-import { Cron } from '@nestjs/schedule';
-
 import { YmlCatalog, Offer, Category } from './interfaces';
+import { PRODUCT_SERVICE_URL } from '@app/common';
 @Injectable()
 export class SupplierService {
   private readonly logger = new Logger(SupplierService.name);
   constructor(
-    @Inject(PRODUCT_SERVICE) private readonly productService: ClientProxy,
     private readonly configService: ConfigService,
   ) {}
 
@@ -60,14 +56,14 @@ export class SupplierService {
 
     const jsonDataCategories = JSON.stringify(transformCategories);
     const categories = await axios.post(
-      'http://localhost:3001/dev/products/set_supply_categories',
+      `${PRODUCT_SERVICE_URL.PROD}/products/set_supply_categories`,
       {
         data: jsonDataCategories,
       },
     );
     const jsonDataOffers = JSON.stringify(transformOffers);
     const offers = await axios.post(
-      'http://localhost:3001/dev/products/set_supply_offers',
+      `${PRODUCT_SERVICE_URL.PROD}/products/set_supply_offers`,
       {
         data: jsonDataOffers,
       },
@@ -78,7 +74,6 @@ export class SupplierService {
     }
   }
 
-  @Cron('5 9,14,19,23 * * *')
   async updateDate() {
     try {
       this.logger.log('Data start updating');
@@ -93,22 +88,22 @@ export class SupplierService {
 
       const jsonDataCategories = JSON.stringify(transformCategories);
 
-      const categories = this.productService
-        .send('update_supply_categories', jsonDataCategories)
-        .subscribe((res) => {
-          return res;
-        });
+      // const categories = this.productService
+      //   .send('update_supply_categories', jsonDataCategories)
+      //   .subscribe((res) => {
+      //     return res;
+      //   });
 
-      const jsonDataOffers = JSON.stringify(transformOffers);
-      const offers = this.productService
-        .send('update_supply_offers', jsonDataOffers)
-        .subscribe((res) => {
-          return res;
-        });
+      // const jsonDataOffers = JSON.stringify(transformOffers);
+      // const offers = this.productService
+      //   .send('update_supply_offers', jsonDataOffers)
+      //   .subscribe((res) => {
+      //     return res;
+      //   });
 
-      if (categories && offers) {
-        this.logger.log('Data successfully updated');
-      }
+      // if (categories && offers) {
+      //   this.logger.log('Data successfully updated');
+      // }
     } catch (error) {
       this.logger.error('Error update');
     }

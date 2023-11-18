@@ -1,6 +1,5 @@
 import { NestFactory } from '@nestjs/core';
 import { OrderServiceModule } from './order-service.module';
-import { ConfigService } from '@nestjs/config';
 import { Logger } from 'nestjs-pino';
 import { ValidationPipe } from '@nestjs/common';
 import * as cookieParser from 'cookie-parser';
@@ -13,7 +12,6 @@ const serverSubject = new ReplaySubject<Handler>()
 
 async function bootstrap() {
   const app = await NestFactory.create(OrderServiceModule);
-  const configService = app.get(ConfigService);
   app.enableCors();
   app.useLogger(app.get(Logger));
   app.use(cookieParser());
