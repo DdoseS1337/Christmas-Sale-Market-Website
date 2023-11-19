@@ -4,16 +4,11 @@ useDotenv: true
 
 plugins:
   - serverless-offline
-  - serverless-domain-manager
 
 custom:
     serverless-offline:
         httpPort: 3002
         lambdaPort: 3006
-    customDomain:
-      domainName: 'christmas-tree-api.store'
-      stage: prod
-      createRoute53Record: true
 
 provider:
   name: aws

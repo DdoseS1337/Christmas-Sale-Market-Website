@@ -59,7 +59,7 @@ export class OrderServiceService {
         });
 
       return axios
-        .post(`${TELEGRAM_BOT_URL.PROD}/tg-bot/notify_bot`, {
+        .post(`${TELEGRAM_BOT_URL.PROD}/notify_bot`, {
           ...createUserOrderDto,
           products: productsDataArray,
         })

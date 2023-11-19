@@ -4,16 +4,11 @@ useDotenv: true
 
 plugins:
   - serverless-offline
-  - serverless-domain-manager
 
 custom:
     serverless-offline:
         httpPort: 4001
         lambdaPort: 3008 	
-    customDomain:
-      domainName: 'christmas-tree-api.store'
-      stage: prod
-      createRoute53Record: true
 
 provider:
   name: aws
@@ -35,6 +30,14 @@ package:
     - ./dist/libs/common/src/database/*.js
     - ./dist/libs/common/src/models/*.js
     - ./dist/libs/common/src/decorators/*.js
+  include:
+    - ./dist/libs/common/src/database/plug.js
+    - ./dist/libs/common/src/database/index.js
+    - ./dist/libs/common/src/models/plug.js
+    - ./dist/libs/common/src/models/index.js
+    - ./dist/libs/common/src/decorators/plug.js
+    - ./dist/libs/common/src/decorators/index.js
+
 functions:
   main:
     handler: dist/apps/telegram-bot/src/serverless.handler

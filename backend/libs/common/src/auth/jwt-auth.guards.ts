@@ -33,7 +33,7 @@ export class JwtAuthGuard implements CanActivate {
     const roles = this.reflector.get<string[]>('roles', context.getHandler());
 
     return from(
-      axios.get<UserDto>(`${AUTH_SERVICE_URL.PROD}/auth/authenticate`, {
+      axios.get<UserDto>(`${AUTH_SERVICE_URL.PROD}/authenticate`, {
         headers: {
           Authentication: jwt,
         }

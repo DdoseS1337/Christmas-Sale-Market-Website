@@ -4,17 +4,11 @@ useDotenv: true
 
 plugins:
   - serverless-offline
-  - serverless-domain-manager
 
 custom:
     serverless-offline:
         httpPort: 3000
         lambdaPort: 3009
-    customDomain:
-      domainName: 'christmas-tree-api.store'
-      stage: prod
-      createRoute53Record: true
-        
 provider:
   name: aws
   region: eu-north-1
@@ -24,8 +18,6 @@ provider:
   endpointType: REGIONAL
   environment:
     RABBITMQ_URI: ${env:RABBITMQ_URI}
-
-
 
 package:
   excludeDevDependencies: true

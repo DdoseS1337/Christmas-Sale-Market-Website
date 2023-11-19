@@ -2,7 +2,7 @@ import { Body, Controller, Post } from "@nestjs/common"
 import { TelegramBotService } from "./telegram-bot.service";
 import { TelegramOrderDto } from "@app/common";
 
-@Controller('tg-bot')
+@Controller()
 export class TelegramBotController {
   constructor(private readonly telegramBotService: TelegramBotService) {}
 

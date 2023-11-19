@@ -72,27 +72,20 @@ export class TelegramBotService extends Telegraf<Context> {
 
     <b>Total Amount:</b> ${totalAmount} ₴
     `;
-    let admins = [596621527]
-    for (const admin of admins) {
-      this.telegram.sendMessage(admin, message, {
-        parse_mode: 'HTML',
-      });
-    }
-    return 'test';
-    // return axios.get(`${AUTH_SERVICE_URL}/auth/get-admins`)
-    // .then((response) => {
-    //   const adminsResponse: UserDto[] = response.data;
+    return axios.get(`${AUTH_SERVICE_URL.DEV}/get-admins`)
+    .then((response) => {
+      const adminsResponse: UserDto[] = response.data;
   
-    //   adminsResponse
-    //     .filter((admin) => admin.telegramChatId)
-    //     .forEach((admin) => {
-    //       this.telegram.sendMessage(admin.telegramChatId, message, {
-    //         parse_mode: 'HTML',
-    //       });
-    //     });
-    // })
-    // .catch((error) => {
-    //   console.error('Error:', error);
-    // });
+      adminsResponse
+        .filter((admin) => admin.telegramChatId)
+        .forEach((admin) => {
+          this.telegram.sendMessage(admin.telegramChatId, message, {
+            parse_mode: 'HTML',
+          });
+        });
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
   }
 }
