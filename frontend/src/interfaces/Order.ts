@@ -16,8 +16,8 @@ export interface IOrderCustomerInformation {
 }
 
 export interface IOrderOffer {
-    offerId: number;
-    number: number;
+    id: number;
+    quantity: number;
 }
 
 export class OrderCustomerInformationValidation implements IOrderCustomerInformation {

@@ -8,7 +8,7 @@ class OrderServiceSingleton extends HttpService {
     }
 
     async sendOrder(order: IOrder) {
-        await this.post({
+        const response = await this.post({
             url: BACKEND_KEYS.SEND_ORDER,
             data: {
                 first_name: order.customerInformation.firstName,
@@ -16,11 +16,15 @@ class OrderServiceSingleton extends HttpService {
                 email: order.customerInformation.email,
                 phone_number: order.customerInformation.phoneNumber,
                 additional_info: order.customerInformation.additionalInformation,
-                Branch_nova_poshta: order.customerInformation.branchOfNovaPoshta,
+                branch_nova_poshta: order.customerInformation.branchOfNovaPoshta,
                 city: order.customerInformation.city,
-                productsIds: order.offers.map(o => o.offerId)
+                products: order.offers.map(item => ({
+                    id: item.id.toString(),
+                    quantity: item.quantity,
+                }))
             }
         }).catch(e => console.log(e));
+        console.log(response);
     }
 }
 
