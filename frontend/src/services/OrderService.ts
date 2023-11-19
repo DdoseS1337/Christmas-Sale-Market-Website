@@ -8,7 +8,7 @@ class OrderServiceSingleton extends HttpService {
     }
 
     async sendOrder(order: IOrder) {
-        const response = await this.post({
+        await this.post({
             url: BACKEND_KEYS.SEND_ORDER,
             data: {
                 first_name: order.customerInformation.firstName,
@@ -24,7 +24,6 @@ class OrderServiceSingleton extends HttpService {
                 }))
             }
         }).catch(e => console.log(e));
-        console.log(response);
     }
 }
 
