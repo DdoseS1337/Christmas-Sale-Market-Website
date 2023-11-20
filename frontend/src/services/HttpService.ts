@@ -7,7 +7,7 @@ interface BaseRequestConfig extends AxiosRequestConfig {
 }
 
 interface GetRequestConfig extends Omit<BaseRequestConfig, "data"> {}
-interface PostRequestConfig extends Omit<BaseRequestConfig, "params"> {}
+interface PostRequestConfig extends Pick<BaseRequestConfig, "url" | "data"> {}
 
 interface ICachingArray {
 	[key: string]: ICachedItem;

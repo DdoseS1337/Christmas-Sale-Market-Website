@@ -16,9 +16,12 @@ class OrderServiceSingleton extends HttpService {
                 email: order.customerInformation.email,
                 phone_number: order.customerInformation.phoneNumber,
                 additional_info: order.customerInformation.additionalInformation,
-                Branch_nova_poshta: order.customerInformation.branchOfNovaPoshta,
+                branch_nova_poshta: order.customerInformation.branchOfNovaPoshta,
                 city: order.customerInformation.city,
-                productsIds: order.offers.map(o => o.offerId)
+                products: order.offers.map(item => ({
+                    id: item.id.toString(),
+                    quantity: item.quantity,
+                }))
             }
         }).catch(e => console.log(e));
     }

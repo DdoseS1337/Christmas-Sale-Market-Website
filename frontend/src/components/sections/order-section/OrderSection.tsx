@@ -1,5 +1,5 @@
 import "../../../styles/components/sections/order-section/order-section.css";
-import { Container, Image } from "react-bootstrap";
+import { Image } from "react-bootstrap";
 import RoundedButton from "../../common/RoundedButton";
 import { CartService } from "../../../services/basketService";
 import { Link } from "react-router-dom";
@@ -55,7 +55,7 @@ export const OrderSection = () => {
 				},
 			}}
 		>
-			<Toast ref={toast} />
+			<Toast className="z-3" ref={toast} />
 			<OrderForm formik={formik} />
 
 			<div className="order-summary">
@@ -117,8 +117,8 @@ export const OrderSection = () => {
 		OrderService.sendOrder({
 			customerInformation: data,
 			offers: itemsOfCart.map<IOrderOffer>((item) => ({
-				offerId: Number(item.id),
-				number: item.amount,
+				id: Number(item.id),
+				quantity: item.amount,
 			})),
 		});
 	}
