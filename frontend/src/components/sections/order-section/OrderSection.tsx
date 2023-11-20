@@ -36,14 +36,6 @@ export const OrderSection = () => {
 
 	const toast = useRef<any>(null);
 
-	const showSuccessOrderToast = () => {
-		toast.current!.show({
-			severity: "success",
-			summary: "Успіх",
-			detail: "Замовлення відправлено",
-		});
-	};
-
 	return (
 		<Section
 			width="1400px"
@@ -55,7 +47,7 @@ export const OrderSection = () => {
 				},
 			}}
 		>
-			<Toast className="z-3" ref={toast} />
+			<Toast style={{ zIndex: 9999 }} ref={toast} />
 			<OrderForm formik={formik} />
 
 			<div className="order-summary">
@@ -113,13 +105,29 @@ export const OrderSection = () => {
 	);
 
 	async function sendOrder(data: CustomerInformationFormFields) {
-		showSuccessOrderToast();
-		OrderService.sendOrder({
+		const successfully = await OrderService.sendOrder({
 			customerInformation: data,
 			offers: itemsOfCart.map<IOrderOffer>((item) => ({
 				id: Number(item.id),
 				quantity: item.amount,
 			})),
+		});
+		successfully ? showSuccessOrderToast() : showErrorOrderToast();
+	}
+
+	function showSuccessOrderToast() {
+		toast.current!.show({
+			severity: "success",
+			summary: "Успіх",
+			detail: "Замовлення відправлено",
+		});
+	}
+
+	function showErrorOrderToast() {
+		toast.current!.show({
+			severity: "error",
+			summary: "Ой, сталась помилка",
+			detail: "Сталась помилка, ми працюємо над нею!",
 		});
 	}
 };
