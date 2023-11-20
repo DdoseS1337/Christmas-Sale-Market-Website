@@ -118,7 +118,7 @@ export const OrderSection = () => {
 			})),
 		});
 		setIsOrderSending(false);
-		successfully ? showSuccessOrderToast() : showErrorOrderToast();
+		successfully ? showSuccessOrderToast() : showFailedOrderToast();
 	}
 
 	function showSuccessOrderToast() {
@@ -129,7 +129,7 @@ export const OrderSection = () => {
 		});
 	}
 
-	function showErrorOrderToast() {
+	function showFailedOrderToast() {
 		toast.current!.show({
 			severity: "error",
 			summary: "Ой, сталась помилка",
