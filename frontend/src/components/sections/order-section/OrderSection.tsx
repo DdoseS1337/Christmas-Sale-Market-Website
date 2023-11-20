@@ -1,9 +1,9 @@
 import "../../../styles/components/sections/order-section/order-section.css";
-import { Image } from "react-bootstrap";
+import { Image, Spinner } from "react-bootstrap";
 import RoundedButton from "../../common/RoundedButton";
 import { CartService } from "../../../services/basketService";
 import { Link } from "react-router-dom";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import {
 	OrderCustomerInformationValidation as CustomerInformationFormFields,
 	IOrderOffer,
@@ -14,6 +14,7 @@ import { Toast } from "primereact/toast";
 import { OrderService } from "../../../services/OrderService";
 import { validate } from "class-validator";
 import { Section } from "../../common/Section";
+import { boolean } from "yargs";
 
 export const OrderSection = () => {
 	const itemsOfCart = CartService.getCart();
@@ -36,9 +37,12 @@ export const OrderSection = () => {
 
 	const toast = useRef<any>(null);
 
+	const [isOrderSending, setIsOrderSending] = useState<boolean>(false);
+
 	return (
 		<Section
 			width="1400px"
+			className="z-1"
 			unPadded
 			pt={{
 				inner: {
@@ -47,7 +51,7 @@ export const OrderSection = () => {
 				},
 			}}
 		>
-			<Toast style={{ zIndex: 9999 }} ref={toast} />
+			<Toast ref={toast} />
 			<OrderForm formik={formik} />
 
 			<div className="order-summary">
@@ -98,13 +102,14 @@ export const OrderSection = () => {
 					className="d-flex justify-content-center"
 					onClick={formik.submitForm}
 				>
-					Замовити товар
+					{isOrderSending ? <Spinner size="sm" /> : "Замовити товар"}
 				</RoundedButton>
 			</div>
 		</Section>
 	);
 
 	async function sendOrder(data: CustomerInformationFormFields) {
+		setIsOrderSending(true);
 		const successfully = await OrderService.sendOrder({
 			customerInformation: data,
 			offers: itemsOfCart.map<IOrderOffer>((item) => ({
@@ -112,6 +117,7 @@ export const OrderSection = () => {
 				quantity: item.amount,
 			})),
 		});
+		setIsOrderSending(false);
 		successfully ? showSuccessOrderToast() : showErrorOrderToast();
 	}
 
@@ -127,7 +133,8 @@ export const OrderSection = () => {
 		toast.current!.show({
 			severity: "error",
 			summary: "Ой, сталась помилка",
-			detail: "Сталась помилка, ми працюємо над нею!",
+			detail: "Ви можете повідомити нам про помилку написавши на your.christmas.tree.shop@gmail.com!",
+			life: 6000,
 		});
 	}
 };
