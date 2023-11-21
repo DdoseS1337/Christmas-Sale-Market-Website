@@ -163,10 +163,37 @@ const ProductPage = ({ setAdditionalBreadCrumbs }: IProps) => {
                                     style: { color: "#c93f4f" },
                                 },
                                 thumbnailItemContent: {
-                                    style: { border: "#c93f4f solid 1px" },
+                                    style: {
+                                        border: "#c93f4f solid 1px",
+                                    },
                                 },
-                                item: {
-                                    style: { height: "23rem" },
+                                content: {
+                                    style: { height: "auto" },
+                                },
+                                thumbnailContainer: {
+                                    style: { padding: "0px" },
+                                },
+                                previousItemButton: {
+                                    style: {
+                                        color: "black",
+                                        width: "5rem",
+                                        height: "calc(100% - 2rem)",
+                                        top: "1rem",
+                                        margin: 0,
+                                        boxShadow: "none",
+                                        backgroundColor: "transparent",
+                                    },
+                                },
+                                nextItemButton: {
+                                    style: {
+                                        color: "black",
+                                        width: "5rem",
+                                        height: "calc(100% - 2rem)",
+                                        top: "1rem",
+                                        margin: 0,
+                                        boxShadow: "none",
+                                        backgroundColor: "transparent",
+                                    },
                                 },
                             }}
                         />
