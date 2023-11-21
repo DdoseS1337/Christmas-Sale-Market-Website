@@ -14,7 +14,7 @@ const BottomCarousel = () => {
                     .getAllOffers(true)
                     .then((offers) =>
                         offers.map((offer) => [offer.picture[0], offer.id])
-                    );
+                    );                    
 
                 setOffers(offers);
             } catch (error: any) {

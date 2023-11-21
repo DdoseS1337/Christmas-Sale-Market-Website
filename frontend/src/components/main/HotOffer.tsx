@@ -77,8 +77,16 @@ const HotOffer = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const item = await christmasTreeApi.getOfferById("104");
-                setProduct(item);
+                const offers = await christmasTreeApi
+                    .getOffersByCategoryId(89)
+                    .then((offers) => offers.filter((offer) => offer.available))
+                    .then((offers) =>
+                        offers.length > 7 ? offers.splice(0, 7) : offers
+                    );
+
+                const date = new Date().getDay();
+
+                setProduct(offers[date]);
             } catch (error: any) {
                 console.error(`Error in Hot Offer: ${error.message}`);
             }
