@@ -3,6 +3,8 @@ import christmasTreeApi from "../../services/christmas-tree.api";
 import { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { ArrowRight, Eye } from "react-bootstrap-icons";
+import "../../styles/components/bottom-carousel.css";
 
 const BottomCarousel = () => {
     const [offers, setOffers] = useState<any | null>([]);
@@ -14,7 +16,7 @@ const BottomCarousel = () => {
                     .getAllOffers(true)
                     .then((offers) =>
                         offers.map((offer) => [offer.picture[0], offer.id])
-                    );                    
+                    );
 
                 setOffers(offers);
             } catch (error: any) {
@@ -44,7 +46,7 @@ const BottomCarousel = () => {
 
     const offerTemplate = (product: Array<string>) => {
         return (
-            <div className="text-center">
+            <div className="text-center position-relative bottom-carousel-img-hover">
                 <Link
                     to={`catalog/${product[1]}`}
                     onClick={() => window.scroll(0, 0)}
@@ -58,13 +60,25 @@ const BottomCarousel = () => {
                         }}
                     />
                 </Link>
+                <div className="d-none " id="bottom-carousel-hidden">
+                    <Eye
+                        size={60}
+                        color="black"
+                        id="bottom-carousel-eye-icon"
+                    />
+                    <span>
+                        Переглянути
+                        <br /> сторінку товару
+                        <ArrowRight color="black" className="ms-1" size={15} />
+                    </span>
+                </div>
             </div>
         );
     };
 
     return (
         <>
-            <h2 className="text-center my-5 fw-bold">Наша галерея</h2>
+            <h2 className="text-center my-5 fw-bold">Галерея товару</h2>
             <Container className="p-0">
                 <Carousel
                     value={offers}
