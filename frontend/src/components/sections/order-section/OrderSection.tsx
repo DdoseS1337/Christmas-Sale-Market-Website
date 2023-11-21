@@ -121,6 +121,7 @@ export const OrderSection = () => {
 			summary: "Успіх",
 			detail: "Замовлення відправлено",
 		});
+		CartService.clearStorage();
 	}
 
 	function showErrorOrderToast() {
