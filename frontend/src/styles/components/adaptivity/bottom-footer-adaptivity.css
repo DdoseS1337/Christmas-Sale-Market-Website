@@ -1,0 +1,28 @@
+@media (max-width: 995px) {
+    .bottom-footer__row {
+        display: block !important;
+    }
+    .bottom-footer__row .col-4 {
+        width: 100% !important;
+    }
+
+    #bottom-footer-hidden-element {
+        display: block !important;
+        margin: 24px 0px;
+        padding: 0;
+    }
+    #bottom-footer-container-adaptivity {
+        justify-content: space-between !important;
+    }
+}
+
+@media (max-width: 468px) {
+    #bottom-footer-container-adaptivity {
+        display: block !important;
+    }
+    #bottom-footer-hidden-element-2 {
+        display: block !important;
+        margin: 24px 0px;
+        padding: 0;
+    }
+}

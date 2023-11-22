@@ -1,4 +1,5 @@
 import "../../styles/components/footer/bottom-footer.css";
+import "../../styles/components/adaptivity/bottom-footer-adaptivity.css";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -38,61 +39,63 @@ const BottomFooter = () => {
                             text={CONTACTS.email}
                         />
                     </Col>
+                    <div
+                        className="bottom-footer__bottom-row d-none"
+                        id="bottom-footer-hidden-element"
+                    />
                     <Col>
-                        <FooterList
-                            title="My Account"
-                            list={[
-                                { text: "My Account", link: "" },
-                                { text: "Order History", link: "" },
-                                { text: "Shopping Cart", link: "" },
-                                { text: "Wishlist", link: "" },
-                            ]}
-                        />
-                    </Col>
-                    <Col>
-                        <FooterList
-                            title="Інформація"
-                            list={[
-                                { text: "Контакти", link: "/contacts" },
-                                {
-                                    text: "Часті запитання",
-                                    link: "/information",
-                                },
-                                {
-                                    text: "Угода користувача",
-                                    link: "/policy",
-                                },
-                            ]}
-                        />
-                    </Col>
-                    <Col>
-                        <FooterList
-                            title="Сторінки"
-                            list={[
-                                { text: "Головна сторінка", link: "/" },
-                                { text: "Каталог", link: "/catalog" },
-                                { text: "Кошик", link: "/basket" },
-                                { text: "Контакти", link: "/contacts" },
-                                {
-                                    text: "Часті запитання",
-                                    link: "/information",
-                                },
-                                {
-                                    text: "Угода користувача",
-                                    link: "/policy",
-                                },
-                            ]}
-                        />
-                    </Col>
-                    <Col>
-                        <FooterList
-                            title="Категорії"
-                            list={[
-                                { text: "Ялинки", link: "" },
-                                { text: "Гірлянди хвойні", link: "" },
-                                { text: "Новорічні вінки", link: "" },
-                            ]}
-                        />
+                        <Container
+                            className="d-flex justify-content-around p-0"
+                            id="bottom-footer-container-adaptivity"
+                        >
+                            <FooterList
+                                title="Інформація"
+                                list={[
+                                    { text: "Контакти", link: "/contacts" },
+                                    {
+                                        text: "Часті запитання",
+                                        link: "/information",
+                                    },
+                                    {
+                                        text: "Угода користувача",
+                                        link: "/policy",
+                                    },
+                                ]}
+                            />
+                            <div
+                                className="bottom-footer__bottom-row d-none"
+                                id="bottom-footer-hidden-element-2"
+                            />
+                            <FooterList
+                                title="Сторінки"
+                                list={[
+                                    { text: "Головна сторінка", link: "/" },
+                                    { text: "Каталог", link: "/catalog" },
+                                    { text: "Кошик", link: "/basket" },
+                                    { text: "Контакти", link: "/contacts" },
+                                    {
+                                        text: "Часті запитання",
+                                        link: "/information",
+                                    },
+                                    {
+                                        text: "Угода користувача",
+                                        link: "/policy",
+                                    },
+                                ]}
+                            />
+                            <div
+                                className="bottom-footer__bottom-row d-none"
+                                id="bottom-footer-hidden-element-2"
+                            />
+                            <FooterList
+                                title="Категорії"
+                                list={[
+                                    { text: "Ялинки", link: "" },
+                                    { text: "Гірлянди хвойні", link: "" },
+                                    { text: "Новорічні вінки", link: "" },
+                                ]}
+                            />
+                        </Container>
                     </Col>
                 </Row>
                 <Row className="bottom-footer__bottom-row">

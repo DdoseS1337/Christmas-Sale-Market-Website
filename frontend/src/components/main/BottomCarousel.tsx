@@ -1,13 +1,14 @@
 import { Carousel } from "primereact/carousel";
 import christmasTreeApi from "../../services/christmas-tree.api";
 import { useEffect, useState } from "react";
-import { Container } from "react-bootstrap";
+import { Container, Spinner } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { ArrowRight, Eye } from "react-bootstrap-icons";
 import "../../styles/components/bottom-carousel.css";
 
 const BottomCarousel = () => {
     const [offers, setOffers] = useState<any | null>([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -21,6 +22,8 @@ const BottomCarousel = () => {
                 setOffers(offers);
             } catch (error: any) {
                 console.error(`Error in Bottom Carousel: ${error.message}`);
+            } finally {
+                setIsLoading(false);
             }
         };
         fetchData();
@@ -79,18 +82,28 @@ const BottomCarousel = () => {
     return (
         <>
             <h2 className="text-center my-5 fw-bold">Галерея товару</h2>
-            <Container className="p-0">
-                <Carousel
-                    value={offers}
-                    numScroll={1}
-                    numVisible={4}
-                    itemTemplate={offerTemplate}
-                    responsiveOptions={responsiveOptions}
-                    autoplayInterval={3000}
-                    showIndicators={false}
-                    circular
-                />
-            </Container>
+            {isLoading ? (
+                <div className="text-center">
+                    <Spinner
+                        animation="border"
+                        variant="danger"
+                        style={{ width: "6rem", height: "6rem" }}
+                    />
+                </div>
+            ) : (
+                <Container className="p-0">
+                    <Carousel
+                        value={offers}
+                        numScroll={1}
+                        numVisible={4}
+                        itemTemplate={offerTemplate}
+                        responsiveOptions={responsiveOptions}
+                        autoplayInterval={3000}
+                        showIndicators={false}
+                        circular
+                    />
+                </Container>
+            )}
         </>
     );
 };
