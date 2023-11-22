@@ -7,19 +7,31 @@ interface BaseRequestConfig extends AxiosRequestConfig {
 }
 
 interface GetRequestConfig extends Omit<BaseRequestConfig, "data"> {}
-interface PostRequestConfig extends Pick<BaseRequestConfig, "url" | "data"> {}
-
-interface ICachingArray {
-	[key: string]: ICachedItem;
-}
+interface PostRequestConfig extends Omit<BaseRequestConfig, "params"> {}
 
 export default class HttpService {
 	fetchingService: Axios;
-	cachedData: ICachingArray = {};
+	cachedData: Record<string, ICachedItem>;
+	requestsThatSending: Record<string, boolean>;
+	sessionCachedDataKey: string = "CACHED_ITEMS";
 
 	constructor(baseURL: string) {
 		this.fetchingService = axios.create({
 			baseURL: baseURL
+		});
+ 
+		this.cachedData = {};
+		this.requestsThatSending = {};
+		const sessionCachedData: Record<string, ICachedItem> = JSON.parse(sessionStorage.getItem(this.sessionCachedDataKey) ?? "{}");
+
+		// convert date from string to Date
+		Object.entries(sessionCachedData).forEach((value) => {
+			const key = value[0];
+			const newCachedData = {
+				data: value[1].data,
+				cachedDataActualTo: new Date(value[1].cachedDataActualTo)
+			};
+			return this.cachedData[key] = newCachedData;
 		});
 	}
 
@@ -31,20 +43,39 @@ export default class HttpService {
 
 	async post<T>(config: PostRequestConfig) {
 		const response = await this.fetchingService
-			.post<T>(config.url, config.data);
+			.post<T>(config.url, config.data, config);
 		return response.data;
 	}
 
 	async getWithCaching<T>(config: GetRequestConfig): Promise<T> {
-		if (this.hasCachedResponse(config))
-			return this.getCachedResponse(config).data;
+		while (this.identicalRequestIsSending(config)) { await delay(100) }
 
+		if (this.hasCachedResponse(config)) {
+			return this.getCachedResponse(config)?.data;
+		}
+
+		this.markThatRequestSending(config);
 		const response = await this.get<T>(config);
+		this.markThatRequestReturnedResponse(config);
+
 		this.cachingResponse(config, response);
 		return response;
 	}
 
-	cachingResponse(key: BaseRequestConfig, response: any) {
+	identicalRequestIsSending(config: BaseRequestConfig): boolean {
+		return this.requestsThatSending[this.buildKey(config)] ?? false;
+	}
+
+	markThatRequestSending(config: BaseRequestConfig) {
+		// so that other don't send identical request during current request that not end
+		this.requestsThatSending[this.buildKey(config)] = true;
+	}
+	
+	markThatRequestReturnedResponse(config: BaseRequestConfig) {
+		this.requestsThatSending[this.buildKey(config)] = false;
+	}
+
+	cachingResponse(config: BaseRequestConfig, response: any) {
 		const cachedDataActualTo = new Date();
 		cachedDataActualTo.setSeconds(cachedDataActualTo.getSeconds() + CACHING_CONST.CACHING_PERIOD_IN_SECONDS);
 
@@ -53,11 +84,12 @@ export default class HttpService {
 			cachedDataActualTo: cachedDataActualTo
 		};
 
-		this.cachedData[this.buildKey(key)] = cachingItem;
+		this.cachedData[this.buildKey(config)] = cachingItem;
+		sessionStorage.setItem(this.sessionCachedDataKey, JSON.stringify(this.cachedData));
 	}
 
-	getCachedResponse(key: BaseRequestConfig): ICachedItem {
-		return this.cachedData[this.buildKey(key)];
+	getCachedResponse(config: BaseRequestConfig): ICachedItem | undefined {
+		return this.cachedData[this.buildKey(config)];
 	}
 
 	hasCachedResponse(key: BaseRequestConfig): any {
@@ -66,11 +98,19 @@ export default class HttpService {
 		return item != null && item.cachedDataActualTo > now;
 	}
 
-	removeCachedResponse(key: BaseRequestConfig) {
-		delete this.cachedData[this.buildKey(key)];
+	removeCachedResponse(config: BaseRequestConfig) {
+		delete this.cachedData[this.buildKey(config)];
+		sessionStorage.setItem(this.sessionCachedDataKey, JSON.stringify(this.cachedData));
 	}
 
 	buildKey(key: BaseRequestConfig): string {
-		return key.baseURL + key.url + JSON.stringify(key.data ?? {}) + JSON.stringify(key.params ?? {});
+		return key.url + JSON.stringify(key.params ?? {});
 	}
+}
+
+
+// utils
+
+function delay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }

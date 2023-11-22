@@ -28,7 +28,7 @@ export const CONTACTS = {
 };
 
 export const CACHING_CONST = {
-    CACHING_PERIOD_IN_SECONDS: 60,
+    CACHING_PERIOD_IN_SECONDS: 300,
 };
 
 export const FILTER_CONST = {
