@@ -1,14 +1,17 @@
 import { Carousel } from "primereact/carousel";
 import christmasTreeApi from "../../services/christmas-tree.api";
 import { useEffect, useState } from "react";
-import { Container, Spinner } from "react-bootstrap";
+import { Container } from "react-bootstrap";
+import LoadingSpinner from "../common/LoadingSpinner";
 import { Link } from "react-router-dom";
 import { ArrowRight, Eye } from "react-bootstrap-icons";
 import "../../styles/components/bottom-carousel.css";
+import ErrorMessage from "../common/ErrorMessage";
 
 const BottomCarousel = () => {
     const [offers, setOffers] = useState<any | null>([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -20,10 +23,10 @@ const BottomCarousel = () => {
                     );
 
                 setOffers(offers);
-            } catch (error: any) {
-                console.error(`Error in Bottom Carousel: ${error.message}`);
-            } finally {
                 setIsLoading(false);
+            } catch (err: any) {
+                console.error(`Error in Bottom Carousel: ${err.message}`);
+                setError(err);
             }
         };
         fetchData();
@@ -81,15 +84,10 @@ const BottomCarousel = () => {
 
     return (
         <>
+            {error && <ErrorMessage />}
             <h2 className="text-center my-5 fw-bold">Галерея товару</h2>
             {isLoading ? (
-                <div className="text-center">
-                    <Spinner
-                        animation="border"
-                        variant="danger"
-                        style={{ width: "6rem", height: "6rem" }}
-                    />
-                </div>
+                <LoadingSpinner variant="danger" />
             ) : (
                 <Container className="p-0">
                     <Carousel
