@@ -1,5 +1,5 @@
 import { Galleria } from "primereact/galleria";
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Row, Spinner } from "react-bootstrap";
 import christmasTreeApi from "../../services/christmas-tree.api";
 import { useEffect, useState } from "react";
 import { IOffer } from "../../interfaces/Offer";
@@ -29,6 +29,7 @@ import ProductParameters from "../../interfaces/ProductParameters";
 const HotOffer = () => {
     const [product, setProduct] = useState<IOffer | null>(null);
     const [, setRefresh] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [amount, setAmount] = useState(1);
     const {
         isMinusHovered,
@@ -85,10 +86,11 @@ const HotOffer = () => {
                     );
 
                 const date = new Date().getDay();
-
                 setProduct(offers[date]);
             } catch (error: any) {
                 console.error(`Error in Hot Offer: ${error.message}`);
+            } finally {
+                setIsLoading(false);
             }
         };
 
@@ -100,170 +102,182 @@ const HotOffer = () => {
             <Container>
                 <h2 id="hotOffer-header-adaptivity">Гаряча пропозиція</h2>
             </Container>
-            <Container>
-                <Row
-                    className="m-0 p-0 pt-4 pb-4 d-flex text-white align-items-center"
-                    id="hotOffer-gallery-adaptivity"
-                >
-                    <Col xs={5} className="d-flex">
-                        <Galleria
-                            value={product !== null ? product.picture : []}
-                            numVisible={3}
-                            item={(img) => (
-                                <GalleriaMainPhoto
-                                    src={img}
-                                    styles={galleriaMainPhotoStyle}
-                                />
-                            )}
-                            thumbnailsPosition={"left"}
-                            thumbnail={(imageLink) => (
-                                <GalleriaCarousel
-                                    src={imageLink}
-                                    styles={galleriaCarouselStyle}
-                                />
-                            )}
-                            showItemNavigators
-                            showItemNavigatorsOnHover
-                            circular
-                            pt={{
-                                nextThumbnailButton: {
-                                    style: { color: "white" },
-                                },
-                                previousThumbnailButton: {
-                                    style: { color: "white" },
-                                },
-                                thumbnailItemContent: {
-                                    style: { border: "white solid 1px" },
-                                },
-                                thumbnailContainer: {
-                                    style: { height: "30rem", padding: "0px" },
-                                },
-                                thumbnailItem: {
-                                    style: { height: "100%" },
-                                },
-                                thumbnailItemsContainer: {
-                                    style: { height: "auto" },
-                                },
-                                previousItemButton: {
-                                    style: {
-                                        color: "black",
-                                        width: "5rem",
-                                        height: "calc(100% - 2rem)",
-                                        top: "1rem",
-                                        margin: 0,
-                                        boxShadow: "none",
-                                        backgroundColor: "transparent",
-                                    },
-                                },
-                                nextItemButton: {
-                                    style: {
-                                        color: "black",
-                                        width: "5rem",
-                                        height: "calc(100% - 2rem)",
-                                        top: "1rem",
-                                        margin: 0,
-                                        boxShadow: "none",
-                                        backgroundColor: "transparent",
-                                    },
-                                },
-                            }}
-                        />
-                    </Col>
-                    <Col>
-                        <h3 className="m-0 mb-3">
-                            <Link
-                                to={`/catalog/${product?.id}`}
-                                className="text-decoration-none text-white"
-                                onClick={() => window.scroll(0, 0)}
-                            >
-                                {product?.name}
-                            </Link>
-                        </h3>
-                        <span className="fs-4">
-                            Вартість:
-                            <span className="text-white-50 text-decoration-line-through mx-2">
-                                {product?.price}₴
-                            </span>
-                            {product?.newPrice}₴
-                        </span>
-                        <div className="p-0 d-flex mt-3">
-                            <div
-                                className="d-flex justify-content-between p-2 border rounded-pill align-items-center h-25 bg-white text-black"
-                                style={{ minWidth: "80px", width: "7rem" }}
-                            >
-                                {isMinusHovered ? (
-                                    <DashCircleFill
-                                        className="basket-btn-quantity"
-                                        onMouseLeave={handleMinusMouseLeave}
-                                        onClick={() => amountChange("-")}
-                                    />
-                                ) : (
-                                    <DashCircle
-                                        className="basket-btn-quantity"
-                                        onMouseEnter={handleMinusMouseEnter}
+            {isLoading ? (
+                <div className="text-center">
+                    <Spinner
+                        animation="border"
+                        style={{ width: "6rem", height: "6rem" }}
+                    />
+                </div>
+            ) : (
+                <Container>
+                    <Row
+                        className="m-0 p-0 pt-4 pb-4 d-flex text-white align-items-center"
+                        id="hotOffer-gallery-adaptivity"
+                    >
+                        <Col xs={5} className="d-flex">
+                            <Galleria
+                                value={product !== null ? product.picture : []}
+                                numVisible={3}
+                                item={(img) => (
+                                    <GalleriaMainPhoto
+                                        src={img}
+                                        styles={galleriaMainPhotoStyle}
                                     />
                                 )}
-                                <span>{amount}</span>
-                                {isPlusHovered ? (
-                                    <PlusCircleFill
-                                        className="basket-btn-quantity"
-                                        onMouseLeave={handlePlusMouseLeave}
-                                        onClick={() => amountChange("+")}
-                                    />
-                                ) : (
-                                    <PlusCircle
-                                        className="basket-btn-quantity"
-                                        onMouseEnter={handlePlusMouseEnter}
+                                thumbnailsPosition={"left"}
+                                thumbnail={(imageLink) => (
+                                    <GalleriaCarousel
+                                        src={imageLink}
+                                        styles={galleriaCarouselStyle}
                                     />
                                 )}
-                            </div>
-                            <div
-                                className="btn_white_theme d-inline-flex px-5 py-2 ms-4 rounded-5 align-items-center fw-bold"
-                                onClick={() => {
-                                    isInCard
-                                        ? removeFromBasket()
-                                        : addToBasket();
+                                showItemNavigators
+                                showItemNavigatorsOnHover
+                                circular
+                                pt={{
+                                    nextThumbnailButton: {
+                                        style: { color: "white" },
+                                    },
+                                    previousThumbnailButton: {
+                                        style: { color: "white" },
+                                    },
+                                    thumbnailItemContent: {
+                                        style: { border: "white solid 1px" },
+                                    },
+                                    thumbnailContainer: {
+                                        style: {
+                                            height: "30rem",
+                                            padding: "0px",
+                                        },
+                                    },
+                                    thumbnailItem: {
+                                        style: { height: "100%" },
+                                    },
+                                    thumbnailItemsContainer: {
+                                        style: { height: "auto" },
+                                    },
+                                    previousItemButton: {
+                                        style: {
+                                            color: "black",
+                                            width: "5rem",
+                                            height: "calc(100% - 2rem)",
+                                            top: "1rem",
+                                            margin: 0,
+                                            boxShadow: "none",
+                                            backgroundColor: "transparent",
+                                        },
+                                    },
+                                    nextItemButton: {
+                                        style: {
+                                            color: "black",
+                                            width: "5rem",
+                                            height: "calc(100% - 2rem)",
+                                            top: "1rem",
+                                            margin: 0,
+                                            boxShadow: "none",
+                                            backgroundColor: "transparent",
+                                        },
+                                    },
                                 }}
-                                id="hotOffer-btn-basket"
-                            >
-                                {isInCard
-                                    ? removeFromBasketIcon
-                                    : addToBasketIcon}
+                            />
+                        </Col>
+                        <Col>
+                            <h3 className="m-0 mb-3">
+                                <Link
+                                    to={`/catalog/${product?.id}`}
+                                    className="text-decoration-none text-white"
+                                    onClick={() => window.scroll(0, 0)}
+                                >
+                                    {product?.name}
+                                </Link>
+                            </h3>
+                            <span className="fs-4">
+                                Вартість:
+                                <span className="text-white-50 text-decoration-line-through mx-2">
+                                    {product?.price}₴
+                                </span>
+                                {product?.newPrice}₴
+                            </span>
+                            <div className="p-0 d-flex mt-3">
+                                <div
+                                    className="d-flex justify-content-between p-2 border rounded-pill align-items-center h-25 bg-white text-black"
+                                    style={{ minWidth: "80px", width: "7rem" }}
+                                >
+                                    {isMinusHovered ? (
+                                        <DashCircleFill
+                                            className="basket-btn-quantity"
+                                            onMouseLeave={handleMinusMouseLeave}
+                                            onClick={() => amountChange("-")}
+                                        />
+                                    ) : (
+                                        <DashCircle
+                                            className="basket-btn-quantity"
+                                            onMouseEnter={handleMinusMouseEnter}
+                                        />
+                                    )}
+                                    <span>{amount}</span>
+                                    {isPlusHovered ? (
+                                        <PlusCircleFill
+                                            className="basket-btn-quantity"
+                                            onMouseLeave={handlePlusMouseLeave}
+                                            onClick={() => amountChange("+")}
+                                        />
+                                    ) : (
+                                        <PlusCircle
+                                            className="basket-btn-quantity"
+                                            onMouseEnter={handlePlusMouseEnter}
+                                        />
+                                    )}
+                                </div>
+                                <div
+                                    className="btn_white_theme d-inline-flex px-5 py-2 ms-4 rounded-5 align-items-center fw-bold"
+                                    onClick={() => {
+                                        isInCard
+                                            ? removeFromBasket()
+                                            : addToBasket();
+                                    }}
+                                    id="hotOffer-btn-basket"
+                                >
+                                    {isInCard
+                                        ? removeFromBasketIcon
+                                        : addToBasketIcon}
+                                </div>
                             </div>
-                        </div>
-                        <h4 className="mt-4">Характеристики</h4>
-                        <div className="m-0 p-0 mt-4 d-flex flex-wrap justify-content-between">
-                            {product?.param.map(
-                                (item: ProductParameters, index) => {
-                                    return (
-                                        <div
-                                            key={index}
-                                            className="border-bottom mb-3 pb-3 d-flex justify-content-between"
-                                            style={{ width: "48%" }}
-                                            id="hotOffer-characteristics"
-                                        >
-                                            <h6 className="m-0 fw-bold">
-                                                {item.name}:
-                                            </h6>
-                                            <span>{item.description}</span>
-                                        </div>
-                                    );
-                                }
-                            )}
-                            <Link
-                                to={`/catalog/${product?.id}`}
-                                className="products-of-category__view-all fw-bold text-white mb-4"
-                                onClick={() => window.scroll(0, 0)}
-                                style={{ width: "48%" }}
-                                id="hotOffer-characteristics"
-                            >
-                                Переглянути сторінку товару
-                                <ArrowRight className="ms-1" />
-                            </Link>
-                        </div>
-                    </Col>
-                </Row>
-            </Container>
+                            <h4 className="mt-4">Характеристики</h4>
+                            <div className="m-0 p-0 mt-4 d-flex flex-wrap justify-content-between">
+                                {product?.param.map(
+                                    (item: ProductParameters, index) => {
+                                        return (
+                                            <div
+                                                key={index}
+                                                className="border-bottom mb-3 pb-3 d-flex justify-content-between"
+                                                style={{ width: "48%" }}
+                                                id="hotOffer-characteristics"
+                                            >
+                                                <h6 className="m-0 fw-bold">
+                                                    {item.name}:
+                                                </h6>
+                                                <span>{item.description}</span>
+                                            </div>
+                                        );
+                                    }
+                                )}
+                                <Link
+                                    to={`/catalog/${product?.id}`}
+                                    className="products-of-category__view-all fw-bold text-white mb-4"
+                                    onClick={() => window.scroll(0, 0)}
+                                    style={{ width: "48%" }}
+                                    id="hotOffer-characteristics"
+                                >
+                                    Переглянути сторінку товару
+                                    <ArrowRight className="ms-1" />
+                                </Link>
+                            </div>
+                        </Col>
+                    </Row>
+                </Container>
+            )}
 
             <MediaQuery minWidth={1590}>
                 <img
