@@ -38,7 +38,7 @@ export class CartService {
         const existingItem = this.cart.find(
             (cartItem) => cartItem.id === item.id
         );
-        
+
         if (existingItem) {
             existingItem.amount += 1;
         } else {
@@ -104,5 +104,10 @@ export class CartService {
             return item;
         });
         this.saveCart(updatedCart);
+    }
+
+    //Очищення localStorage
+    static clearStorage() {
+        localStorage.removeItem("christmasMarketBasket");
     }
 }

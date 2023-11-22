@@ -14,10 +14,6 @@
     opacity: 1;
 }
 
-.p-galleria-thumbnail-items-container {
-    margin: 1rem 0;
-}
-
 button:disabled svg {
     display: none;
 }

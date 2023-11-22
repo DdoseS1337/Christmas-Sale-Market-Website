@@ -1,0 +1,24 @@
+.bottom-carousel-img-hover:hover img{
+    opacity: 0.5;
+}
+
+.bottom-carousel-img-hover:hover #bottom-carousel-hidden {
+    display: block !important;
+}
+
+#bottom-carousel-eye-icon {
+    position: absolute;
+    left: 50%;
+    top: 40%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
+
+#bottom-carousel-hidden span {
+    position: absolute;
+    left: 50%;
+    top: 60%;
+    transform: translate(-50%, -50%);
+    color: black;
+    pointer-events: none;
+}

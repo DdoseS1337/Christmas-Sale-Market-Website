@@ -36,76 +36,83 @@ export const OrderSection = () => {
 	});
 
 	const toast = useRef<any>(null);
-
 	const [isOrderSending, setIsOrderSending] = useState<boolean>(false);
 
 	return (
-		<Section
-			width="1400px"
-			className="z-1"
-			unPadded
-			pt={{
-				inner: {
-					className:
-						"d-flex justify-content-center align-items-start flex-wrap gap-4",
-				},
-			}}
-		>
+		<>
 			<Toast ref={toast} />
-			<OrderForm formik={formik} />
+			<Section
+				width="1400px"
+				unPadded
+				pt={{
+					inner: {
+						className:
+							"d-flex justify-content-center align-items-start flex-wrap gap-4",
+					},
+				}}
+			>
+				<OrderForm formik={formik} />
 
-			<div className="order-summary">
-				<h3 className="order-sum">Підсумок Замовлення</h3>
-				<ul className="product-basket">
-					{itemsOfCart &&
-						itemsOfCart.map((item) => {
-							return (
-								<li key={item.id} className="product-listing">
-									<Image
-										src={item.picture[0]}
-										alt={item.name}
-										className="product-listing__image"
-									/>
-									<Link
-										className="product-listing__name"
-										to={"/catalog/" + item.id}
+				<div className="order-summary">
+					<h3 className="order-sum">Підсумок Замовлення</h3>
+					<ul className="product-basket">
+						{itemsOfCart &&
+							itemsOfCart.map((item) => {
+								return (
+									<li
+										key={item.id}
+										className="product-listing"
 									>
-										{item.name}
-									</Link>
-									<span className="product-listing__amount">
-										x{item.amount}
-									</span>
-									<span>
-										<b>{item.newPrice} грн</b>
-									</span>
-								</li>
-							);
-						})}
-				</ul>
-				<div className="mb-4 mt-4">
-					<hr className="divide" />
-					<p className="total">
-						Повна сума :{" "}
-						<span>
-							<b>{totalPrice} грн</b>
-						</span>
-					</p>
-				</div>
-				<div className="payment-method">
-					<h4 className="order-pay m-0">Оплата</h4>
-					<small className="d-inline-flex pb-3">
-						*Оплата тільки при отримані
-					</small>
-				</div>
+										<Image
+											src={item.picture[0]}
+											alt={item.name}
+											className="product-listing__image"
+										/>
+										<Link
+											className="product-listing__name"
+											to={"/catalog/" + item.id}
+										>
+											{item.name}
+										</Link>
+										<span className="product-listing__amount">
+											x{item.amount}
+										</span>
+										<span>
+											<b>{item.newPrice} грн</b>
+										</span>
+									</li>
+								);
+							})}
+					</ul>
+					<div className="mb-4 mt-4">
+						<hr className="divide" />
+						<p className="total">
+							Повна сума :{" "}
+							<span>
+								<b>{totalPrice} грн</b>
+							</span>
+						</p>
+					</div>
+					<div className="payment-method">
+						<h4 className="order-pay m-0">Оплата</h4>
+						<small className="d-inline-flex pb-3">
+							*Оплата тільки при отримані
+						</small>
+					</div>
 
-				<RoundedButton
-					className="d-flex justify-content-center"
-					onClick={formik.submitForm}
-				>
-					{isOrderSending ? <Spinner size="sm" /> : "Замовити товар"}
-				</RoundedButton>
-			</div>
-		</Section>
+					<RoundedButton
+						className="d-flex justify-content-center"
+						onClick={formik.submitForm}
+					>
+						{isOrderSending ? (
+							<Spinner size="sm" />
+						) : (
+							"Замовити товар"
+						)}
+					</RoundedButton>
+				</div>
+			</Section>
+		</>
 	);
 
 	async function sendOrder(data: CustomerInformationFormFields) {
@@ -127,6 +134,7 @@ export const OrderSection = () => {
 			summary: "Успіх",
 			detail: "Замовлення відправлено",
 		});
+		CartService.clearStorage();
 	}
 
 	function showFailedOrderToast() {

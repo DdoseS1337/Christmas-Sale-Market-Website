@@ -11,7 +11,7 @@ const MainContainer = (prop: Props) => {
 	return (
 		<Container fluid className="p-0 position-relative">
 			<ScrollButton />
-			<MediaQuery minWidth={1755}>
+			<MediaQuery minWidth={1698}>
 				<img
 					src="/images/pictures/santa-chimney.png"
 					alt="santa-chimney"

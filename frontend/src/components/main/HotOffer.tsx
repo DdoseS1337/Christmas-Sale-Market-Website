@@ -43,7 +43,7 @@ const HotOffer = () => {
         .includes(product?.id.toString() ?? "");
 
     const galleriaMainPhotoStyle = { width: "20rem" };
-    const galleriaCarouselStyle = { width: "5rem" };
+    const galleriaCarouselStyle = { width: "4rem" };
 
     const addToBasket = () => {
         CartService.loadCart();
@@ -77,8 +77,16 @@ const HotOffer = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const item = await christmasTreeApi.getOfferById("106");
-                setProduct(item);
+                const offers = await christmasTreeApi
+                    .getOffersByCategoryId(89)
+                    .then((offers) => offers.filter((offer) => offer.available))
+                    .then((offers) =>
+                        offers.length > 7 ? offers.splice(0, 7) : offers
+                    );
+
+                const date = new Date().getDay();
+
+                setProduct(offers[date]);
             } catch (error: any) {
                 console.error(`Error in Hot Offer: ${error.message}`);
             }
@@ -128,13 +136,35 @@ const HotOffer = () => {
                                     style: { border: "white solid 1px" },
                                 },
                                 thumbnailContainer: {
-                                    style: { height: "30rem" },
+                                    style: { height: "30rem", padding: "0px" },
                                 },
                                 thumbnailItem: {
                                     style: { height: "100%" },
                                 },
                                 thumbnailItemsContainer: {
                                     style: { height: "auto" },
+                                },
+                                previousItemButton: {
+                                    style: {
+                                        color: "black",
+                                        width: "5rem",
+                                        height: "calc(100% - 2rem)",
+                                        top: "1rem",
+                                        margin: 0,
+                                        boxShadow: "none",
+                                        backgroundColor: "transparent",
+                                    },
+                                },
+                                nextItemButton: {
+                                    style: {
+                                        color: "black",
+                                        width: "5rem",
+                                        height: "calc(100% - 2rem)",
+                                        top: "1rem",
+                                        margin: 0,
+                                        boxShadow: "none",
+                                        backgroundColor: "transparent",
+                                    },
                                 },
                             }}
                         />
@@ -203,21 +233,23 @@ const HotOffer = () => {
                         </div>
                         <h4 className="mt-4">Характеристики</h4>
                         <div className="m-0 p-0 mt-4 d-flex flex-wrap justify-content-between">
-                            {product?.param.map((item: ProductParameters, index) => {
-                                return (
-                                    <div
-                                        key={index}
-                                        className="border-bottom mb-3 pb-3 d-flex justify-content-between"
-                                        style={{ width: "48%" }}
-                                        id="hotOffer-characteristics"
-                                    >
-                                        <h6 className="m-0 fw-bold">
-                                            {item.name}:
-                                        </h6>
-                                        <span>{item.description}</span>
-                                    </div>
-                                );
-                            })}
+                            {product?.param.map(
+                                (item: ProductParameters, index) => {
+                                    return (
+                                        <div
+                                            key={index}
+                                            className="border-bottom mb-3 pb-3 d-flex justify-content-between"
+                                            style={{ width: "48%" }}
+                                            id="hotOffer-characteristics"
+                                        >
+                                            <h6 className="m-0 fw-bold">
+                                                {item.name}:
+                                            </h6>
+                                            <span>{item.description}</span>
+                                        </div>
+                                    );
+                                }
+                            )}
                             <Link
                                 to={`/catalog/${product?.id}`}
                                 className="products-of-category__view-all fw-bold text-white mb-4"
