@@ -12,7 +12,7 @@ interface PostRequestConfig extends Omit<BaseRequestConfig, "params"> {}
 export default class HttpService {
 	fetchingService: Axios;
 	cachedData: Record<string, ICachedItem>;
-	requestsIsSending: Record<string, boolean>;
+	requestsThatSending: Record<string, boolean>;
 	sessionCachedDataKey: string = "CACHED_ITEMS";
 
 	constructor(baseURL: string) {
@@ -21,7 +21,7 @@ export default class HttpService {
 		});
  
 		this.cachedData = {};
-		this.requestsIsSending = {};
+		this.requestsThatSending = {};
 		const sessionCachedData: Record<string, ICachedItem> = JSON.parse(sessionStorage.getItem(this.sessionCachedDataKey) ?? "{}");
 
 		// convert date from string to Date
@@ -63,16 +63,16 @@ export default class HttpService {
 	}
 
 	identicalRequestIsSending(config: BaseRequestConfig): boolean {
-		return this.requestsIsSending[this.buildKey(config)] ?? false;
+		return this.requestsThatSending[this.buildKey(config)] ?? false;
 	}
 
 	markThatRequestSending(config: BaseRequestConfig) {
 		// so that other don't send identical request during current request that not end
-		this.requestsIsSending[this.buildKey(config)] = true;
+		this.requestsThatSending[this.buildKey(config)] = true;
 	}
 	
 	markThatRequestReturnedResponse(config: BaseRequestConfig) {
-		this.requestsIsSending[this.buildKey(config)] = false;
+		this.requestsThatSending[this.buildKey(config)] = false;
 	}
 
 	cachingResponse(config: BaseRequestConfig, response: any) {
