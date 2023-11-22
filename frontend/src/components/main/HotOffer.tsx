@@ -317,14 +317,14 @@ const HotOffer = () => {
                 </MediaQuery>
                 <img
                     src="./images/pictures/presents.png"
-                    alt="presents-image"
+                    alt="presents"
                     className="position-absolute bottom-0 start-0 ms-5"
                     style={{ width: "12rem" }}
                 />
                 <MediaQuery minWidth={522}>
                     <img
                         src="./images/pictures/presents.png"
-                        alt="presents-image-reversed"
+                        alt="presents-reversed"
                         className="position-absolute bottom-0 end-0 me-5"
                         style={{ transform: "scaleX(-1)", width: "12rem" }}
                     />
