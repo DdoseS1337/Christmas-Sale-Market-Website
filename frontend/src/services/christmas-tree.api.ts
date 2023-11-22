@@ -17,7 +17,7 @@ class ChristmasTreeApi extends HttpService {
     }
 
     async getCategoryById(id: string) {
-        return this.get<ICategory>({
+        return this.getWithCaching<ICategory>({
             url: `${BACKEND_KEYS.CHRISTMAS_TREE_CATEGORIES}/${id}`,
         });
     }
@@ -25,12 +25,10 @@ class ChristmasTreeApi extends HttpService {
     async getAllOffers(available?: boolean) {
         return this.getWithCaching<Array<IOffer>>({
             url: BACKEND_KEYS.CHRISTMAS_TREE_OFFERS,
-        }).then((offers) => {
-            offers = offers.filter((offer) => offer.newPrice != 0);
-            if (available)
-                offers = offers.filter((offer) => offer.available == available);
-            return offers;
-        });
+            params: {
+                available
+            }
+        })
     }
 
     async getOfferById(id: string) {
@@ -47,13 +45,8 @@ class ChristmasTreeApi extends HttpService {
             throw new Error("Id is invalid");
 
         if (selectedCategory.parentId != null) {
-            return await this.getWithCaching<Array<IOffer>>({
-                url: `${BACKEND_KEYS.CHRISTMAS_TREE_OFFERS}`,
-                params: {
-                    categoryId,
-                    available: true,
-                },
-            });
+            return (await this.getAllOffers(true))
+                .filter((offer) => offer.categoryId === categoryId);
         }
 
         const allCategories = await this.getAllCategories();
