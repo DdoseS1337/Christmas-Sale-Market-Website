@@ -18,12 +18,12 @@ export const STORAGE_KEYS = {
 
 export const NOVA_POSHTA = {
     BASE_URL: "https://api.novaposhta.ua/v2.0/json",
-    API_KEY: "0729b8d2c7d323c51c21503e113f627f"
+    API_KEY: process.env.REACT_APP_NOVA_POSHTA_API_KEY
 }
 
 export const CONTACTS = {
     telephone: "+1234567890",
-    email: "example@gmail.com",
+    email: "your.christmas.tree.shop@gmail.com",
     viber: "https://www.viber.com/ua/",
 };
 
