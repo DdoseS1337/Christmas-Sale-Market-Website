@@ -56,7 +56,7 @@ export const OrderForm = ({ formik }: IProps) => {
 
 	return (
 		<form className="order-form">
-			<h1>Платіжна інформація</h1>
+			<h1 className="">Платіжна інформація</h1>
 			<div className="order-form__row">
 				<CustomInput
 					width="1/3"
@@ -143,17 +143,21 @@ export const OrderForm = ({ formik }: IProps) => {
 				/>
 			</div>
 			<div className="order-form__row flex-column">
-				<Form.Label>Примітки до замовлення</Form.Label>
-				<InputTextarea
-					id="additional-info-textbox"
-					placeholder="Примітки щодо вашого замовлення, напр. спеціальні примітки для доставки"
-					onChange={(e) =>
-						formik.setFieldValue(
-							"additionalInformation",
-							e.target.value
-						)
-					}
-				/>
+				<div>
+					<Form.Label htmlFor="additional-information">
+						Примітки до замовлення
+					</Form.Label>
+					<InputTextarea
+						id="additional-information"
+						placeholder="Примітки щодо вашого замовлення, напр. спеціальні примітки для доставки"
+						onChange={(e) =>
+							formik.setFieldValue(
+								"additionalInformation",
+								e.target.value
+							)
+						}
+					/>
+				</div>
 			</div>
 		</form>
 	);

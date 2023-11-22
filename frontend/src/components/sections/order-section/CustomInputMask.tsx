@@ -17,22 +17,24 @@ export const CustomInputMask = ({
 	placeholder,
 	isInvalid,
 	mask,
+	field,
 	...wrapperProps
 }: IProps) => {
 	return (
 		<CustomInputWrapper
 			{...wrapperProps}
+			field={field}
 			isInvalid={isInvalid}
 			input={
 				<InputMask
+					id={field}
 					placeholder={placeholder}
 					mask={mask}
 					onChange={(e) => {
-						e.target.value &&
-							setValue(wrapperProps.field, e.target.value);
+						e.target.value && setValue(field, e.target.value);
 					}}
 					className={classNames({
-						"p-invalid": isInvalid(wrapperProps.field),
+						"p-invalid": isInvalid(field),
 					})}
 				/>
 			}

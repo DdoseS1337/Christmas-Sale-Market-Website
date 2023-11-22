@@ -31,6 +31,7 @@ export const CustomDropdown = ({
 	value,
 	setField,
 	setSelectedValue,
+	field,
 	...wrapperProps
 }: IProps) => {
 	const [filter, setFilter] = filterState ?? [undefined, undefined];
@@ -38,9 +39,15 @@ export const CustomDropdown = ({
 	return (
 		<CustomInputWrapper
 			{...wrapperProps}
+			field={field}
 			isInvalid={isInvalid}
 			input={
 				<Dropdown
+					pt={{
+						input: {
+							id: field,
+						},
+					}}
 					value={value}
 					options={options}
 					disabled={disabled}
@@ -70,7 +77,7 @@ export const CustomDropdown = ({
 					)}
 					onChange={(e) => {
 						setSelectedValue && setSelectedValue(e.value);
-						setField(wrapperProps.field, e.value.name);
+						setField(field, e.value.name);
 					}}
 					optionLabel={optionLabel}
 					itemTemplate={(option) => {
@@ -81,7 +88,7 @@ export const CustomDropdown = ({
 						);
 					}}
 					className={classNames({
-						"p-invalid": isInvalid(wrapperProps.field),
+						"p-invalid": isInvalid(field),
 					})}
 				/>
 			}

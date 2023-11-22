@@ -1,4 +1,4 @@
-#additional-info-textbox {
+#additional-information {
   display: flex;
   width: 100%;
   height: 200px;
@@ -8,11 +8,10 @@
 }
 
 .order-summary {
-  /* margin-left: 3rem; */
-  border-radius: 8px;
+  max-width: 410px;
+  border-radius: 14px;
   border: 1px solid var(--Light-red, #c93f4f);
   background: var(--gray-scale-white, #fff);
-  /* width: 415.833px; */
   padding: 2rem;
   flex-direction: column;
   align-items: flex-start;
@@ -81,12 +80,13 @@
 
 .order-form {
   flex-grow: 1;
+  display: grid;
+  row-gap: 1rem;
 }
 
 .order-form__row {
   display: flex;
   gap: 1rem;
-  margin-bottom: 1rem;
   width: 100%;
 }
 

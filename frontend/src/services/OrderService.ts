@@ -18,7 +18,7 @@ class OrderServiceSingleton extends HttpService {
                 additional_info: order.customerInformation.additionalInformation,
                 branch_nova_poshta: order.customerInformation.branchOfNovaPoshta,
                 city: order.customerInformation.city,
-                productsi: order.offers.map(item => ({
+                products: order.offers.map(item => ({
                     id: item.id.toString(),
                     quantity: item.quantity,
                 }))
