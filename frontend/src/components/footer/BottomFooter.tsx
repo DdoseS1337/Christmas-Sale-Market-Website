@@ -8,8 +8,30 @@ import HeaderLogo from "../header/HeaderLogo";
 import { LinkWithIcon } from "../common/LinkWithIcon";
 import { CONTACTS } from "../../common";
 import Snowfall from "../ui/Snowfall";
+import { useEffect, useState } from "react";
+import christmasTreeApi from "../../services/christmas-tree.api";
+import { ICategory } from "../../interfaces/Category";
 
 const BottomFooter = () => {
+    const [categories, setCategories] = useState<Array<ICategory>>([]);
+
+    useEffect(() => {
+        christmasTreeApi
+            .getAllCategories()
+            .then((category) => {
+                setCategories(
+                    category
+                        .filter(
+                            (obj) =>
+                                obj.parentId == null &&
+                                obj.name !== "АРХИВ НЕАКТИВНЫХ"
+                        )
+                        .splice(0, 6)
+                );
+            })
+            .catch((error) => console.log(error));
+    }, []);
+
     return (
         <div className="bottom-footer">
             <Snowfall />
@@ -89,11 +111,10 @@ const BottomFooter = () => {
                             />
                             <FooterList
                                 title="Категорії"
-                                list={[
-                                    { text: "Ялинки", link: "" },
-                                    { text: "Гірлянди хвойні", link: "" },
-                                    { text: "Новорічні вінки", link: "" },
-                                ]}
+                                list={categories.map((el: ICategory) => ({
+                                    text: el.name,
+                                    link: `/catalog?categoryId=${el.id}`,
+                                }))}
                             />
                         </Container>
                     </Col>
