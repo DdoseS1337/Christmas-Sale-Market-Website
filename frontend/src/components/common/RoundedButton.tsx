@@ -34,7 +34,6 @@ const RoundedButton = ({
 		{
 			"rounded-button--inactive": inactive,
 		},
-		"p-ripple",
 		linkProps.className
 	);
 

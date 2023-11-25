@@ -1,17 +1,52 @@
-.footer-email-section {
+.email-section{
     background-color: var(--gray-50);
     padding-top: 40px;
     padding-bottom: 40px;
     overflow: hidden;
 }
-
-.footer-email-section .container {
-    position: relative;
+.email-section__container{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: 6rem;
 }
-
-.footer-email-section__tree-icon {
+.email-section__description{
+    color: var(--dark-gray-text);
+}
+.email-section__tree-icon{
     position: absolute;
     bottom: -41px;
     left: calc(100% + 10px);
     width: 220px;
+}
+
+@media (max-width: 600px){
+    .email-section__input{
+        width: 100% !important;
+    }
+}
+
+@media (max-width: 1050px){
+    .email-section__container{
+        justify-content: center;
+    }
+}
+
+@media (max-width: 1200px){
+    .email-section__tree-icon{
+        display: none;
+    }
+}
+
+@media (max-width: 1900px){
+    /* position-relative class interrupted position static, so I added div */
+    div.email-section__container{
+        position: static !important;
+    }
+    .email-section__tree-icon{
+        left: auto;
+        right: 50px;
+        bottom: 0;
+        z-index: -1;
+    }
 }
