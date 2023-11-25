@@ -1,0 +1,26 @@
+
+@media (max-width: 800px) {
+    .featured {
+        padding: 2rem;
+        flex-wrap: wrap;
+        /* gap: 2rem; */
+        row-gap: 2rem;
+        justify-content: center;
+        align-items: default;
+    }
+
+    .banner-big__title {
+        font-size: 2.5rem;
+    }
+
+    .banner-big {
+        padding: 100px 0 115px 60px;
+        /* font-size: 12px; */
+    }
+}
+
+@media (max-width: 500px) {
+    .banner-big__title {
+        font-size: 2rem;
+    }
+}
