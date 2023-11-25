@@ -18,7 +18,6 @@ import { IBannerInfo } from "./BannerBig";
 import { Featured } from "./Featured";
 import Confetti from "react-confetti";
 import "../../../styles/components/sections/present-section/present-section.css";
-import "../../../styles/components/adaptivity/present-section-adaptivity.css";
 import { useMediaQuery } from "react-responsive";
 import { BREAKPOINTS } from "../../../common";
 
