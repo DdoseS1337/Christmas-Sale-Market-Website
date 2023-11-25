@@ -40,21 +40,18 @@ export const CatalogSection = () => {
 	});
 
 	return (
-		<Section width="1550px" style={{ marginTop: "-3rem" }}>
+		<Section width="1550px" style={{ marginTop: "-3rem", zIndex: "10" }}>
 			{filterData ? (
-				<div className="mx-auto catalog animate__animated animate__fadeIn">
-					<div className="d-flex align-items-start">
+				<div className="catalog animate__animated animate__fadeIn">
+					<div className="catalog__inner">
 						<CatalogFilter
 							categories={filterData.categoriesForFilter}
 							selectedCategoryId={categoryId}
 							priceRange={filterData.priceRange}
 							pagination={filterData?.pagination}
+							className="catalog-filter--side"
 						/>
-						<CatalogOffersPresenter
-							categoryName={filterData?.selectedCategory?.name}
-							offers={filterData?.offers}
-							pagination={filterData?.pagination}
-						/>
+						<CatalogOffersPresenter {...filterData} />
 					</div>
 				</div>
 			) : (

@@ -8,12 +8,14 @@ import { CatalogPagination } from "./CatalogPagination";
 import { IFilterPagination } from "../../../interfaces/FilterPage";
 import { FILTER_CONST } from "../../../common";
 import { CatalogFilterRadioButton } from "./CatalogFilterRadioButton";
+import { classNames } from "primereact/utils";
 
 interface IProps {
 	categories: Array<ICategory>;
 	selectedCategoryId?: number;
 	priceRange: MultiRange;
 	pagination?: IFilterPagination;
+	className?: string;
 }
 
 export const CatalogFilter = ({
@@ -21,14 +23,15 @@ export const CatalogFilter = ({
 	selectedCategoryId,
 	priceRange,
 	pagination,
+	className,
 }: IProps) => {
 	const [queryParameters, setQueryParameters] = useSearchParams();
 
 	return (
 		<Accordion
-			className="catalog-filter"
+			className={classNames("catalog-filter", className)}
 			alwaysOpen
-			defaultActiveKey={["0", "1", "2", "3"]}
+			defaultActiveKey={["0", "1", "2", "3", "4"]}
 		>
 			<Accordion.Item className="catalog-filter__block" eventKey="0">
 				<Accordion.Header className="catalog-filter__title">
@@ -202,7 +205,7 @@ export const CatalogFilter = ({
 					/>
 				</Accordion.Body>
 			</Accordion.Item>
-			<Accordion.Item className="catalog-filter__block" eventKey="3">
+			<Accordion.Item className="catalog-filter__block" eventKey="4">
 				<Accordion.Header className="catalog-filter__title">
 					Сторінки
 				</Accordion.Header>
