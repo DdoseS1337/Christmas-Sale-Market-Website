@@ -5,3 +5,11 @@
     width: 160px;
     height: 220px;
 }
+
+@media (max-width: 550px) {
+    .present-section__inner {
+        padding-top: 1rem !important;
+        padding-bottom: 1rem !important;
+        margin-bottom: 6rem;
+    }
+}

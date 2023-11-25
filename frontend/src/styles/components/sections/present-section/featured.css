@@ -53,3 +53,9 @@
     line-height: 150%; /* 21px */
     margin: 0;
 }
+
+@media (max-width: 550px) {
+    .featured {
+        margin: 1rem 0 -6rem 0;
+    }
+}

@@ -139,6 +139,11 @@ export const PresentSection = () => {
 			<Section
 				style={{ marginBottom: 50, marginTop: "-3rem" }}
 				backgroundType={BackgroundType.RedWithSnow}
+				pt={{
+					inner: {
+						className: "present-section__inner",
+					},
+				}}
 			>
 				<Row style={{ margin: "0 -12px" }}>
 					<Col xs={3} className={isTabletLeftMenu ? "" : "d-none"}>
