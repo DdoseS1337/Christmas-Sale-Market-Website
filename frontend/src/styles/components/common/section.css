@@ -7,3 +7,12 @@
     color: var(--light);
     background: var(--bg-primary);
 }
+
+.section__inner {
+    position: relative;
+}
+
+.section__inner--with-padding {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+}

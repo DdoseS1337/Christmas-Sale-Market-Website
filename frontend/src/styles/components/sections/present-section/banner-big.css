@@ -2,7 +2,7 @@
     width: 100%;
     height: 520px;
 
-    padding: 155px 211px 115px 60px;
+    padding: 155px 0 115px 60px;
     border-radius: 10px;
     background-size: cover;
     background-repeat: no-repeat;
@@ -12,14 +12,19 @@
     flex-direction: column;
     justify-content: flex-end;
     align-items: flex-start;
+
 }
 
 .banner-big > *:not(:last-child) {
     margin-bottom: 28px;
 }
 
+.banner-big--with-discount {
+    padding-bottom: 60px;
+}
+
 .banner-big__title {
-    font-size: 48px;
+    font-size: 3rem;
     font-weight: 600;
     line-height: 120%;
 }
@@ -82,4 +87,28 @@
 .banner-big__button:hover {
     background-color: var(--bg-primary);
     color: var(--light);
+}
+
+@media (max-width: 800px) {
+    .banner-big__title {
+        font-size: 2.5rem;
+    }
+
+    .banner-big {
+        padding: 60px 0 60px 60px;
+    }
+}
+
+@media (max-width: 500px) {
+    .banner-big__title {
+        font-size: 1.7rem;
+    }
+
+    .banner-big__discount-title {
+        font-size: 1rem;
+    }
+
+    .banner-big__discount-number {
+        font-size: 1.2rem;
+    }
 }

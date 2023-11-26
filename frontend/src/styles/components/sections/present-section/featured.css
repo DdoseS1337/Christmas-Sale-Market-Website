@@ -53,3 +53,20 @@
     line-height: 150%; /* 21px */
     margin: 0;
 }
+
+
+@media (max-width: 800px) {
+    .featured {
+        padding: 2rem;
+        flex-wrap: wrap;
+        row-gap: 2rem;
+        justify-content: center;
+        align-items: default;
+    }
+}
+
+@media (max-width: 550px) {
+    .featured {
+        margin: 1rem 0 -6rem 0;
+    }
+}

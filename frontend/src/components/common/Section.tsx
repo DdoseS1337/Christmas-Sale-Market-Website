@@ -55,11 +55,11 @@ export const Section = ({
 				{...pt?.inner}
 				fluid={isFluid ?? "xl"}
 				className={classNames(
-					"position-relative",
-					pt?.inner?.className,
+					"section__inner",
 					{
-						"py-5": !unPadded,
-					}
+						"section__inner--with-padding": !unPadded,
+					},
+					pt?.inner?.className
 				)}
 				style={{
 					...pt?.inner?.style,
