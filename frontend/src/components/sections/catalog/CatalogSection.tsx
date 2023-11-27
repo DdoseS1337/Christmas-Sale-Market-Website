@@ -9,23 +9,16 @@ import { IFilterPageData } from "../../../interfaces/FilterPage";
 import { FILTER_CONST } from "../../../common";
 import { Spinner } from "react-bootstrap";
 import "animate.css";
+import { classNames } from "primereact/utils";
+import { useState } from "react";
 
 export const CatalogSection = () => {
 	const [queryParameters] = useSearchParams();
+	const [mobileFilterIsOpened, setMobileFilterIsOpened] =
+		useState<boolean>(false);
 
-	const {
-		page,
-		categoryId,
-		available,
-		priceRange,
-		sorting,
-	}: {
-		page: number;
-		categoryId: number | undefined;
-		available: boolean | undefined;
-		priceRange: MultiRange;
-		sorting: boolean | undefined;
-	} = getParametersFromURL();
+	const { page, categoryId, available, priceRange, sorting } =
+		getParametersFromURL();
 
 	const { items: filterData } = useFetchData<IFilterPageData>({
 		callApi: () =>
@@ -40,19 +33,28 @@ export const CatalogSection = () => {
 	});
 
 	return (
-		<Section width="1550px" style={{ marginTop: "-3rem", zIndex: "10" }}>
+		<Section
+			className={classNames("catalog", {
+				catalog__biggestZIndex: mobileFilterIsOpened,
+			})}
+			width="1550px"
+		>
 			{filterData ? (
-				<div className="catalog animate__animated animate__fadeIn">
-					<div className="catalog__inner">
-						<CatalogFilter
-							categories={filterData.categoriesForFilter}
-							selectedCategoryId={categoryId}
-							priceRange={filterData.priceRange}
-							pagination={filterData?.pagination}
-							className="catalog-filter--side"
-						/>
-						<CatalogOffersPresenter {...filterData} />
-					</div>
+				<div className="catalog__inner animate__animated animate__fadeIn">
+					<CatalogFilter
+						categories={filterData.categoriesForFilter}
+						selectedCategoryId={categoryId}
+						priceRange={filterData.priceRange}
+						pagination={filterData?.pagination}
+						className="catalog-filter--side"
+					/>
+					<CatalogOffersPresenter
+						{...filterData}
+						mobileFilterIsOpened={[
+							mobileFilterIsOpened,
+							setMobileFilterIsOpened,
+						]}
+					/>
 				</div>
 			) : (
 				<div className="catalog__spinner-wrapper animate__animated animate__animated">

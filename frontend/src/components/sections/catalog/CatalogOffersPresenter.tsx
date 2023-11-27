@@ -5,18 +5,21 @@ import { CatalogPagination } from "./CatalogPagination";
 import { List, XLg } from "react-bootstrap-icons";
 import { CatalogFilter } from "./CatalogFilter";
 import { classNames } from "primereact/utils";
-import { useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 
-interface IProps extends IFilterPageData {}
+interface IProps extends IFilterPageData {
+	mobileFilterIsOpened: [boolean, Dispatch<SetStateAction<boolean>>];
+}
 
 export const CatalogOffersPresenter = ({
 	selectedCategory,
 	offers,
 	pagination,
+	mobileFilterIsOpened,
 	...otherFilterData
 }: IProps) => {
 	const offersIsEmpty = offers?.length === 0;
-	const [filterIsOpened, setFilterIsOpened] = useState(false);
+	const [filterIsOpened, setFilterIsOpened] = mobileFilterIsOpened;
 
 	return (
 		<div className="catalog__content">
