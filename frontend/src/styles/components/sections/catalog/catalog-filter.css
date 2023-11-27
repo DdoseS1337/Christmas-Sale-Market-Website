@@ -23,6 +23,12 @@
     cursor: pointer;
 }
 
+.catalog-filter__radio-control > .form-check-input {
+    border-color: var(--gray-200) !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
 .catalog-filter__radio-control > .form-check-input:checked {
     background-color: var(--primary);
     border-color: var(--primary) !important;
