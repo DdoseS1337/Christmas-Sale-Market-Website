@@ -32,7 +32,7 @@
     }
 }
 
-@media (max-width: 1200px){
+@media (max-width: 1366px){
     .email-section__tree-icon{
         display: none;
     }
