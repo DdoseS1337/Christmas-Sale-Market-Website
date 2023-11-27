@@ -7,7 +7,7 @@ const InStockBlock = ({ available }: InStockBlockProps) => {
                 available
                     ? "bg-success-subtle  text-primary"
                     : "bg-danger-subtle text-danger"
-            } ms-4 d-flex justify-content-center align-items-center  rounded-3 px-3 py-2`}
+            } ms-4 d-inline-flex justify-content-center align-items-center  rounded-3 px-3 py-2`}
             style={{ whiteSpace: "nowrap" }}
         >
             <span>{available ? "В наявності" : "Немає в наявності"}</span>

@@ -1,7 +1,7 @@
 import { Galleria } from "primereact/galleria";
 import { Col, Container, Row } from "react-bootstrap";
 import christmasTreeApi from "../../services/christmas-tree.api";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { IOffer } from "../../interfaces/Offer";
 import MediaQuery from "react-responsive";
 import useHoverStates from "../sections/basket/AmountChangeHooks";
