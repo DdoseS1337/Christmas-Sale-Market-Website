@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import LoadingSpinner from "../common/LoadingSpinner";
 import { Link } from "react-router-dom";
-import { ArrowRight, Eye } from "react-bootstrap-icons";
+import { Eye } from "react-bootstrap-icons";
 import "../../styles/components/bottom-carousel.css";
 import ErrorMessage from "../common/ErrorMessage";
 
@@ -34,6 +34,11 @@ const BottomCarousel = () => {
 
     const responsiveOptions = [
         {
+            breakpoint: "9000px",
+            numVisible: 4,
+            numScroll: 1,
+        },
+        {
             breakpoint: "1204px",
             numVisible: 3,
             numScroll: 1,
@@ -52,9 +57,10 @@ const BottomCarousel = () => {
 
     const offerTemplate = (product: Array<string>) => {
         return (
-            <div className="text-center position-relative bottom-carousel-img-hover">
+            <div className="text-center position-relative">
                 <Link
                     to={`catalog/${product[1]}`}
+                    className="bottom-carousel-img-hover"
                     onClick={() => window.scroll(0, 0)}
                 >
                     <img
@@ -65,19 +71,15 @@ const BottomCarousel = () => {
                             width: "15rem",
                         }}
                     />
+                    <div className="d-none" id="bottom-carousel-hidden">
+                        <Eye
+                            size={60}
+                            color="black"
+                            id="bottom-carousel-eye-icon"
+                        />
+                        <span>Переглянути сторінку товару</span>
+                    </div>
                 </Link>
-                <div className="d-none " id="bottom-carousel-hidden">
-                    <Eye
-                        size={60}
-                        color="black"
-                        id="bottom-carousel-eye-icon"
-                    />
-                    <span>
-                        Переглянути
-                        <br /> сторінку товару
-                        <ArrowRight color="black" className="ms-1" size={15} />
-                    </span>
-                </div>
             </div>
         );
     };

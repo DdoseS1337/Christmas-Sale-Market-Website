@@ -4,6 +4,7 @@ import "../../../styles/components/sections/hot-product/hot-product.css";
 import { useFetchData } from "../../../hooks/FetchDataHook";
 import christmasTreeApi from "../../../services/christmas-tree.api";
 import { ICategoryWithOffers } from "../../../interfaces/Category";
+import LoadingSpinner from "../../common/LoadingSpinner";
 
 export const ShortOffersPreviewer = () => {
 	const { items: categoriesWithOffers } = useFetchData<
@@ -14,7 +15,7 @@ export const ShortOffersPreviewer = () => {
 
 	return (
 		<Section className="hot-product" width="1510px">
-			{categoriesWithOffers &&
+			{categoriesWithOffers ? (
 				categoriesWithOffers.map(
 					(categoryWithOffers: ICategoryWithOffers) => {
 						return (
@@ -25,6 +26,8 @@ export const ShortOffersPreviewer = () => {
 							/>
 						);
 					}
+				)):(
+					<LoadingSpinner variant="danger"/>
 				)}
 		</Section>
 	);

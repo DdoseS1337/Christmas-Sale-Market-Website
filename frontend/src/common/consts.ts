@@ -54,7 +54,7 @@ export const SIMILAR_PRODUCTS = {
 export const BREAKPOINTS = {
     TABLET: {
         HEADER: {
-            LOGO: 500,
+            LOGO: 510,
             SEARCHBAR: 1100,
             BASKET: 1100,
         },

@@ -34,6 +34,7 @@ import {
 } from "../components/sections/product/ProductGalleria";
 import "../styles/components/basket.css";
 import "../styles/components/adaptivity/product-adaptivity.css";
+import LoadingSpinner from "../components/common/LoadingSpinner";
 
 interface IProps {
     setAdditionalBreadCrumbs: Dispatch<SetStateAction<any>>;
@@ -133,181 +134,192 @@ const ProductPage = ({ setAdditionalBreadCrumbs }: IProps) => {
 
     return (
         <>
-            <Container>
-                <Row>
-                    <Col lg={4} className="d-flex justify-content-center">
-                        <Galleria
-                            value={product !== null ? product.picture : []}
-                            numVisible={3}
-                            item={(img) => (
-                                <GalleriaMainPhoto
-                                    src={img}
-                                    styles={galleriaMainPhotoStyle}
-                                />
-                            )}
-                            thumbnailsPosition={"left"}
-                            thumbnail={(imageLink) => (
-                                <GalleriaCarousel
-                                    src={imageLink}
-                                    styles={galleriaCarouselStyle}
-                                />
-                            )}
-                            showItemNavigators
-                            showItemNavigatorsOnHover
-                            circular
-                            pt={{
-                                nextThumbnailButton: {
-                                    style: { color: "#c93f4f" },
-                                },
-                                previousThumbnailButton: {
-                                    style: { color: "#c93f4f" },
-                                },
-                                thumbnailItemContent: {
-                                    style: {
-                                        border: "#c93f4f solid 1px",
-                                    },
-                                },
-                                content: {
-                                    style: { height: "auto" },
-                                },
-                                thumbnailContainer: {
-                                    style: { padding: "0px" },
-                                },
-                                previousItemButton: {
-                                    style: {
-                                        color: "black",
-                                        width: "5rem",
-                                        height: "calc(100% - 2rem)",
-                                        top: "1rem",
-                                        margin: 0,
-                                        boxShadow: "none",
-                                        backgroundColor: "transparent",
-                                    },
-                                },
-                                nextItemButton: {
-                                    style: {
-                                        color: "black",
-                                        width: "5rem",
-                                        height: "calc(100% - 2rem)",
-                                        top: "1rem",
-                                        margin: 0,
-                                        boxShadow: "none",
-                                        backgroundColor: "transparent",
-                                    },
-                                },
-                            }}
-                        />
-                    </Col>
-                    <Col
-                        className="p-0 m-0 ms-3"
-                        id="product-description-block"
-                    >
-                        <Container className="d-flex p-0 align-items-start">
-                            <h2>{product?.name}</h2>
-                            <InStockBlock available={product?.available} />
-                        </Container>
-                        <Container className="p-0">
-                            <span className="text-decoration-line-through text-secondary fs-5">
-                                {product?.price}₴
-                            </span>
-                            <span className="ms-2 fs-5 fw-semibold">
-                                {product?.newPrice}₴
-                            </span>
-                            <DiscountBadge
-                                price={product?.price}
-                                newPrice={product?.newPrice}
-                            />
-                        </Container>
-                        <GreyLine />
-                        <Container className="p-0 d-flex align-items-center">
-                            <h6 className="m-0">Склад: </h6>
-                            <div className="product-storage-badge">1</div>
-                        </Container>
-                        <Container className="p-0 mt-4 d-flex align-items-center">
-                            <h6 className="m-0">
-                                Категорія:
-                                <span
-                                    className="text-secondary ms-2"
-                                    style={{ cursor: "pointer" }}
-                                    onClick={() =>
-                                        handleCategoryClick(category?.id)
-                                    }
-                                >
-                                    {category?.name}
-                                </span>
-                            </h6>
-                        </Container>
-                        <GreyLine />
-                        <Container className="p-0 d-flex">
-                            <div
-                                className="d-flex justify-content-between p-2 border rounded-pill align-items-center h-25"
-                                style={{ minWidth: "80px", width: "7rem" }}
-                            >
-                                {isMinusHovered ? (
-                                    <DashCircleFill
-                                        className="basket-btn-quantity"
-                                        onMouseLeave={handleMinusMouseLeave}
-                                        onClick={() => amountChange("-")}
-                                    />
-                                ) : (
-                                    <DashCircle
-                                        className="basket-btn-quantity"
-                                        onMouseEnter={handleMinusMouseEnter}
+            {product ? (
+                <Container>
+                    <Row>
+                        <Col lg={4} className="d-flex justify-content-center">
+                            <Galleria
+                                value={product !== null ? product.picture : []}
+                                numVisible={3}
+                                item={(img) => (
+                                    <GalleriaMainPhoto
+                                        src={img}
+                                        styles={galleriaMainPhotoStyle}
                                     />
                                 )}
-                                <span>{amount}</span>
-                                {isPlusHovered ? (
-                                    <PlusCircleFill
-                                        className="basket-btn-quantity"
-                                        onMouseLeave={handlePlusMouseLeave}
-                                        onClick={() => amountChange("+")}
-                                    />
-                                ) : (
-                                    <PlusCircle
-                                        className="basket-btn-quantity"
-                                        onMouseEnter={handlePlusMouseEnter}
+                                thumbnailsPosition={"left"}
+                                thumbnail={(imageLink) => (
+                                    <GalleriaCarousel
+                                        src={imageLink}
+                                        styles={galleriaCarouselStyle}
                                     />
                                 )}
-                            </div>
-                            <div
-                                className={`btn-red-theme d-inline-flex px-5 py-2 ms-4 rounded-5 align-items-center ${
-                                    product?.available ? "" : "btn disabled"
-                                }`}
-                                onClick={() => {
-                                    isInCard
-                                        ? removeFromBasket()
-                                        : addToBasket();
+                                showItemNavigators
+                                showItemNavigatorsOnHover
+                                circular
+                                pt={{
+                                    nextThumbnailButton: {
+                                        style: { color: "#c93f4f" },
+                                    },
+                                    previousThumbnailButton: {
+                                        style: { color: "#c93f4f" },
+                                    },
+                                    thumbnailItemContent: {
+                                        style: {
+                                            border: "#c93f4f solid 1px",
+                                        },
+                                    },
+                                    content: {
+                                        style: { height: "auto" },
+                                    },
+                                    thumbnailContainer: {
+                                        style: { padding: "0px" },
+                                    },
+                                    previousItemButton: {
+                                        style: {
+                                            color: "black",
+                                            width: "5rem",
+                                            height: "calc(100% - 2rem)",
+                                            top: "1rem",
+                                            margin: 0,
+                                            boxShadow: "none",
+                                            backgroundColor: "transparent",
+                                        },
+                                    },
+                                    nextItemButton: {
+                                        style: {
+                                            color: "black",
+                                            width: "5rem",
+                                            height: "calc(100% - 2rem)",
+                                            top: "1rem",
+                                            margin: 0,
+                                            boxShadow: "none",
+                                            backgroundColor: "transparent",
+                                        },
+                                    },
                                 }}
-                                id="product-btn-basket"
-                            >
-                                {isInCard
-                                    ? removeFromBasketIcon
-                                    : addToBasketIcon}
-                            </div>
-                        </Container>
-                        <GreyLine />
-                    </Col>
-                </Row>
-                <Row className="mt-5">
-                    <h5 className="product-h6-title" style={{ width: "12rem" }}>
-                        Характеристики
-                    </h5>
-                    <div className="border-bottom" />
-                </Row>
-                <Container className="m-0 p-0 mt-4 d-flex flex-wrap justify-content-between">
-                    {product?.param.map((item: ProductParameters, index) => (
-                        <div
-                            key={index}
-                            className="border-bottom mb-3 pb-3 d-flex justify-content-between"
-                            style={{ width: "48%" }}
-                            id="product-characteristics"
+                            />
+                        </Col>
+                        <Col
+                            className="p-0 m-0 ms-3"
+                            id="product-description-block"
                         >
-                            <h6 className="m-0 fw-bold">{item.name}:</h6>
-                            <span>{item.description}</span>
-                        </div>
-                    ))}
+                            <Container className="d-flex p-0 align-items-start">
+                                <h2>{product?.name}</h2>
+                                <InStockBlock available={product?.available} />
+                            </Container>
+                            <Container className="p-0">
+                                <span className="text-decoration-line-through text-secondary fs-5">
+                                    {product?.price}₴
+                                </span>
+                                <span className="ms-2 fs-5 fw-semibold">
+                                    {product?.newPrice}₴
+                                </span>
+                                <DiscountBadge
+                                    price={product?.price}
+                                    newPrice={product?.newPrice}
+                                />
+                            </Container>
+                            <GreyLine />
+                            <Container className="p-0 d-flex align-items-center">
+                                <h6 className="m-0">Склад: </h6>
+                                <div className="product-storage-badge">1</div>
+                            </Container>
+                            <Container className="p-0 mt-4 d-flex align-items-center">
+                                <h6 className="m-0">
+                                    Категорія:
+                                    <span
+                                        className="text-secondary ms-2"
+                                        style={{ cursor: "pointer" }}
+                                        onClick={() =>
+                                            handleCategoryClick(category?.id)
+                                        }
+                                    >
+                                        {category?.name}
+                                    </span>
+                                </h6>
+                            </Container>
+                            <GreyLine />
+                            <Container className="p-0 d-flex">
+                                <div
+                                    className="d-flex justify-content-between p-2 border rounded-pill align-items-center h-25"
+                                    style={{ minWidth: "80px", width: "7rem" }}
+                                >
+                                    {isMinusHovered ? (
+                                        <DashCircleFill
+                                            className="basket-btn-quantity"
+                                            onMouseLeave={handleMinusMouseLeave}
+                                            onClick={() => amountChange("-")}
+                                        />
+                                    ) : (
+                                        <DashCircle
+                                            className="basket-btn-quantity"
+                                            onMouseEnter={handleMinusMouseEnter}
+                                        />
+                                    )}
+                                    <span>{amount}</span>
+                                    {isPlusHovered ? (
+                                        <PlusCircleFill
+                                            className="basket-btn-quantity"
+                                            onMouseLeave={handlePlusMouseLeave}
+                                            onClick={() => amountChange("+")}
+                                        />
+                                    ) : (
+                                        <PlusCircle
+                                            className="basket-btn-quantity"
+                                            onMouseEnter={handlePlusMouseEnter}
+                                        />
+                                    )}
+                                </div>
+                                <div
+                                    className={`btn-red-theme d-inline-flex px-5 py-2 ms-4 rounded-5 align-items-center ${
+                                        product?.available ? "" : "btn disabled"
+                                    }`}
+                                    onClick={() => {
+                                        isInCard
+                                            ? removeFromBasket()
+                                            : addToBasket();
+                                    }}
+                                    id="product-btn-basket"
+                                >
+                                    {isInCard
+                                        ? removeFromBasketIcon
+                                        : addToBasketIcon}
+                                </div>
+                            </Container>
+                            <GreyLine />
+                        </Col>
+                    </Row>
+                    <Row className="mt-5">
+                        <h5
+                            className="product-h6-title"
+                            style={{ width: "12rem" }}
+                        >
+                            Характеристики
+                        </h5>
+                        <div className="border-bottom" />
+                    </Row>
+                    <Container className="m-0 p-0 mt-4 d-flex flex-wrap justify-content-between">
+                        {product?.param.map(
+                            (item: ProductParameters, index) => (
+                                <div
+                                    key={index}
+                                    className="border-bottom mb-3 pb-3 d-flex justify-content-between"
+                                    style={{ width: "48%" }}
+                                    id="product-characteristics"
+                                >
+                                    <h6 className="m-0 fw-bold">
+                                        {item.name}:
+                                    </h6>
+                                    <span>{item.description}</span>
+                                </div>
+                            )
+                        )}
+                    </Container>
                 </Container>
-            </Container>
+            ) : (
+                <LoadingSpinner variant="danger" />
+            )}
             {product && <SimilarProducts categoryId={product?.categoryId} />}
         </>
     );
