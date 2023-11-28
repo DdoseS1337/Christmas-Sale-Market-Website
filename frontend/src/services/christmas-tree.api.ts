@@ -4,6 +4,7 @@ import { MultiRange } from "../interfaces/MultiRange";
 import { IOffer } from "../interfaces/Offer";
 import { ICategory, ICategoryWithOffers } from "../interfaces/Category";
 import { IFilterPageData } from "../interfaces/FilterPage";
+import { asyncFilter } from "../utils/AsyncFilter";
 
 class ChristmasTreeApi extends HttpService {
     constructor() {
@@ -13,7 +14,7 @@ class ChristmasTreeApi extends HttpService {
     async getAllCategories(): Promise<Array<ICategory>> {
         return this.getWithCaching<Array<ICategory>>({
             url: BACKEND_KEYS.CHRISTMAS_TREE_CATEGORIES,
-        });
+        }).then(response => response.filter(category => category.name !== "АРХИВ НЕАКТИВНЫХ"));
     }
 
     async getCategoryById(id: string) {
@@ -28,7 +29,7 @@ class ChristmasTreeApi extends HttpService {
             params: {
                 available
             }
-        })
+        }).then(response => response.filter(offer => offer.newPrice != 0 && offer.price != 0));
     }
 
     async getOfferById(id: string) {
@@ -97,52 +98,50 @@ class ChristmasTreeApi extends HttpService {
     ) {
         if (page < 1) page = 1;
 
-        const allCategories = await this.getAllCategories();
+        const filterableCategories = await asyncFilter(
+            await this.getAllCategories(), 
+            async category => category.parentId === null &&
+                (await this.getOffersByCategoryId(category.id)).length !== 0
+        );
+
         const selectedCategory =
             categoryId != null
-                ? allCategories.find((category) => category.id == categoryId)
+                ? filterableCategories.find((category) => category.id == categoryId)
                 : undefined;
-        const categoriesForFilter = allCategories.filter(
-            (category) => category.parentId == null
-        );
-        const categoriesToFindOffers = selectedCategory
-            ? allCategories.filter(
-                  (category) => category.parentId == selectedCategory?.id
-              )
-            : allCategories;
+
+        let filteredOffersByPage = [];
 
         const allOffers = await this.getAllOffers();
-        let filteredOffersByPage = allOffers;
 
-        if (categoryId != null)
-            filteredOffersByPage = filteredOffersByPage.filter(
-                (offer) =>
-                    offer.categoryId == categoryId ||
-                    categoriesToFindOffers
-                        .map((c) => c.id)
-                        .includes(offer.categoryId)
-            );
+        filteredOffersByPage = !!categoryId
+            ? await this.getOffersByCategoryId(categoryId)
+            : allOffers
 
-        if (available != null)
-            filteredOffersByPage = filteredOffersByPage.filter(
-                (offer) => offer.available == available
-            );
+        filteredOffersByPage = !!available 
+            ? filteredOffersByPage.filter((offer) => offer.available == available) 
+            : filteredOffersByPage;
 
-        if (priceRange != null)
-            filteredOffersByPage = filteredOffersByPage.filter(
+        filteredOffersByPage = !!available 
+            ? filteredOffersByPage.filter((offer) => offer.available == available) 
+            : filteredOffersByPage;
+
+        filteredOffersByPage = !!priceRange 
+            ? filteredOffersByPage.filter(
                 (offer) =>
                     offer.newPrice >= priceRange!.min &&
                     offer.newPrice <= priceRange!.max
-            );
+            )
+            : filteredOffersByPage;
 
-        if (sorting != null && sorting === true)
-            filteredOffersByPage = filteredOffersByPage.sort(
-                (o1, o2) => o1.newPrice - o2.newPrice
-            );
-        else if (sorting != null && sorting === false)
-            filteredOffersByPage = filteredOffersByPage.sort(
-                (o1, o2) => o2.newPrice - o1.newPrice
-            );
+        filteredOffersByPage = !!sorting 
+            ? sorting
+                ? filteredOffersByPage.sort(
+                    (o1, o2) => o1.newPrice - o2.newPrice
+                )
+                : filteredOffersByPage.sort(
+                    (o1, o2) => o2.newPrice - o1.newPrice
+                )
+            : filteredOffersByPage;
 
         const totalNumberOfPages = Math.ceil(
             filteredOffersByPage.length / FILTER_CONST.PAGE_SIZE
@@ -157,8 +156,7 @@ class ChristmasTreeApi extends HttpService {
 
         return {
             selectedCategory,
-            categoriesForFilter,
-            subCategories: categoriesToFindOffers,
+            categoriesForFilter: filterableCategories,
             offers: offersByPage,
             priceRange: {
                 min: Math.min(...allOffers.map((o) => o.newPrice)),

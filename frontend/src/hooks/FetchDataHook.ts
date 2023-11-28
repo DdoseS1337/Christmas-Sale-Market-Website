@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { isTypeElement } from "typescript";
+import { asyncFilter } from "../utils/AsyncFilter";
 
 export interface IFetchDataParameters<T> {
     callApi: () => Promise<T>
@@ -52,9 +52,4 @@ export const useFetchData = <T>(fetchDataParameters: IFetchDataParameters<T>) =>
     }, fetchDataParameters.dependencies ?? []);
     
     return { items, refresh, error, inProgress };
-}
-
-const asyncFilter = async (arr: Array<any>, func: (value: any, index: number, array: any[]) => boolean | Promise<boolean>) => {
-    const boolArr = await Promise.all(arr.map(func));
-    return arr.filter((_, i) => boolArr[i]);
 }

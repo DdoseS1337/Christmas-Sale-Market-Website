@@ -42,15 +42,16 @@ export const CatalogSection = () => {
 			{filterData ? (
 				<div className="catalog__inner animate__animated animate__fadeIn">
 					<CatalogFilter
+						radioUniqueKey="side"
 						categories={filterData.categoriesForFilter}
 						selectedCategoryId={categoryId}
 						priceRange={filterData.priceRange}
-						pagination={filterData?.pagination}
+						pagination={filterData.pagination}
 						className="catalog-filter--side"
 					/>
 					<CatalogOffersPresenter
 						{...filterData}
-						mobileFilterIsOpened={[
+						mobileFilterIsOpenedState={[
 							mobileFilterIsOpened,
 							setMobileFilterIsOpened,
 						]}

@@ -8,14 +8,14 @@ import { classNames } from "primereact/utils";
 import { Dispatch, SetStateAction } from "react";
 
 interface IProps extends IFilterPageData {
-	mobileFilterIsOpened: [boolean, Dispatch<SetStateAction<boolean>>];
+	mobileFilterIsOpenedState: [boolean, Dispatch<SetStateAction<boolean>>];
 }
 
 export const CatalogOffersPresenter = ({
 	selectedCategory,
 	offers,
 	pagination,
-	mobileFilterIsOpened,
+	mobileFilterIsOpenedState: mobileFilterIsOpened,
 	...otherFilterData
 }: IProps) => {
 	const offersIsEmpty = offers?.length === 0;
@@ -59,6 +59,7 @@ export const CatalogOffersPresenter = ({
 			>
 				<CatalogFilter
 					{...otherFilterData}
+					radioUniqueKey="mobile"
 					pagination={pagination}
 					selectedCategoryId={selectedCategory?.id}
 					categories={otherFilterData.categoriesForFilter}

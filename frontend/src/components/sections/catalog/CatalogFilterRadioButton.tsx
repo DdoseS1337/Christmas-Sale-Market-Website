@@ -7,6 +7,7 @@ interface IProps {
 	checked?: boolean;
 	onChecked?: () => void;
 	changeQueryParameters?: (queryParameters: URLSearchParams) => void;
+	radioUniqueKey: string;
 }
 
 export const CatalogFilterRadioButton = ({
@@ -15,13 +16,14 @@ export const CatalogFilterRadioButton = ({
 	checked,
 	onChecked,
 	changeQueryParameters,
+	radioUniqueKey,
 }: IProps) => {
 	const [, setQueryParameters] = useSearchParams();
 
 	return (
 		<Form.Check
-			name={name}
-			id={name + "-" + crypto.randomUUID()}
+			name={name + "--" + radioUniqueKey}
+			id={name + "--" + crypto.randomUUID()}
 			type="radio"
 			className="catalog-filter__radio-control"
 			label={label}
