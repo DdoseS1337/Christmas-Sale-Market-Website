@@ -1,7 +1,7 @@
 import { Card } from "react-bootstrap";
 import "../../styles/components/common/product-card.css";
 import RoundedButton from "./RoundedButton";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
 import { IShortOffer } from "../../interfaces/Offer";
 import { CartService } from "../../services/basketService";
@@ -24,7 +24,7 @@ export const ProductCard = ({
 	className,
 	available,
 }: IProps) => {
-	const linkRef = useRef<HTMLAnchorElement>(null);
+	const navigate = useNavigate();
 
 	const isInCart = CartService.getCart()
 		.map((item) => item.id)
@@ -50,10 +50,7 @@ export const ProductCard = ({
 				body
 				className={"product-card " + className}
 				onClick={() => {
-					!clickedOnBasked &&
-						linkRef.current?.click() &&
-						window.scroll(0, 0);
-
+					!clickedOnBasked && navigateToProductPage();
 					clickedOnBasked = false;
 				}}
 			>
@@ -77,13 +74,7 @@ export const ProductCard = ({
 				<Card.Footer>
 					<div>
 						<Card.Title className="product-card__title">
-							<Link
-								to={`/catalog/${id}`}
-								ref={linkRef}
-								onClick={() => window.scroll(0, 0)}
-							>
-								{title}
-							</Link>
+							{title}
 						</Card.Title>
 						<div className="product-card__price">
 							<div className="product-card__price-actual me-2">
@@ -141,5 +132,10 @@ export const ProductCard = ({
 
 	function removeFromBasket() {
 		setModalShow(true);
+	}
+
+	function navigateToProductPage() {
+		navigate(`/catalog/${id}`);
+		window.scroll(0, 0);
 	}
 };
