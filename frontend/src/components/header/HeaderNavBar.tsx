@@ -33,7 +33,6 @@ const HeaderNavBar = () => {
                 <Nav
                     className="me-auto my-2 my-lg-0"
                     style={{ maxHeight: "160px" }}
-                    navbarScroll
                 >
                     <LinkContainer to="/">
                         <Nav.Link>Головна</Nav.Link>

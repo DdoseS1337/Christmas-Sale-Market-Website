@@ -69,12 +69,6 @@
     }
 }
 
-/* @media (max-width: 904px) {
-    .scroll-up-button {
-        display: none !important;
-    }
-} */
-
 @media (max-width: 394px) {
     #basket-back-to-catalog-btn {
         display: none !important;

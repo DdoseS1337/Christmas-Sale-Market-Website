@@ -64,7 +64,7 @@ const Header = () => {
                     <Col>
                         <NavBar />
                     </Col>
-                    <Col className="d-flex justify-content-end align-items-center">
+                    <Col className="d-flex justify-content-end align-items-center" id="header-contacts-container-adaptivity">
                         <ContactsBar />
                     </Col>
                 </Row>
