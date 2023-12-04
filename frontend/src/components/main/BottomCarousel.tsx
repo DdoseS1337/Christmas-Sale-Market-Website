@@ -1,4 +1,4 @@
-import { Carousel } from "primereact/carousel";
+import { Carousel, CarouselResponsiveOption } from "primereact/carousel";
 import christmasTreeApi from "../../services/christmas-tree.api";
 import { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
@@ -9,7 +9,7 @@ import "../../styles/components/bottom-carousel.css";
 import ErrorMessage from "../common/ErrorMessage";
 
 const BottomCarousel = () => {
-    const [offers, setOffers] = useState<any | null>([]);
+    const [offers, setOffers] = useState<any>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -32,9 +32,9 @@ const BottomCarousel = () => {
         fetchData();
     }, []);
 
-    const responsiveOptions = [
+    const responsiveOptions: CarouselResponsiveOption[] = [
         {
-            breakpoint: "9000px",
+            breakpoint: "5000px",
             numVisible: 4,
             numScroll: 1,
         },
@@ -96,7 +96,7 @@ const BottomCarousel = () => {
                         value={offers}
                         numScroll={1}
                         numVisible={4}
-                        itemTemplate={offerTemplate}
+                        itemTemplate={offerTemplate} 
                         responsiveOptions={responsiveOptions}
                         autoplayInterval={3000}
                         showIndicators={false}
