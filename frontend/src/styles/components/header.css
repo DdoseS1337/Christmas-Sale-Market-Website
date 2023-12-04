@@ -60,3 +60,17 @@ a.active.nav-link {
 .contact-icon {
     width: 1.6rem;
 }
+
+.navbar-toggler {
+    box-shadow: none !important;
+}
+
+.dropdown-menu {
+    position: absolute !important;
+}
+
+@media (max-width: 780px) {
+    #header-contacts-container-adaptivity {
+        align-items: start !important;
+    }
+}
