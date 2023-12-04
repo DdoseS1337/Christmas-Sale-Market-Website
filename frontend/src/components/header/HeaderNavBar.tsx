@@ -13,7 +13,7 @@ const HeaderNavBar = () => {
         christmasTreeApi
             .getAllCategories()
             .then((el) => {
-                setCategories(el.filter((obj) => obj.parentId == null));
+                setCategories(el.filter((obj) => obj.parentId == null).splice(0, 6));
             })
             .catch((error) => console.log(error));
     }, []);
