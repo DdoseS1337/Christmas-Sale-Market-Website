@@ -7,6 +7,8 @@ import { IFilterPageData } from "../interfaces/FilterPage";
 import { asyncFilter } from "../utils/AsyncFilter";
 
 class ChristmasTreeApi extends HttpService {
+    private NOT_NEEDED_CATEGORY_NAME = "АРХИВ НЕАКТИВНЫХ";
+
     constructor() {
         super(BACKEND_KEYS.PRODUCTS_SERVER_URL);
     }
@@ -14,7 +16,7 @@ class ChristmasTreeApi extends HttpService {
     async getAllCategories(): Promise<Array<ICategory>> {
         return this.getWithCaching<Array<ICategory>>({
             url: BACKEND_KEYS.CHRISTMAS_TREE_CATEGORIES,
-        }).then(response => response.filter(category => category.name !== "АРХИВ НЕАКТИВНЫХ"));
+        }).then(response => response.filter(category => category.name !== this.NOT_NEEDED_CATEGORY_NAME));
     }
 
     async getCategoryById(id: string) {
@@ -89,13 +91,22 @@ class ChristmasTreeApi extends HttpService {
             .slice(0, categoriesCount);
     }
 
+    async getOffersByIncludeName(name: string): Promise<Array<IOffer>> {
+        return this.getWithCaching<Array<IOffer>>({
+            url: BACKEND_KEYS.CHRISTMAS_TREE_OFFERS
+        }).then(response => this.filterOffersByIncludeName(response, name));
+    }
+
     async getCategoryWithOffersForFilterPage(
         page: number,
         categoryId?: number,
         available?: boolean,
         priceRange?: MultiRange,
-        sorting?: boolean
+        sorting?: boolean,
+        search?: string,
     ) {
+        // little time
+
         if (page < 1) page = 1;
 
         const filterableCategories = await asyncFilter(
@@ -109,47 +120,51 @@ class ChristmasTreeApi extends HttpService {
                 ? filterableCategories.find((category) => category.id == categoryId)
                 : undefined;
 
-        let filteredOffersByPage = [];
+        let filteredOffers = [];
 
         const allOffers = await this.getAllOffers();
 
-        filteredOffersByPage = !!categoryId
+        filteredOffers = !!categoryId
             ? await this.getOffersByCategoryId(categoryId)
             : allOffers
 
-        filteredOffersByPage = !!available 
-            ? filteredOffersByPage.filter((offer) => offer.available == available) 
-            : filteredOffersByPage;
+        filteredOffers = !!available 
+            ? filteredOffers.filter((offer) => offer.available == available) 
+            : filteredOffers;
 
-        filteredOffersByPage = !!available 
-            ? filteredOffersByPage.filter((offer) => offer.available == available) 
-            : filteredOffersByPage;
+        filteredOffers = !!available 
+            ? filteredOffers.filter((offer) => offer.available == available) 
+            : filteredOffers;
 
-        filteredOffersByPage = !!priceRange 
-            ? filteredOffersByPage.filter(
+        filteredOffers = !!priceRange 
+            ? filteredOffers.filter(
                 (offer) =>
                     offer.newPrice >= priceRange!.min &&
                     offer.newPrice <= priceRange!.max
             )
-            : filteredOffersByPage;
+            : filteredOffers;
 
-        filteredOffersByPage = !!sorting 
+        filteredOffers = !!sorting 
             ? sorting
-                ? filteredOffersByPage.sort(
+                ? filteredOffers.sort(
                     (o1, o2) => o1.newPrice - o2.newPrice
                 )
-                : filteredOffersByPage.sort(
+                : filteredOffers.sort(
                     (o1, o2) => o2.newPrice - o1.newPrice
                 )
-            : filteredOffersByPage;
+            : filteredOffers;
+
+        filteredOffers = !!search 
+            ? await this.filterOffersByIncludeName(filteredOffers, search)
+            : filteredOffers;
 
         const totalNumberOfPages = Math.ceil(
-            filteredOffersByPage.length / FILTER_CONST.PAGE_SIZE
+            filteredOffers.length / FILTER_CONST.PAGE_SIZE
         );
         if (page > totalNumberOfPages) page = totalNumberOfPages;
 
         const startIndex = (page - 1) * FILTER_CONST.PAGE_SIZE;
-        const offersByPage = filteredOffersByPage.slice(
+        const offersByPage = filteredOffers.slice(
             startIndex,
             startIndex + FILTER_CONST.PAGE_SIZE
         );
@@ -165,10 +180,14 @@ class ChristmasTreeApi extends HttpService {
             pagination: {
                 page: page,
                 numberOfPages: totalNumberOfPages,
-                numberOfOffers: filteredOffersByPage.length,
+                numberOfOffers: filteredOffers.length,
                 numberOfOffersPerPage: offersByPage.length,
             },
         } as IFilterPageData;
+    }
+
+    private async filterOffersByIncludeName(offers: Array<IOffer>, name: string): Promise<Array<IOffer>> {
+        return offers.filter(offer => offer.name.toLowerCase().includes(name.toLowerCase()));
     }
 }
 
