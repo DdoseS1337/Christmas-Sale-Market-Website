@@ -102,7 +102,7 @@ class ChristmasTreeApi extends HttpService {
         categoryId?: number,
         available?: boolean,
         priceRange?: MultiRange,
-        sorting?: boolean,
+        sorting?: string,
         search?: string,
     ) {
         // little time
@@ -124,19 +124,15 @@ class ChristmasTreeApi extends HttpService {
 
         const allOffers = await this.getAllOffers();
 
-        filteredOffers = !!categoryId
+        filteredOffers = categoryId !== undefined
             ? await this.getOffersByCategoryId(categoryId)
-            : allOffers
+            : allOffers;
 
-        filteredOffers = !!available 
+        filteredOffers = available !== undefined
             ? filteredOffers.filter((offer) => offer.available == available) 
             : filteredOffers;
 
-        filteredOffers = !!available 
-            ? filteredOffers.filter((offer) => offer.available == available) 
-            : filteredOffers;
-
-        filteredOffers = !!priceRange 
+        filteredOffers = priceRange !== undefined
             ? filteredOffers.filter(
                 (offer) =>
                     offer.newPrice >= priceRange!.min &&
@@ -144,8 +140,8 @@ class ChristmasTreeApi extends HttpService {
             )
             : filteredOffers;
 
-        filteredOffers = !!sorting 
-            ? sorting
+        filteredOffers = sorting !== undefined
+            ? sorting === "ABC"
                 ? filteredOffers.sort(
                     (o1, o2) => o1.newPrice - o2.newPrice
                 )
@@ -154,7 +150,7 @@ class ChristmasTreeApi extends HttpService {
                 )
             : filteredOffers;
 
-        filteredOffers = !!search 
+        filteredOffers = search !== undefined
             ? await this.filterOffersByIncludeName(filteredOffers, search)
             : filteredOffers;
 
