@@ -5,7 +5,7 @@ import { BREAKPOINTS } from "../../../common";
 import { useEffect, useState } from "react";
 import RoundedButton from "../../common/RoundedButton";
 import { Search, XLg } from "react-bootstrap-icons";
-import { useSearchParams } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 
 export const HeaderSearchBar = () => {
 	const isTabletSearchbar = useMediaQuery({
@@ -13,11 +13,12 @@ export const HeaderSearchBar = () => {
 	});
 	const [showAdaptivity, setShowAdaptivity] = useState(false);
 
-	const [queryParameters] = useSearchParams();
+	const location = useLocation();
 
 	useEffect(() => {
+		console.log(13);
 		setShowAdaptivity(false);
-	}, [queryParameters]);
+	}, [location]);
 
 	return (
 		<>
