@@ -5,48 +5,48 @@ import { BREAKPOINTS } from "../../../common";
 import { useEffect, useState } from "react";
 import RoundedButton from "../../common/RoundedButton";
 import { Search } from "react-bootstrap-icons";
-import { useSearchParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 export const HeaderSearchBar = () => {
-	const isTabletSearchbar = useMediaQuery({
-		minWidth: BREAKPOINTS.TABLET.HEADER.SEARCHBAR,
-	});
-	const [showAdaptivity, setShowAdaptivity] = useState(false);
+    const isTabletSearchbar = useMediaQuery({
+        minWidth: BREAKPOINTS.TABLET.HEADER.SEARCHBAR,
+    });
+    const [showAdaptivity, setShowAdaptivity] = useState(false);
 
-	const [queryParameters] = useSearchParams();
+    const location = useLocation();
 
-	useEffect(() => {
-		setShowAdaptivity(false);
-	}, [queryParameters]);
+    useEffect(() => {
+        setShowAdaptivity(false);
+    }, [location]);
 
-	return (
-		<>
-			{!isTabletSearchbar && (
-				<RoundedButton
-					className="ms-auto me-3"
-					isCircle
-					onClick={() => setShowAdaptivity(true)}
-				>
-					<Search fontSize={30} />
-				</RoundedButton>
-			)}
-			{!isTabletSearchbar && showAdaptivity && (
-				<div
-					className="searchbar-mobile"
-					onClick={(e) => {
-						(e.target as HTMLDivElement).className ===
-							"searchbar-mobile" && setShowAdaptivity(false);
-					}}
-				>
-					<div className="searchbar-mobile__inner">
-						<NotAdaptedSearchBar />
-					</div>
-					<span className="searchbar-mobile__description">
-						Пишіть щоб отримати підказку
-					</span>
-				</div>
-			)}
-			{isTabletSearchbar && <NotAdaptedSearchBar />}
-		</>
-	);
+    return (
+        <>
+            {!isTabletSearchbar && (
+                <RoundedButton
+                    className="ms-auto me-3"
+                    isCircle
+                    onClick={() => setShowAdaptivity(true)}
+                >
+                    <Search fontSize={30} />
+                </RoundedButton>
+            )}
+            {!isTabletSearchbar && showAdaptivity && (
+                <div
+                    className="searchbar-mobile"
+                    onClick={(e) => {
+                        (e.target as HTMLDivElement).className ===
+                            "searchbar-mobile" && setShowAdaptivity(false);
+                    }}
+                >
+                    <div className="searchbar-mobile__inner">
+                        <NotAdaptedSearchBar />
+                    </div>
+                    <span className="searchbar-mobile__description">
+                        Пишіть щоб отримати підказку
+                    </span>
+                </div>
+            )}
+            {isTabletSearchbar && <NotAdaptedSearchBar />}
+        </>
+    );
 };
