@@ -141,7 +141,7 @@ class ChristmasTreeApi extends HttpService {
             : filteredOffers;
 
         filteredOffers = sorting !== undefined
-            ? sorting === "ABC"
+            ? sorting === FILTER_CONST.SORTING_VALUES.ABC
                 ? filteredOffers.sort(
                     (o1, o2) => o1.newPrice - o2.newPrice
                 )
