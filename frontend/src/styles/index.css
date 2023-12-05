@@ -70,6 +70,7 @@ code {
     --gray-200: #cccccc;
     --gray-400: #999999;
     --gray-900: #1a1a1a;
+    --gray-900-30: #1a1a1aba;
 
     /* old variable */
     --light: var(--secondary);

@@ -31,12 +31,18 @@ export const HeaderSearchBar = () => {
 				</RoundedButton>
 			)}
 			{!isTabletSearchbar && showAdaptivity && (
-				<div className="searchbar-mobile">
-					<XLg
+				<div
+					className="searchbar-mobile"
+					onClick={(e) => {
+						(e.target as HTMLDivElement).className ===
+							"searchbar-mobile" && setShowAdaptivity(false);
+					}}
+				>
+					{/* <XLg
 						size={32}
 						className="searchbar-mobile__close"
 						onClick={() => setShowAdaptivity(false)}
-					/>
+					/> */}
 					<div className="searchbar-mobile__inner">
 						<NotAdaptedSearchBar />
 					</div>
