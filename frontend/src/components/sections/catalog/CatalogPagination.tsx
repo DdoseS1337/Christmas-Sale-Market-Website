@@ -10,13 +10,6 @@ interface IProps {
 export const CatalogPagination = ({ pagination }: IProps) => {
 	const [, setQueryParameters] = useSearchParams();
 
-	const changePage = (page: number) => {
-		setQueryParameters((oldParameters) => {
-			oldParameters.set("page", page.toString());
-			return oldParameters;
-		});
-	};
-
 	return (
 		<div className="catalog__pagination">
 			{pagination?.page != null && pagination?.page > 2 && (
@@ -64,4 +57,12 @@ export const CatalogPagination = ({ pagination }: IProps) => {
 				)}
 		</div>
 	);
+
+	function changePage(page: number) {
+		setQueryParameters((oldParameters) => {
+			oldParameters.set("page", page.toString());
+			return oldParameters;
+		});
+		window.scrollTo(0, 0);
+	}
 };
