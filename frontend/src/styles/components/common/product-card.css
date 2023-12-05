@@ -23,7 +23,9 @@
 
 .product-card .card-header {
     position: absolute;
-    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
 }
 
 .product-card__header-item {
