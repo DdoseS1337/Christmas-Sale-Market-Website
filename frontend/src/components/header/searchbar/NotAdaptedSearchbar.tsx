@@ -10,6 +10,8 @@ import { useClickOutside } from "primereact/hooks";
 import { FILTER_CONST } from "../../../common";
 import { IOffer } from "../../../interfaces/Offer";
 import { Search } from "react-bootstrap-icons";
+import { Divider } from "primereact/divider";
+import { FoundOfferTemplate } from "./FoundOfferTemplate";
 
 export const NotAdaptedSearchBar = () => {
 	const navigate = useNavigate();
@@ -78,13 +80,11 @@ export const NotAdaptedSearchBar = () => {
 			>
 				<DataView
 					value={filteredOffers}
-					itemTemplate={(item: IOffer) => (
-						<span
-							className="searchbar__searched-name"
-							onClick={() => search(item.name)}
-						>
-							{item.name}
-						</span>
+					itemTemplate={(offer: IOffer) => (
+						<FoundOfferTemplate
+							{...offer}
+							onClick={() => search(offer.name)}
+						/>
 					)}
 					pt={{
 						grid: {
