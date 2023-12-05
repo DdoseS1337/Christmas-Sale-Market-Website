@@ -101,10 +101,8 @@ export const CatalogSection = () => {
 		);
 
 		const sorting =
-			queryParameters.has(FILTER_CONST.QUERY_PARAMETERS.SORTING) === false
-				? undefined
-				: queryParameters.get(FILTER_CONST.QUERY_PARAMETERS.SORTING) ===
-				  FILTER_CONST.SORTING_VALUES.ABC;
+			queryParameters.get(FILTER_CONST.QUERY_PARAMETERS.SORTING) ??
+			undefined;
 
 		const search = queryParameters.has(FILTER_CONST.QUERY_PARAMETERS.SEARCH)
 			? queryParameters.get(FILTER_CONST.QUERY_PARAMETERS.SEARCH)!
