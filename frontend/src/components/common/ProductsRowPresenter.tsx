@@ -6,47 +6,49 @@ import { ICategory } from "../../interfaces/Category";
 import "animate.css";
 
 interface IProps {
-	customTitle?: string;
-	category: ICategory;
-	offers: Array<IOffer>;
+    customTitle?: string;
+    category: ICategory;
+    offers: Array<IOffer>;
 }
 
 export const RowProductPresenter = ({
-	customTitle,
-	category,
-	offers,
+    customTitle,
+    category,
+    offers,
 }: IProps) => {
-	const navigate = useNavigate();
+    const navigate = useNavigate();
 
-	const handleCategoryClick = (categoryId: any) => {
-		navigate(`/catalog?categoryId=${categoryId}`);
-		window.scroll(0, 0);
-	};
+    const handleCategoryClick = (categoryId: any) => {
+        navigate(`/catalog?categoryId=${categoryId}`);
+        window.scroll(0, 0);
+    };
 
-	return (
-		<div className="products-of-category animate__animated animate__fadeIn">
-			<div className="products-of-category__header">
-				<h2 className="products-of-category__title">
-					{customTitle ?? category.name}
-				</h2>
-				<div
-					className="products-of-category__view-all fw-bold"
-					onClick={() => handleCategoryClick(category.id)}
-				>
-					Переглянути всі <ArrowRight className="ms-1" />
-				</div>
-			</div>
-			<div className="products-of-category__cards hot-product__scroll-container">
-				{offers?.map((offer) => {
-					return (
-						<ProductCard
-							key={offer.id}
-							{...offer}
-							picture={offer.picture[0]}
-						/>
-					);
-				})}
-			</div>
-		</div>
-	);
+    return (
+        <div className="products-of-category animate__animated animate__fadeIn">
+            <div className="products-of-category__header">
+                <h2 className="products-of-category__title">
+                    {customTitle ?? category.name}
+                </h2>
+                <div
+                    className="products-of-category__view-all fw-bold"
+                    onClick={() => handleCategoryClick(category.id)}
+                    data-desktop="Переглянути всі"
+                    data-mobile="Всі"
+                >
+                    <ArrowRight className="ms-1 products-of-category__arrow-right" />
+                </div>
+            </div>
+            <div className="products-of-category__cards hot-product__scroll-container">
+                {offers?.map((offer) => {
+                    return (
+                        <ProductCard
+                            key={offer.id}
+                            {...offer}
+                            picture={offer.picture[0]}
+                        />
+                    );
+                })}
+            </div>
+        </div>
+    );
 };

@@ -27,6 +27,7 @@ import {
 } from "../sections/product/BasketIcons";
 import ProductParameters from "../../interfaces/ProductParameters";
 import ErrorMessage from "../common/ErrorMessage";
+import ContinueShopping from "../common/ContinueShopping";
 
 const HotOffer = () => {
     const [product, setProduct] = useState<IOffer | null>(null);
@@ -34,6 +35,7 @@ const HotOffer = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [amount, setAmount] = useState(1);
     const [error, setError] = useState(null);
+    const [confirmShow, setConfirmShow] = useState(false);
 
     const {
         isMinusHovered,
@@ -59,11 +61,13 @@ const HotOffer = () => {
             picture: product!.picture,
             amount: amount,
         });
+        setConfirmShow(true);
         setRefresh((oldValue) => !oldValue);
     };
 
     const removeFromBasket = () => {
         CartService.removeFromCart(String(product?.id));
+        setConfirmShow(false);
         setRefresh((oldValue) => !oldValue);
     };
 
@@ -103,6 +107,10 @@ const HotOffer = () => {
 
     return (
         <>
+            <ContinueShopping
+                show={confirmShow}
+                onHide={() => setConfirmShow(false)}
+            />
             {error && <ErrorMessage />}
             <Section backgroundType={BackgroundType.RedWithSnow} isFluid>
                 <Container>
