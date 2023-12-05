@@ -1,16 +1,16 @@
 import { Form, InputGroup } from "react-bootstrap";
-import { useFetchData } from "../../hooks/FetchDataHook";
-import christmasTreeApi from "../../services/christmas-tree.api";
-import { useRef, useState } from "react";
+import { useFetchData } from "../../../hooks/FetchDataHook";
+import christmasTreeApi from "../../../services/christmas-tree.api";
+import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { DataView } from "primereact/dataview";
 import classNames from "classnames";
-import "../../styles/components/header/header.css";
+import "../../../styles/components/header/header.css";
 import { useClickOutside } from "primereact/hooks";
-import { FILTER_CONST } from "../../common";
-import { IOffer } from "../../interfaces/Offer";
+import { FILTER_CONST } from "../../../common";
+import { IOffer } from "../../../interfaces/Offer";
 
-const HeaderSearchBar = () => {
+export const NotAdaptedSearchBar = () => {
 	const navigate = useNavigate();
 	const location = useLocation();
 	const [queryParameters, setQueryParameters] = useSearchParams();
@@ -18,6 +18,12 @@ const HeaderSearchBar = () => {
 	const [searchingName, setSearchingName] = useState<string>(
 		queryParameters.get(FILTER_CONST.QUERY_PARAMETERS.SEARCH) ?? ""
 	);
+
+	useEffect(() => {
+		setSearchingName(
+			queryParameters.get(FILTER_CONST.QUERY_PARAMETERS.SEARCH) ?? ""
+		);
+	}, [queryParameters]);
 
 	const { items: filteredOffers } = useFetchData({
 		callApi: () => christmasTreeApi.getOffersByIncludeName(searchingName),
@@ -33,7 +39,7 @@ const HeaderSearchBar = () => {
 	});
 
 	return (
-		<div ref={searchRef}>
+		<div className="searchbar" ref={searchRef}>
 			<InputGroup
 				className="searchbar__input-group"
 				onClick={() => setSearchDropdownVisibility(true)}
@@ -46,7 +52,7 @@ const HeaderSearchBar = () => {
 					placeholder="Я шукаю..."
 					aria-label="Search"
 					aria-describedby="basic-addon2"
-					className="searchbar__input red_theme bold_text search-form"
+					className="searchbar__input bold_text search-form"
 					value={searchingName}
 					onChange={(e) =>
 						setSearchingName(e.target.value.toLowerCase())
@@ -116,5 +122,3 @@ const HeaderSearchBar = () => {
 		}
 	}
 };
-
-export default HeaderSearchBar;

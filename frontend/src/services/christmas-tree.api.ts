@@ -7,6 +7,8 @@ import { IFilterPageData } from "../interfaces/FilterPage";
 import { asyncFilter } from "../utils/AsyncFilter";
 
 class ChristmasTreeApi extends HttpService {
+    private NOT_NEEDED_CATEGORY_NAME = "АРХИВ НЕАКТИВНЫХ";
+
     constructor() {
         super(BACKEND_KEYS.PRODUCTS_SERVER_URL);
     }
@@ -14,7 +16,7 @@ class ChristmasTreeApi extends HttpService {
     async getAllCategories(): Promise<Array<ICategory>> {
         return this.getWithCaching<Array<ICategory>>({
             url: BACKEND_KEYS.CHRISTMAS_TREE_CATEGORIES,
-        }).then(response => response.filter(category => category.name !== "АРХИВ НЕАКТИВНЫХ"));
+        }).then(response => response.filter(category => category.name !== this.NOT_NEEDED_CATEGORY_NAME));
     }
 
     async getCategoryById(id: string) {
@@ -87,6 +89,12 @@ class ChristmasTreeApi extends HttpService {
         return result
             .filter((c) => c.offers.length != 0)
             .slice(0, categoriesCount);
+    }
+
+    async getOffersByIncludeName(name: string): Promise<Array<IOffer>> {
+        return this.getWithCaching<Array<IOffer>>({
+            url: BACKEND_KEYS.CHRISTMAS_TREE_OFFERS
+        }).then(response => this.filterOffersByIncludeName(response, name));
     }
 
     async getCategoryWithOffersForFilterPage(
@@ -176,12 +184,6 @@ class ChristmasTreeApi extends HttpService {
                 numberOfOffersPerPage: offersByPage.length,
             },
         } as IFilterPageData;
-    }
-
-    async getOffersByIncludeName(name: string): Promise<Array<IOffer>> {
-        return this.getWithCaching<Array<IOffer>>({
-            url: BACKEND_KEYS.CHRISTMAS_TREE_OFFERS
-        }).then(response => this.filterOffersByIncludeName(response, name));
     }
 
     private async filterOffersByIncludeName(offers: Array<IOffer>, name: string): Promise<Array<IOffer>> {

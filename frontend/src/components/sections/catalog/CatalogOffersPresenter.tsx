@@ -6,6 +6,8 @@ import { List, XLg } from "react-bootstrap-icons";
 import { CatalogFilter } from "./CatalogFilter";
 import { classNames } from "primereact/utils";
 import { Dispatch, SetStateAction } from "react";
+import { Link, useSearchParams } from "react-router-dom";
+import { FILTER_CONST } from "../../../common";
 
 interface IProps extends IFilterPageData {
 	mobileFilterIsOpenedState: [boolean, Dispatch<SetStateAction<boolean>>];
@@ -21,11 +23,18 @@ export const CatalogOffersPresenter = ({
 	const offersIsEmpty = offers?.length === 0;
 	const [filterIsOpened, setFilterIsOpened] = mobileFilterIsOpened;
 
+	const [queryParameters, setQueryParameters] = useSearchParams();
+	const searchingName = queryParameters.get(
+		FILTER_CONST.QUERY_PARAMETERS.SEARCH
+	);
+
 	return (
 		<div className="catalog__content">
 			<div className="catalog__header">
 				<h1 className="catalog__title">
-					{selectedCategory?.name ?? "Усі товари"}
+					{searchingName
+						? "Пошук: " + searchingName
+						: selectedCategory?.name ?? "Усі товари"}
 				</h1>
 				<List
 					size={35}
@@ -37,6 +46,21 @@ export const CatalogOffersPresenter = ({
 				<span className="catalog__not-found">Товарів не знайдено</span>
 			) : (
 				<>
+					{searchingName && (
+						<div
+							className="catalog__back-to-all"
+							onClick={() => {
+								setQueryParameters((old) => {
+									old.delete(
+										FILTER_CONST.QUERY_PARAMETERS.SEARCH
+									);
+									return old;
+								});
+							}}
+						>
+							Повернутись до всіх товарів
+						</div>
+					)}
 					<div className="catalog__offers">
 						{offers?.map((offer) => {
 							return (
