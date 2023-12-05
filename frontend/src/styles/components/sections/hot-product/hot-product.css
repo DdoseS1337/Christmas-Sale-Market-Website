@@ -7,6 +7,10 @@
     margin-bottom: 40px;
 }
 
+.products-of-category__view-all::before {
+    content: attr(data-desktop);
+}
+
 .products-of-category__header {
     display: flex;
     justify-content: space-between;
@@ -25,12 +29,13 @@
 
 .products-of-category__cards {
     display: flex;
+    justify-content: space-between;
     width: 100%;
     gap: 1.4rem;
 }
 
 .products-of-category__title {
-    color: var(--gray-scale-gray-900, #1A1A1A);
+    color: var(--gray-scale-gray-900, #1a1a1a);
     /* Heading 05/Heading 05 — 600 */
     font-size: 32px;
     font-weight: 600;
@@ -45,20 +50,20 @@
     padding-bottom: 10px;
 }
 
-.hot-product__scroll-container::-webkit-scrollbar{
-	width: 10px;
+.hot-product__scroll-container::-webkit-scrollbar {
+    width: 10px;
 }
 
-.hot-product__scroll-container::-webkit-scrollbar-thumb{
-	background-color: #CBCBCB;
-	outline: 2px solid #FFF;
-	outline-offset: -2px;
-	border: .1px solid #B7B7B7;
+.hot-product__scroll-container::-webkit-scrollbar-thumb {
+    background-color: #cbcbcb;
+    outline: 2px solid #fff;
+    outline-offset: -2px;
+    border: 0.1px solid #b7b7b7;
     border-radius: 10px;
 }
 
-.hot-product__scroll-container::-webkit-scrollbar-thumb:hover{
-	background-color: #909090;
+.hot-product__scroll-container::-webkit-scrollbar-thumb:hover {
+    background-color: #909090;
 }
 
 @media (max-width: 1000px) {
@@ -73,5 +78,11 @@
     }
     .products-of-category__cards {
         gap: 1.2rem;
+    }
+}
+
+@media (max-width: 531px) {
+    .products-of-category__view-all::before {
+        content: attr(data-mobile);
     }
 }

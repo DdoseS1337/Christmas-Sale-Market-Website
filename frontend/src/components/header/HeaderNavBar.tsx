@@ -13,7 +13,7 @@ const HeaderNavBar = () => {
         christmasTreeApi
             .getAllCategories()
             .then((el) => {
-                setCategories(el.filter((obj) => obj.parentId == null));
+                setCategories(el.filter((obj) => obj.parentId == null).splice(0, 6));
             })
             .catch((error) => console.log(error));
     }, []);
@@ -33,7 +33,6 @@ const HeaderNavBar = () => {
                 <Nav
                     className="me-auto my-2 my-lg-0"
                     style={{ maxHeight: "160px" }}
-                    navbarScroll
                 >
                     <LinkContainer to="/">
                         <Nav.Link>Головна</Nav.Link>

@@ -1,0 +1,25 @@
+@media (max-width: 439px) {
+    #continue-shopping-adaptivity-hide {
+        display: none;
+    }
+    #continue-shopping-adaptivity-show {
+        display: block !important;
+    }
+}
+
+@media (max-width: 389px) {
+    #continue-shopping-adaptivity-show {
+        display: none !important;
+    }
+    #continue-shopping-adaptivity-arrow {
+        display: block !important;
+    }
+}
+
+@media (max-width: 599px) {
+    .alert {
+        top: 0 !important;
+        right: 0 !important;
+        width: 100%;
+    }
+}
