@@ -1,0 +1,49 @@
+.searchbar__input-group {
+    z-index: 2;
+    background-color: var(--primary);
+    border-radius: .5rem;
+}
+
+.searchbar__input {
+    background-color: var(--primary);
+}
+
+.searchbar__dropdown {
+    display: none;
+    position: absolute;
+    z-index: 1;
+    max-width: 650px;
+    width: 100%;
+    max-height: 500px;
+    overflow: auto;
+    border-radius: 0 0 .375rem .375rem;
+    background-color: var(--secondary);
+    margin-top: -5px;
+    padding-top: 5px;
+    box-shadow: 0 0 10px var(--gray-400);
+}
+
+
+.searchbar__offers {
+    display: flex;
+    flex-direction: column;
+}
+
+.searchbar__searched-name {
+    padding: 7px 20px;
+    cursor: pointer;
+    transition: .15s;
+}
+
+.searchbar__searched-name:hover {
+    background-color: var(--gray-50);
+}
+
+.searchbar__empty-message {
+    border: 0;
+    padding: 7px 20px;
+}
+
+.searchbar__dropdown--opened {
+    display: block;
+}

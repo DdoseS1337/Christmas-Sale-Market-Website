@@ -40,6 +40,7 @@ export const FILTER_CONST = {
         PRICE_MIN: "priceMin",
         PRICE_MAX: "priceMax",
         SORTING: "sorting",
+        SEARCH: "search",
     },
     SORTING_VALUES: {
         ABC: "ABC",

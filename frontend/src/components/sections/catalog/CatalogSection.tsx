@@ -17,7 +17,7 @@ export const CatalogSection = () => {
 	const [mobileFilterIsOpened, setMobileFilterIsOpened] =
 		useState<boolean>(false);
 
-	const { page, categoryId, available, priceRange, sorting } =
+	const { page, categoryId, available, priceRange, sorting, search } =
 		getParametersFromURL();
 
 	const { items: filterData } = useFetchData<IFilterPageData>({
@@ -27,7 +27,8 @@ export const CatalogSection = () => {
 				categoryId,
 				available,
 				priceRange,
-				sorting
+				sorting,
+				search
 			),
 		dependencies: [queryParameters],
 	});
@@ -105,6 +106,10 @@ export const CatalogSection = () => {
 				: queryParameters.get(FILTER_CONST.QUERY_PARAMETERS.SORTING) ===
 				  FILTER_CONST.SORTING_VALUES.ABC;
 
-		return { page, categoryId, available, priceRange, sorting };
+		const search = queryParameters.has(FILTER_CONST.QUERY_PARAMETERS.SEARCH)
+			? queryParameters.get(FILTER_CONST.QUERY_PARAMETERS.SEARCH)!
+			: undefined;
+
+		return { page, categoryId, available, priceRange, sorting, search };
 	}
 };
