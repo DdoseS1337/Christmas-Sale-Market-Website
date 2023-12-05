@@ -38,11 +38,6 @@ export const HeaderSearchBar = () => {
 							"searchbar-mobile" && setShowAdaptivity(false);
 					}}
 				>
-					{/* <XLg
-						size={32}
-						className="searchbar-mobile__close"
-						onClick={() => setShowAdaptivity(false)}
-					/> */}
 					<div className="searchbar-mobile__inner">
 						<NotAdaptedSearchBar />
 					</div>
