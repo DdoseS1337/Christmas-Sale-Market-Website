@@ -10,7 +10,6 @@ import { useClickOutside } from "primereact/hooks";
 import { FILTER_CONST } from "../../../common";
 import { IOffer } from "../../../interfaces/Offer";
 import { Search } from "react-bootstrap-icons";
-import { Divider } from "primereact/divider";
 import { FoundOfferTemplate } from "./FoundOfferTemplate";
 
 export const NotAdaptedSearchBar = () => {

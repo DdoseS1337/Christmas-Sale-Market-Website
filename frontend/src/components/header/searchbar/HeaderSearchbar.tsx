@@ -4,7 +4,7 @@ import { NotAdaptedSearchBar } from "./NotAdaptedSearchbar";
 import { BREAKPOINTS } from "../../../common";
 import { useEffect, useState } from "react";
 import RoundedButton from "../../common/RoundedButton";
-import { Search, XLg } from "react-bootstrap-icons";
+import { Search } from "react-bootstrap-icons";
 import { useSearchParams } from "react-router-dom";
 
 export const HeaderSearchBar = () => {
