@@ -9,6 +9,8 @@
 
 .searchbar {
     position: relative;
+    width: 550px;
+    max-width: 100%;
 }
 
 .searchbar__input-group {
@@ -19,7 +21,9 @@
 
 .searchbar__input {
     background-color: var(--primary) !important;
-    width: 450px !important;
+    display: block !important;
+    flex-basis: 100%;
+    flex-grow: 1;
 }
 
 .searchbar__dropdown {
@@ -71,6 +75,9 @@
     padding: 1.3rem;
     padding-top: 4.3rem;
     z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
 }
 
 .searchbar-mobile__close {
@@ -83,6 +90,7 @@
 .searchbar-mobile__inner {
     border: 3px solid var(--primary);
     border-radius: .375rem;
+    max-width: 100%;
 }
 
 .searchbar-mobile__description {

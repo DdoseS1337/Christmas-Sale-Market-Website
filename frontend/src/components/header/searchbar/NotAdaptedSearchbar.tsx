@@ -9,6 +9,7 @@ import "../../../styles/components/header/header.css";
 import { useClickOutside } from "primereact/hooks";
 import { FILTER_CONST } from "../../../common";
 import { IOffer } from "../../../interfaces/Offer";
+import { Search } from "react-bootstrap-icons";
 
 export const NotAdaptedSearchBar = () => {
 	const navigate = useNavigate();
@@ -45,7 +46,7 @@ export const NotAdaptedSearchBar = () => {
 				onClick={() => setSearchDropdownVisibility(true)}
 			>
 				<InputGroup.Text className="search_loop">
-					<search className="text-light" />
+					<Search className="text-light" />
 				</InputGroup.Text>
 
 				<Form.Control
