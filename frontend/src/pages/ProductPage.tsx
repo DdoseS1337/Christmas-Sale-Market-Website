@@ -85,7 +85,20 @@ const ProductPage = ({ setAdditionalBreadCrumbs }: IProps) => {
                     christmasTreeApi
                         .getCategoryById(offer.categoryId.toString())
                         .then((category: ICategory) => {
-                            setCategory(category);
+                            if (!category.parentId) {
+                                setCategory(category);
+                            } else {
+                                christmasTreeApi
+                                    .getCategoryById(
+                                        category.parentId.toString()
+                                    )
+                                    .then((category) => setCategory(category))
+                                    .catch((error) =>
+                                        console.log(
+                                            `Error in ProductPage (setCategory): ${error}`
+                                        )
+                                    );
+                            }
                         });
                 })
                 .catch((error) => {
