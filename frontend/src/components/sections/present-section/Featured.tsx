@@ -3,8 +3,9 @@ import "../../../styles/components/sections/present-section/featured.css";
 import { FeaturedItem } from "./FeaturedItem";
 import { Basket, Truck, Headset } from "react-bootstrap-icons";
 import { BREAKPOINTS } from "../../../common";
+import { memo } from "react";
 
-export const Featured = () => {
+export const Featured = memo(() => {
 	const isDesktopImages = useMediaQuery({
 		minWidth: BREAKPOINTS.TABLET.PRESENT_SECTION.IMAGES,
 	});
@@ -35,4 +36,4 @@ export const Featured = () => {
 			)}
 		</div>
 	);
-};
+});

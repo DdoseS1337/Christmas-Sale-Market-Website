@@ -65,6 +65,7 @@ export const BREAKPOINTS = {
         },
     },
     PHONE: {
+        HIDE_SNOW: 1000,
         HEADER: {
             SECOND_ROW: 780,
         },
