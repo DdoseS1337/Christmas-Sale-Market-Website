@@ -4,6 +4,7 @@ import { ReactElement, useEffect, useState } from "react";
 import christmasTreeApi from "../../services/christmas-tree.api";
 import { ICategory } from "../../interfaces/Category";
 import { useNavigate } from "react-router-dom";
+import { Skeleton } from "primereact/skeleton";
 
 const HeaderNavBar = () => {
     const [categories, setCategories] = useState<Array<ICategory>>([]);
@@ -13,7 +14,9 @@ const HeaderNavBar = () => {
         christmasTreeApi
             .getAllCategories()
             .then((el) => {
-                setCategories(el.filter((obj) => obj.parentId == null).splice(0, 6));
+                setCategories(
+                    el.filter((obj) => obj.parentId == null).splice(0, 6)
+                );
             })
             .catch((error) => console.log(error));
     }, []);
@@ -38,26 +41,35 @@ const HeaderNavBar = () => {
                         <Nav.Link>Головна</Nav.Link>
                     </LinkContainer>
                     <NavDropdown title="Категорії" id="navbarScrollingDropdown">
-                        {categories.map<ReactElement>(
-                            (el: ICategory, index) => {
-                                return (
-                                    <div key={index}>
-                                        <NavDropdown.Item
-                                            onClick={() =>
-                                                handleCategoryClick(el.id)
-                                            }
-                                        >
-                                            {el.name}
-                                        </NavDropdown.Item>
-                                        {categories.length - 1 === index ? (
-                                            ""
-                                        ) : (
-                                            <NavDropdown.Divider />
-                                        )}
-                                    </div>
-                                );
-                            }
-                        )}
+                        {categories.length === 0
+                            ? Array.from({ length: 6 }).map((_, index) => (
+                                  <Skeleton
+                                      key={index}
+                                      height="2rem"
+                                      className="my-1"
+                                  />
+                              ))
+                            : categories.map<ReactElement>(
+                                  (el: ICategory, index) => {
+                                      return (
+                                          <div key={index}>
+                                              <NavDropdown.Item
+                                                  onClick={() =>
+                                                      handleCategoryClick(el.id)
+                                                  }
+                                              >
+                                                  {el.name}
+                                              </NavDropdown.Item>
+                                              {categories.length - 1 ===
+                                              index ? (
+                                                  ""
+                                              ) : (
+                                                  <NavDropdown.Divider />
+                                              )}
+                                          </div>
+                                      );
+                                  }
+                              )}
                     </NavDropdown>
                     <NavDropdown title="Сторінки" id="navbarScrollingDropdown">
                         <LinkContainer to="/">
