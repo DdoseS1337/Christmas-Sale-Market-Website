@@ -7,11 +7,10 @@ import FooterList from "./FooterList";
 import HeaderLogo from "../header/HeaderLogo";
 import { LinkWithIcon } from "../common/LinkWithIcon";
 import { CONTACTS } from "../../common";
-import Snowfall from "../ui/Snowfall";
 import { useEffect, useState } from "react";
 import christmasTreeApi from "../../services/christmas-tree.api";
 import { ICategory } from "../../interfaces/Category";
-import { DeferredContent } from "primereact/deferredcontent";
+import { BackgroundType, Section } from "../common/Section";
 
 const BottomFooter = () => {
 	const [categories, setCategories] = useState<Array<ICategory>>([]);
@@ -34,10 +33,7 @@ const BottomFooter = () => {
 	}, []);
 
 	return (
-		<div className="bottom-footer">
-			<DeferredContent>
-				<Snowfall />
-			</DeferredContent>
+		<Section backgroundType={BackgroundType.RedWithSnow}>
 			<Container>
 				<Row className="bottom-footer__row">
 					<Col xs={4}>
@@ -129,7 +125,7 @@ const BottomFooter = () => {
 					</p>
 				</Row>
 			</Container>
-		</div>
+		</Section>
 	);
 };
 
