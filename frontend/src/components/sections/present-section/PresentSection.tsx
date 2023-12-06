@@ -147,6 +147,7 @@ export const PresentSection = () => {
 						className: "present-section__inner",
 					},
 				}}
+				hideSnowOnMobile
 			>
 				<Row style={{ margin: "0 -12px" }}>
 					<Col xs={3} className={isTabletLeftMenu ? "" : "d-none"}>

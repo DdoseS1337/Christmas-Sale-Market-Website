@@ -22,9 +22,9 @@ export const NOVA_POSHTA = {
 }
 
 export const CONTACTS = {
-    telephone: "+0956162463",
+    telephone: "+380956162463",
     email: "ua.christmas.tree.market@gmail.com",
-    viber: "https://t.me/GineTik0_0",
+    viber: "viber://chat?number=%2B380930057538",
 };
 
 export const CACHING_CONST = {
@@ -65,6 +65,7 @@ export const BREAKPOINTS = {
         },
     },
     PHONE: {
+        HIDE_SNOW: 1000,
         HEADER: {
             SECOND_ROW: 780,
         },

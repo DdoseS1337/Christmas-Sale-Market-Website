@@ -25,7 +25,7 @@ export const FoundOfferTemplate = ({ onClick, ...offer }: IProps) => {
 				<div>
 					<span className="found-offer__price">
 						Вартість:
-						<span className="text-decoration-line-through ms-2 me-2">
+						<span className="text-decoration-line-through ms-2 me-2 text-secondary">
 							{offer.price}₴
 						</span>
 						{offer.newPrice}₴
