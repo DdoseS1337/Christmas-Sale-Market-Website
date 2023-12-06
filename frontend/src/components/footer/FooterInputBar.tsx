@@ -69,7 +69,9 @@ const FooterInputBar = ({ className }: IProps) => {
                     Підписатися
                 </RoundedButton>
             </form>
-            {formik.touched.email && formik.errors.email ? (
+            {formik.touched.email &&
+            formik.errors.email &&
+            formik.values.email !== "" ? (
                 <Message
                     severity="warn"
                     className="mt-2 d-flex"
