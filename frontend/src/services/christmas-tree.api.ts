@@ -75,20 +75,23 @@ class ChristmasTreeApi extends HttpService {
             (category) => category.parentId == null
         );
 
-        var result = await Promise.all(
-            generalCategories.map(async (category) => {
-                return {
-                    category: category,
-                    offers: (
-                        await this.getOffersByCategoryId(category.id)
-                    ).slice(0, offersCount),
-                };
-            })
-        );
+        var suitableCategoriesWithOffers: Array<ICategoryWithOffers> = [];
+        for (let i = 0; i < categoriesCount;) {
+            const category = generalCategories[i];
+            const categoryWithOffers = {
+                category: category,
+                offers: (
+                    await this.getOffersByCategoryId(category.id)
+                ).slice(0, offersCount),
+            };
 
-        return result
-            .filter((c) => c.offers.length != 0)
-            .slice(0, categoriesCount);
+            if (categoryWithOffers.offers.length !== 0) {
+                suitableCategoriesWithOffers.push(categoryWithOffers);
+                i++;
+            }
+        }
+
+        return suitableCategoriesWithOffers;
     }
 
     async getOffersByIncludeName(name: string): Promise<Array<IOffer>> {

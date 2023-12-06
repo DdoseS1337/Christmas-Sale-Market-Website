@@ -16,7 +16,6 @@ export const HeaderSearchBar = () => {
 	const location = useLocation();
 
 	useEffect(() => {
-		console.log(13);
 		setShowAdaptivity(false);
 	}, [location]);
 

@@ -26,9 +26,10 @@ export const ShortOffersPreviewer = () => {
 							/>
 						);
 					}
-				)):(
-					<LoadingSpinner variant="danger"/>
-				)}
+				)
+			) : (
+				<LoadingSpinner variant="danger" />
+			)}
 		</Section>
 	);
 };
