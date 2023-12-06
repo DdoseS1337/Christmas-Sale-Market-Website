@@ -115,7 +115,7 @@ export const PresentSection = () => {
 				icon: <Stars />,
 				name: "З Новим роком!",
 				imagePath: "/images/banners/banner7.png",
-				title: `З новим ${new Date().getFullYear()} роком!`,
+				title: `З Новим ${new Date().getFullYear()} роком!`,
 				haveDiscount: false,
 				buttonName: "🎉 Ура!",
 				onClick: () => {
