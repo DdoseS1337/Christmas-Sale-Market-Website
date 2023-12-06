@@ -5,7 +5,6 @@ import "../../styles/components/common/section.css";
 import { useMediaQuery } from "react-responsive";
 import { classNames } from "primereact/utils";
 import { BREAKPOINTS } from "../../common";
-import { DeferredContent } from "primereact/deferredcontent";
 
 export enum BackgroundType {
 	Transparent,
@@ -22,7 +21,6 @@ interface IProps extends React.AnchorHTMLAttributes<HTMLDivElement> {
 		root?: React.HTMLAttributes<HTMLDivElement>;
 		inner?: ContainerProps;
 	};
-	notHideSnowOnMobile?: boolean;
 }
 
 export const Section = ({
@@ -33,7 +31,6 @@ export const Section = ({
 	width,
 	className,
 	pt,
-	notHideSnowOnMobile,
 	...divProps
 }: IProps) => {
 	const isRedWithSnow = backgroundType === BackgroundType.RedWithSnow;
@@ -58,12 +55,7 @@ export const Section = ({
 				className
 			)}
 		>
-			{isRedWithSnow &&
-				(notHideSnowOnMobile ? (
-					<Snowfall />
-				) : (
-					!canHideSnowQuery && <Snowfall />
-				))}
+			{isRedWithSnow && !canHideSnowQuery && <Snowfall />}
 			<Container
 				{...pt?.inner}
 				fluid={isFluid ?? "xl"}
