@@ -125,11 +125,9 @@ class ChristmasTreeApi extends HttpService {
                 ? filterableCategories.find((category) => category.id == categoryId)
                 : undefined;
 
-        let filteredOffers = [];
+        const allOffers = await this.getAllOffers(available);
 
-        const allOffers = await this.getAllOffers();
-
-        filteredOffers = categoryId !== undefined
+        let filteredOffers = categoryId !== undefined
             ? await this.getOffersByCategoryId(categoryId, available)
             : allOffers;
 
