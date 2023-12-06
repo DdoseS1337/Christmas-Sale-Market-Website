@@ -1,12 +1,13 @@
 import { Carousel } from "react-bootstrap";
 import { BannerBigItem, IBannerInfo } from "./BannerBig";
+import { memo } from "react";
 
 interface IProps {
 	activeIndex: number;
 	items: IBannerInfo[];
 }
 
-export const BannerBigCarousel = ({ activeIndex, items }: IProps) => {
+export const BannerBigCarousel = memo(({ activeIndex, items }: IProps) => {
 	return (
 		<Carousel
 			activeIndex={activeIndex}
@@ -21,4 +22,4 @@ export const BannerBigCarousel = ({ activeIndex, items }: IProps) => {
 			))}
 		</Carousel>
 	);
-};
+});

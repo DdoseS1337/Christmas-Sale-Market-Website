@@ -40,7 +40,7 @@ class ChristmasTreeApi extends HttpService {
         });
     }
 
-    async getOffersByCategoryId(categoryId: number) {
+    async getOffersByCategoryId(categoryId: number, available?: boolean) {
         const selectedCategory = await this.getCategoryById(
             categoryId.toString()
         );
@@ -59,10 +59,11 @@ class ChristmasTreeApi extends HttpService {
         const allOffers = await this.getAllOffers();
         return allOffers.filter(
             (offer) =>
-                offer.categoryId === selectedCategory.id ||
-                categoriesToFindOffers
-                    .map((c) => c.id)
-                    .includes(offer.categoryId)
+                (offer.categoryId === selectedCategory.id ||
+                    categoriesToFindOffers
+                        .map((c) => c.id)
+                        .includes(offer.categoryId)) &&
+                (available !== undefined ? offer.available === available : true)
         );
     }
 
@@ -75,20 +76,25 @@ class ChristmasTreeApi extends HttpService {
             (category) => category.parentId == null
         );
 
-        var result = await Promise.all(
-            generalCategories.map(async (category) => {
-                return {
-                    category: category,
-                    offers: (
-                        await this.getOffersByCategoryId(category.id)
-                    ).slice(0, offersCount),
-                };
-            })
-        );
+        var suitableCategoriesWithOffers: Array<ICategoryWithOffers> = [];
+        for (let i = 0; 
+            i < generalCategories.length && suitableCategoriesWithOffers.length < categoriesCount; 
+            i++) {
+            const category = generalCategories[i];
+            const categoryWithOffers = {
+                category: category,
+                offers: (
+                    await this.getOffersByCategoryId(category.id, true)
+                ).slice(0, offersCount),
+            };
 
-        return result
-            .filter((c) => c.offers.length != 0)
-            .slice(0, categoriesCount);
+            console.log(categoryWithOffers.offers.length === offersCount)
+            if (categoryWithOffers.offers.length === offersCount) {
+                suitableCategoriesWithOffers.push(categoryWithOffers);
+            }
+        }
+
+        return suitableCategoriesWithOffers;
     }
 
     async getOffersByIncludeName(name: string): Promise<Array<IOffer>> {
@@ -125,12 +131,8 @@ class ChristmasTreeApi extends HttpService {
         const allOffers = await this.getAllOffers();
 
         filteredOffers = categoryId !== undefined
-            ? await this.getOffersByCategoryId(categoryId)
+            ? await this.getOffersByCategoryId(categoryId, available)
             : allOffers;
-
-        filteredOffers = available !== undefined
-            ? filteredOffers.filter((offer) => offer.available == available) 
-            : filteredOffers;
 
         filteredOffers = priceRange !== undefined
             ? filteredOffers.filter(
