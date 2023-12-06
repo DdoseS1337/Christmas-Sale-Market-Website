@@ -112,7 +112,7 @@ const HotOffer = () => {
                 onHide={() => setConfirmShow(false)}
             />
             {error && <ErrorMessage />}
-            <Section backgroundType={BackgroundType.RedWithSnow} isFluid>
+            <Section backgroundType={BackgroundType.RedWithSnow} isFluid notHideSnowOnMobile>
                 <Container>
                     <h2 id="hotOffer-header-adaptivity">Гаряча пропозиція</h2>
                 </Container>

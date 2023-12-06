@@ -22,7 +22,7 @@ interface IProps extends React.AnchorHTMLAttributes<HTMLDivElement> {
 		root?: React.HTMLAttributes<HTMLDivElement>;
 		inner?: ContainerProps;
 	};
-	hideSnowOnMobile?: boolean;
+	notHideSnowOnMobile?: boolean;
 }
 
 export const Section = ({
@@ -33,7 +33,7 @@ export const Section = ({
 	width,
 	className,
 	pt,
-	hideSnowOnMobile,
+	notHideSnowOnMobile,
 	...divProps
 }: IProps) => {
 	const isRedWithSnow = backgroundType === BackgroundType.RedWithSnow;
@@ -58,14 +58,12 @@ export const Section = ({
 				className
 			)}
 		>
-			<DeferredContent>
-				{isRedWithSnow &&
-					(hideSnowOnMobile ? (
-						!canHideSnowQuery && <Snowfall />
-					) : (
-						<Snowfall />
-					))}
-			</DeferredContent>
+			{isRedWithSnow &&
+				(notHideSnowOnMobile ? (
+					<Snowfall />
+				) : (
+					!canHideSnowQuery && <Snowfall />
+				))}
 			<Container
 				{...pt?.inner}
 				fluid={isFluid ?? "xl"}

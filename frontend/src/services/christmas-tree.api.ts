@@ -88,7 +88,6 @@ class ChristmasTreeApi extends HttpService {
                 ).slice(0, offersCount),
             };
 
-            console.log(categoryWithOffers.offers.length === offersCount)
             if (categoryWithOffers.offers.length === offersCount) {
                 suitableCategoriesWithOffers.push(categoryWithOffers);
             }
