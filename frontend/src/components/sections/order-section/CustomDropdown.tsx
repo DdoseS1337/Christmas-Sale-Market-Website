@@ -44,8 +44,12 @@ export const CustomDropdown = ({
 			input={
 				<Dropdown
 					pt={{
+						root: {
+							className: "dropdown",
+						},
 						input: {
 							id: field,
+							className: "dropdown__item",
 						},
 					}}
 					value={value}
@@ -82,7 +86,7 @@ export const CustomDropdown = ({
 					optionLabel={optionLabel}
 					itemTemplate={(option) => {
 						return (
-							<span>
+							<span className="dropdown__item">
 								{optionLabel ? option[optionLabel] : option}
 							</span>
 						);

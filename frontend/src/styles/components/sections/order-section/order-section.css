@@ -120,4 +120,7 @@
   .order-form {
     width: 100%;
   }
+  .dropdown__item {
+    width: 1px;
+  }
 }
