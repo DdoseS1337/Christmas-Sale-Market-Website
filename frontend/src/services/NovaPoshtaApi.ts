@@ -22,7 +22,6 @@ class NovaPoshtaServiceSingleton extends HttpService {
         });
 
         if (response.success != true) {
-            console.log(response);
             return [];
         }
 
