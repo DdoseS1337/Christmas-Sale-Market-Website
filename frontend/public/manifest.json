@@ -3,17 +3,17 @@
   "name": "Christmas Market №1 in Ukraine",
   "icons": [
     {
-      "src": "images/favicon.png",
+      "src": "./images/favicon.png",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     },
     {
-      "src": "images/favicon.png",
+      "src": "./images/favicon.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "images/favicon.png",
+      "src": "./images/favicon.png",
       "type": "image/png",
       "sizes": "512x512"
     }
